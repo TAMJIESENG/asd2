@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能抠图工具 - AI一键抠图，简单高效</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/favicon.ico">
+    <!-- 引入字体图标 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.png" alt="智能抠图工具">
+                <h1>智能抠图工具</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">首页</a></li>
+                    <li><a href="download.html">下载</a></li>
+                    <li><a href="guide.html">使用指南</a></li>
+                    <li><a href="about.html">关于我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>AI智能抠图工具</h1>
+                    <p>基于深度学习的一键抠图解决方案，轻松移除背景，无需专业技能，免费开源。</p>
+                    <div class="hero-buttons">
+                        <a href="download.html" class="btn">立即下载</a>
+                        <a href="guide.html" class="btn btn-secondary">了解更多</a>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="images/hero-image.png" alt="智能抠图效果展示">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="section-header">
+                <h2>核心功能</h2>
+                <p>智能抠图工具融合最新AI技术，为您提供简单高效的抠图体验</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa fa-magic"></i>
+                    </div>
+                    <h3>智能抠图</h3>
+                    <p>基于深度学习模型，自动识别前景主体，一键生成高质量透明背景图像，无需手动勾勒轮廓。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa fa-cubes"></i>
+                    </div>
+                    <h3>多种模型</h3>
+                    <p>内置多种AI模型，包括通用物体、人像、动物等专用模型，针对不同场景提供最佳抠图效果。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa fa-picture-o"></i>
+                    </div>
+                    <h3>透明背景</h3>
+                    <p>生成完美的透明背景PNG图像，支持Alpha通道，可无缝用于设计、电商、个人作品等多种场景。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa fa-tasks"></i>
+                    </div>
+                    <h3>批量处理</h3>
+                    <p>支持批量导入图片并一键处理，自动保存结果，大幅提高工作效率，适合需要处理大量图片的用户。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa fa-sliders"></i>
+                    </div>
+                    <h3>参数调整</h3>
+                    <p>提供Alpha遮罩、边缘精细度等参数调整功能，满足不同细节需求，打造最符合您需求的抠图效果。</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa fa-desktop"></i>
+                    </div>
+                    <h3>离线处理</h3>
+                    <p>所有处理在本地完成，无需联网上传图片，保护隐私的同时提供快速的处理体验。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="demo">
+        <div class="container">
+            <div class="section-header">
+                <h2>效果展示</h2>
+                <p>智能抠图工具能够处理各种复杂场景，以下是部分效果展示</p>
+            </div>
+            <div class="demo-grid">
+                <div class="demo-item">
+                    <div class="demo-before-after">
+                        <div class="demo-before" style="background-image: url('images/demo/before1.jpg');"></div>
+                        <div class="demo-after" style="background-image: url('images/demo/after1.png');"></div>
+                        <div class="demo-slider"></div>
+                        <div class="demo-label before">原图</div>
+                        <div class="demo-label after">抠图后</div>
+                    </div>
+                    <div class="demo-text">
+                        <h3>人像抠图</h3>
+                        <p>精准识别人物轮廓，完美保留发丝细节</p>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="demo-before-after">
+                        <div class="demo-before" style="background-image: url('images/demo/before2.jpg');"></div>
+                        <div class="demo-after" style="background-image: url('images/demo/after2.png');"></div>
+                        <div class="demo-slider"></div>
+                        <div class="demo-label before">原图</div>
+                        <div class="demo-label after">抠图后</div>
+                    </div>
+                    <div class="demo-text">
+                        <h3>产品抠图</h3>
+                        <p>精确分离商品，创建专业电商图片</p>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="demo-before-after">
+                        <div class="demo-before" style="background-image: url('images/demo/before3.jpg');"></div>
+                        <div class="demo-after" style="background-image: url('images/demo/after3.png');"></div>
+                        <div class="demo-slider"></div>
+                        <div class="demo-label before">原图</div>
+                        <div class="demo-label after">抠图后</div>
+                    </div>
+                    <div class="demo-text">
+                        <h3>动物抠图</h3>
+                        <p>准确识别动物轮廓，保留毛发细节</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="models">
+        <div class="container">
+            <div class="section-header">
+                <h2>AI模型介绍</h2>
+                <p>智能抠图工具内置多种先进的AI模型，针对不同场景提供最佳效果</p>
+            </div>
+            <div class="models-grid">
+                <div class="model-card">
+                    <img src="images/models/u2net.png" alt="U2Net模型" class="model-icon">
+                    <h3>U2Net</h3>
+                    <p class="desc">通用物体抠图模型，适用于大多数场景，平衡速度与精度的最佳选择。</p>
+                    <div class="model-specs">
+                        <span class="model-spec">通用物体</span>
+                        <span class="model-spec">中等大小</span>
+                        <span class="model-spec">速度适中</span>
+                    </div>
+                </div>
+                <div class="model-card">
+                    <img src="images/models/u2netp.png" alt="U2Net+模型" class="model-icon">
+                    <h3>U2Net+</h3>
+                    <p class="desc">轻量级通用模型，处理速度更快，适合配置较低的设备或需要快速处理的场景。</p>
+                    <div class="model-specs">
+                        <span class="model-spec">通用物体</span>
+                        <span class="model-spec">轻量级</span>
+                        <span class="model-spec">高速处理</span>
+                    </div>
+                </div>
+                <div class="model-card">
+                    <img src="images/models/u2net_human.png" alt="U2Net人像模型" class="model-icon">
+                    <h3>U2Net人像</h3>
+                    <p class="desc">专为人像优化的模型，能更精确地处理人物轮廓，保留发丝等细节。</p>
+                    <div class="model-specs">
+                        <span class="model-spec">人像专用</span>
+                        <span class="model-spec">发丝细节</span>
+                        <span class="model-spec">精确度高</span>
+                    </div>
+                </div>
+                <div class="model-card">
+                    <img src="images/models/silueta.png" alt="Silueta模型" class="model-icon">
+                    <h3>Silueta</h3>
+                    <p class="desc">性能优异的新一代模型，提供更精细的边缘处理和更准确的主体识别。</p>
+                    <div class="model-specs">
+                        <span class="model-spec">高精度</span>
+                        <span class="model-spec">边缘细节</span>
+                        <span class="model-spec">资源占用大</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>体验智能抠图技术</h2>
+            <p>下载免费开源的智能抠图工具，立即体验AI一键抠图的便捷与高效</p>
+            <a href="download.html" class="btn">立即下载使用</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3>智能抠图工具</h3>
+                    <p>基于AI的一键抠图解决方案</p>
+                    <p class="copyright">© 2025 智能抠图工具 版权所有</p>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="download.html">下载</a></li>
+                        <li><a href="guide.html">使用指南</a></li>
+                        <li><a href="about.html">关于我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系方式</h3>
+                    <ul class="contact">
+                        <li><i class="fa fa-envelope"></i> <a href="mailto:support@aimatting.com">support@aimatting.com</a></li>
+                        <li><i class="fa fa-globe"></i> <a href="https://www.aimatting.com">www.aimatting.com</a></li>
+                    </ul>
+                    <div class="social-icons">
+                        <a href="#"><i class="fa fa-weixin"></i></a>
+                        <a href="#"><i class="fa fa-weibo"></i></a>
+                        <a href="#"><i class="fa fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html> 

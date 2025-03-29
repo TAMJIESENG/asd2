@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能抠图工具使用指南 - 详细教程和帮助</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="images/favicon.ico">
+    <!-- 引入字体图标 -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="images/logo.png" alt="智能抠图工具">
+                <h1>智能抠图工具</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="download.html">下载</a></li>
+                    <li><a href="guide.html" class="active">使用指南</a></li>
+                    <li><a href="about.html">关于我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="guide-hero">
+        <div class="container">
+            <h1>智能抠图工具使用指南</h1>
+            <p>详尽的教程帮助您充分发挥AI抠图功能</p>
+        </div>
+    </section>
+
+    <section class="guide-content">
+        <div class="container">
+            <div class="guide-nav">
+                <ul>
+                    <li><a href="#getting-started" class="active">开始使用</a></li>
+                    <li><a href="#basic-functions">基础功能</a></li>
+                    <li><a href="#advanced-features">高级功能</a></li>
+                    <li><a href="#batch-processing">批量处理</a></li>
+                    <li><a href="#models">模型介绍</a></li>
+                    <li><a href="#troubleshooting">故障排除</a></li>
+                </ul>
+            </div>
+
+            <div class="guide-section" id="toc">
+                <h2>目录</h2>
+                <ol>
+                    <li><a href="#getting-started">开始使用</a>
+                        <ul>
+                            <li><a href="#installation">软件安装</a></li>
+                            <li><a href="#interface">主界面介绍</a></li>
+                            <li><a href="#quickstart">快速开始指南</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#basic-functions">基础功能</a>
+                        <ul>
+                            <li><a href="#select-image">选择图片</a></li>
+                            <li><a href="#choose-model">选择模型</a></li>
+                            <li><a href="#matting-process">抠图处理</a></li>
+                            <li><a href="#save-result">保存结果</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#advanced-features">高级功能</a>
+                        <ul>
+                            <li><a href="#parameters">参数调整</a></li>
+                            <li><a href="#alpha-matting">Alpha遮罩精细调整</a></li>
+                            <li><a href="#background">背景替换</a></li>
+                            <li><a href="#sam-interactive">SAM交互式选择</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#batch-processing">批量处理</a>
+                        <ul>
+                            <li><a href="#batch-setup">批量设置</a></li>
+                            <li><a href="#output-settings">输出设置</a></li>
+                            <li><a href="#processing-queue">处理队列管理</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#models">模型介绍</a>
+                        <ul>
+                            <li><a href="#model-comparison">模型对比</a></li>
+                            <li><a href="#download-models">下载与管理模型</a></li>
+                            <li><a href="#choosing-right-model">选择合适的模型</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#troubleshooting">故障排除</a>
+                        <ul>
+                            <li><a href="#common-issues">常见问题</a></li>
+                            <li><a href="#model-download-issues">模型下载问题</a></li>
+                            <li><a href="#performance">性能优化</a></li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="guide-section" id="getting-started">
+                <h2>开始使用</h2>
+                
+                <div id="installation">
+                    <h3>软件安装</h3>
+                    <p>智能抠图工具是一款免安装的绿色软件，您只需完成以下步骤：</p>
+                    <ol>
+                        <li>从<a href="download.html">官方网站</a>下载最新版本</li>
+                        <li>解压缩下载的压缩包（如果下载的是ZIP格式）或直接运行EXE文件</li>
+                        <li>首次运行时，Windows可能会显示安全警告，请点击"更多信息"然后选择"仍要运行"</li>
+                        <li>软件将自动启动并准备就绪</li>
+                    </ol>
+                    <div class="guide-note">
+                        <p>首次运行时，软件会自动下载所需的AI模型文件。请确保您的计算机连接到互联网。</p>
+                    </div>
+                </div>
+
+                <div id="interface">
+                    <h3>主界面介绍</h3>
+                    <p>软件界面设计简洁直观，主要分为以下几个部分：</p>
+                    <div class="guide-image">
+                        <img src="images/guide/main-interface.jpg" alt="主界面概览">
+                    </div>
+                    <ol>
+                        <li><strong>菜单栏</strong>：包含文件、编辑、模型、帮助等菜单选项</li>
+                        <li><strong>工具栏</strong>：快速访问常用功能的按钮</li>
+                        <li><strong>左侧面板</strong>：显示已加载的图片和批处理队列</li>
+                        <li><strong>主显示区</strong>：显示当前处理的图片和抠图结果</li>
+                        <li><strong>右侧面板</strong>：模型选择和参数设置</li>
+                        <li><strong>状态栏</strong>：显示处理状态和提示信息</li>
+                    </ol>
+                </div>
+
+                <div id="quickstart">
+                    <h3>快速开始指南</h3>
+                    <p>如果您想快速体验软件的基本功能，请按以下步骤操作：</p>
+                    <ol>
+                        <li>点击工具栏上的"打开图片"按钮或按下Ctrl+O</li>
+                        <li>在对话框中选择一张您想要抠图的图片</li>
+                        <li>在右侧面板选择模型（默认为U2Net通用模型）</li>
+                        <li>点击"开始抠图"按钮</li>
+                        <li>处理完成后，使用"保存结果"按钮或按下Ctrl+S保存抠图结果</li>
+                    </ol>
+                    <div class="guide-tip">
+                        <p>对于人物照片，建议选择"U2Net人像"模型以获得更好的效果。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-section" id="basic-functions">
+                <h2>基础功能</h2>
+                
+                <div id="select-image">
+                    <h3>选择图片</h3>
+                    <p>软件支持多种方式导入图片：</p>
+                    <ul>
+                        <li><strong>通过菜单</strong>：点击"文件 > 打开"或使用快捷键Ctrl+O</li>
+                        <li><strong>拖放功能</strong>：直接将图片从文件资源管理器拖放到软件窗口</li>
+                        <li><strong>复制粘贴</strong>：使用Ctrl+V粘贴剪贴板中的图片</li>
+                    </ul>
+                    <p>支持的图片格式包括JPG、PNG、BMP、TIFF、WEBP等常见格式。</p>
+                    <div class="guide-note">
+                        <p>为获得最佳效果，推荐使用分辨率不超过2000×2000像素的图片。过大的图片会被自动缩小以提高处理速度。</p>
+                    </div>
+                </div>
+
+                <div id="choose-model">
+                    <h3>选择模型</h3>
+                    <p>软件内置多种AI模型，针对不同场景优化：</p>
+                    <ul>
+                        <li><strong>U2Net</strong>：通用物体抠图模型，适用于大多数场景</li>
+                        <li><strong>U2Net-人像</strong>：专为人物照片优化，更好地保留头发细节</li>
+                        <li><strong>Silueta</strong>：高精度模型，边缘处理更精细</li>
+                        <li><strong>U2Net-轻量版</strong>：处理速度更快，适合低配置设备</li>
+                    </ul>
+                    <p>在右侧面板的"模型"下拉菜单中选择适合您需求的模型。首次使用某个模型时，软件会自动下载模型文件。</p>
+                    <div class="guide-image">
+                        <img src="images/guide/model-selection.jpg" alt="模型选择界面">
+                    </div>
+                </div>
+
+                <div id="matting-process">
+                    <h3>抠图处理</h3>
+                    <p>选择好图片和模型后，点击"开始抠图"按钮即可开始处理。处理过程中：</p>
+                    <ul>
+                        <li>状态栏会显示处理进度</li>
+                        <li>对于大图片，可能需要几秒到几十秒不等的处理时间</li>
+                        <li>处理完成后，结果会自动显示在主显示区域</li>
+                    </ul>
+                    <p>软件提供两种视图模式切换：</p>
+                    <ul>
+                        <li><strong>原图/结果对比</strong>：左右分屏显示原图和抠图结果</li>
+                        <li><strong>透明背景视图</strong>：显示抠图结果的透明背景效果</li>
+                    </ul>
+                </div>
+
+                <div id="save-result">
+                    <h3>保存结果</h3>
+                    <p>处理完成后，您可以通过以下方式保存结果：</p>
+                    <ul>
+                        <li>点击"文件 > 保存结果"或使用快捷键Ctrl+S</li>
+                        <li>在弹出的对话框中选择保存位置和文件格式</li>
+                    </ul>
+                    <p>支持的输出格式：</p>
+                    <ul>
+                        <li><strong>PNG</strong>：保留透明背景，推荐用于需要透明背景的场景</li>
+                        <li><strong>JPG</strong>：不支持透明背景，会使用白色背景填充</li>
+                        <li><strong>WebP</strong>：支持透明背景，文件体积更小</li>
+                    </ul>
+                    <div class="guide-tip">
+                        <p>您也可以直接将结果拖放到其他应用程序中使用，如Photoshop、Word等。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-section" id="advanced-features">
+                <h2>高级功能</h2>
+                
+                <div id="parameters">
+                    <h3>参数调整</h3>
+                    <p>软件提供多种参数调整选项，以满足不同场景的需求：</p>
+                    <div class="guide-image">
+                        <img src="images/guide/parameters.jpg" alt="参数调整界面">
+                    </div>
+                    <ul>
+                        <li><strong>图像大小调整</strong>：控制处理前图像的缩放比例，较小的图像处理速度更快</li>
+                        <li><strong>透明度阈值</strong>：调整前景检测的灵敏度，值越低保留的细节越多</li>
+                        <li><strong>边缘平滑度</strong>：控制抠图边缘的平滑程度，值越高边缘越平滑</li>
+                    </ul>
+                    <p>调整参数后，点击"重新处理"按钮以应用新参数。</p>
+                </div>
+
+                <div id="alpha-matting">
+                    <h3>Alpha遮罩精细调整</h3>
+                    <p>对于需要精细处理的图片，软件提供Alpha遮罩调整功能：</p>
+                    <ol>
+                        <li>在右侧面板勾选"使用Alpha遮罩"选项</li>
+                        <li>调整以下参数：
+                            <ul>
+                                <li><strong>前景阈值</strong>：确定前景区域的透明度</li>
+                                <li><strong>背景阈值</strong>：确定背景区域的透明度</li>
+                                <li><strong>腐蚀大小</strong>：控制边缘侵蚀程度</li>
+                            </ul>
+                        </li>
+                        <li>点击"重新处理"应用设置</li>
+                    </ol>
+                    <div class="guide-warning">
+                        <p>Alpha遮罩处理会显著增加处理时间，但可以提供更精细的边缘处理效果，特别适合处理头发等细节区域。</p>
+                    </div>
+                </div>
+
+                <div id="background">
+                    <h3>背景替换</h3>
+                    <p>软件支持直接替换背景功能：</p>
+                    <ol>
+                        <li>完成抠图处理后，点击"背景"选项卡</li>
+                        <li>选择背景类型：
+                            <ul>
+                                <li><strong>纯色背景</strong>：选择一个纯色作为背景</li>
+                                <li><strong>图片背景</strong>：使用另一张图片作为背景</li>
+                                <li><strong>渐变背景</strong>：创建颜色渐变作为背景</li>
+                            </ul>
+                        </li>
+                        <li>根据选择，设置相应的背景参数</li>
+                        <li>点击"应用背景"按钮查看效果</li>
+                    </ol>
+                    <div class="guide-image">
+                        <img src="images/guide/background-replacement.jpg" alt="背景替换功能展示">
+                    </div>
+                </div>
+
+                <div id="sam-interactive">
+                    <h3>SAM交互式选择</h3>
+                    <p>对于复杂图像，软件支持SAM（Segment Anything Model）交互式选择功能：</p>
+                    <ol>
+                        <li>在模型下拉菜单中选择"SAM"模型</li>
+                        <li>加载图片后，会进入交互模式</li>
+                        <li>使用鼠标在图片上点击需要保留的前景区域（绿点）</li>
+                        <li>使用Shift+点击标记需要去除的背景区域（红点）</li>
+                        <li>点击"应用选择"按钮生成分割结果</li>
+                        <li>可以继续添加点以改进结果，然后再次点击"应用选择"</li>
+                    </ol>
+                    <div class="guide-tip">
+                        <p>SAM模型较大，首次下载可能需要一段时间。此功能特别适合处理复杂场景或多物体图像。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-section" id="batch-processing">
+                <h2>批量处理</h2>
+                
+                <div id="batch-setup">
+                    <h3>批量设置</h3>
+                    <p>软件支持批量处理多张图片，提高工作效率：</p>
+                    <ol>
+                        <li>点击"文件 > 批量处理"或使用工具栏上的批量按钮</li>
+                        <li>在弹出的对话框中，通过"添加文件"或"添加文件夹"选择需要处理的图片</li>
+                        <li>设置处理参数，包括模型选择和输出设置</li>
+                        <li>点击"开始处理"按钮</li>
+                    </ol>
+                    <div class="guide-image">
+                        <img src="images/guide/batch-processing.jpg" alt="批量处理设置界面">
+                    </div>
+                </div>
+
+                <div id="output-settings">
+                    <h3>输出设置</h3>
+                    <p>批处理模式下，您可以配置以下输出设置：</p>
+                    <ul>
+                        <li><strong>输出文件夹</strong>：选择结果保存的位置</li>
+                        <li><strong>输出格式</strong>：选择PNG、JPG或WebP格式</li>
+                        <li><strong>文件命名规则</strong>：设置输出文件的命名方式
+                            <ul>
+                                <li>原文件名_抠图</li>
+                                <li>原文件名_模型名称</li>
+                                <li>自定义前缀+原文件名</li>
+                                <li>自定义格式（包含序号）</li>
+                            </ul>
+                        </li>
+                        <li><strong>保持原始图片结构</strong>：在输出文件夹中保持原始文件夹结构</li>
+                    </ul>
+                </div>
+
+                <div id="processing-queue">
+                    <h3>处理队列管理</h3>
+                    <p>在批处理过程中，您可以：</p>
+                    <ul>
+                        <li>在左侧面板的队列视图中查看处理进度</li>
+                        <li>暂停/继续整个队列处理</li>
+                        <li>移除尚未处理的任务</li>
+                        <li>调整处理线程数以平衡速度和系统负载</li>
+                    </ul>
+                    <div class="guide-warning">
+                        <p>批量处理可能占用大量系统资源。如果您的计算机配置较低，建议减少并行处理线程数，避免系统卡顿。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-section" id="models">
+                <h2>模型介绍</h2>
+                
+                <div id="model-comparison">
+                    <h3>模型对比</h3>
+                    <p>软件提供的不同模型各有特点，下表对比了主要模型的性能和适用场景：</p>
+                    <div class="guide-table">
+                        <table>
+                            <tr>
+                                <th>模型名称</th>
+                                <th>适用场景</th>
+                                <th>处理速度</th>
+                                <th>精度</th>
+                                <th>模型大小</th>
+                            </tr>
+                            <tr>
+                                <td>U2Net</td>
+                                <td>通用场景</td>
+                                <td>中等</td>
+                                <td>高</td>
+                                <td>176MB</td>
+                            </tr>
+                            <tr>
+                                <td>U2Net轻量版</td>
+                                <td>通用场景</td>
+                                <td>快</td>
+                                <td>中等</td>
+                                <td>4.7MB</td>
+                            </tr>
+                            <tr>
+                                <td>U2Net人像</td>
+                                <td>人物照片</td>
+                                <td>中等</td>
+                                <td>高（人像）</td>
+                                <td>176MB</td>
+                            </tr>
+                            <tr>
+                                <td>Silueta</td>
+                                <td>精细抠图</td>
+                                <td>慢</td>
+                                <td>极高</td>
+                                <td>143MB</td>
+                            </tr>
+                            <tr>
+                                <td>SAM</td>
+                                <td>复杂场景、交互式</td>
+                                <td>慢</td>
+                                <td>极高（交互式）</td>
+                                <td>375MB</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="download-models">
+                    <h3>下载与管理模型</h3>
+                    <p>软件会在需要时自动下载模型，但您也可以手动管理模型文件：</p>
+                    <ol>
+                        <li>点击"模型 > 管理模型"打开模型管理对话框</li>
+                        <li>查看已下载的模型和下载状态</li>
+                        <li>使用"下载"按钮手动下载所需模型</li>
+                        <li>使用"删除"按钮移除不需要的模型以节省空间</li>
+                    </ol>
+                    <div class="guide-note">
+                        <p>模型文件存储在用户目录下的<code>.u2net</code>文件夹中（Windows系统通常是<code>C:\Users\您的用户名\.u2net</code>）。</p>
+                    </div>
+                </div>
+
+                <div id="choosing-right-model">
+                    <h3>选择合适的模型</h3>
+                    <p>根据不同的场景，推荐使用以下模型：</p>
+                    <ul>
+                        <li><strong>人物照片</strong>：U2Net人像模型，更好地保留头发等细节</li>
+                        <li><strong>产品图片</strong>：Silueta或U2Net，提供清晰的边缘</li>
+                        <li><strong>动物图片</strong>：U2Net通用模型，良好平衡速度和效果</li>
+                        <li><strong>简单图形</strong>：U2Net轻量版，速度更快</li>
+                        <li><strong>复杂场景或多物体</strong>：SAM模型，通过交互指定需要保留的区域</li>
+                    </ul>
+                    <div class="guide-image">
+                        <img src="images/guide/model-examples.jpg" alt="不同模型效果对比">
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-section" id="troubleshooting">
+                <h2>故障排除</h2>
+                
+                <div id="common-issues">
+                    <h3>常见问题</h3>
+                    <p><strong>问题：软件启动时报错或崩溃</strong></p>
+                    <p>解决方法：</p>
+                    <ul>
+                        <li>确保您使用的是64位Windows系统</li>
+                        <li>尝试以管理员身份运行软件</li>
+                        <li>检查是否安装了VC++ 2015-2019 运行库，如果没有，请<a href="https://aka.ms/vs/16/release/vc_redist.x64.exe">下载安装</a></li>
+                    </ul>
+
+                    <p><strong>问题：抠图结果不理想，存在边缘问题</strong></p>
+                    <p>解决方法：</p>
+                    <ul>
+                        <li>尝试使用不同的模型，特别是针对特定场景优化的模型</li>
+                        <li>启用Alpha遮罩功能并调整参数</li>
+                        <li>对于复杂图像，尝试使用SAM模型通过交互方式指定区域</li>
+                    </ul>
+
+                    <p><strong>问题：处理速度过慢</strong></p>
+                    <p>解决方法：</p>
+                    <ul>
+                        <li>减小输入图像大小</li>
+                        <li>使用较小的模型，如U2Net轻量版</li>
+                        <li>禁用Alpha遮罩功能（如果不需要极高精度）</li>
+                        <li>检查是否有其他程序占用大量系统资源</li>
+                    </ul>
+                </div>
+
+                <div id="model-download-issues">
+                    <h3>模型下载问题</h3>
+                    <p>如果您在下载模型时遇到问题：</p>
+                    <ol>
+                        <li>检查网络连接是否正常</li>
+                        <li>如果您的网络环境无法访问模型服务器，可以手动下载模型文件：
+                            <ul>
+                                <li>访问<a href="https://github.com/aimatting/smart-matting-tool/releases">GitHub发布页面</a>下载模型文件包</li>
+                                <li>解压下载的模型文件</li>
+                                <li>将解压后的模型文件（.pth文件）放置到<code>~/.u2net</code>目录中</li>
+                                <li>重启软件，模型将被自动识别</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <div class="guide-note">
+                        <p>您也可以在软件的"模型 > 高级设置"中配置代理服务器，以帮助下载模型文件。</p>
+                    </div>
+                </div>
+
+                <div id="performance">
+                    <h3>性能优化</h3>
+                    <p>要提高软件的运行性能，可以采取以下措施：</p>
+                    <ul>
+                        <li>在"设置 > 性能"中调整处理线程数为CPU核心数的一半</li>
+                        <li>对于批量处理，设置适当的并行任务数（推荐值：2-4）</li>
+                        <li>关闭不必要的后台程序</li>
+                        <li>对于需要高效处理的场景，选择性能更好的模型（U2Net轻量版）</li>
+                        <li>限制输入图像的最大分辨率（在设置中可配置）</li>
+                    </ul>
+                    <div class="guide-tip">
+                        <p>如果您的系统有独立显卡，请确保图形应用程序使用独立显卡运行，这可能会提高处理速度。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="guide-cta">
+                <h3>准备好使用智能抠图工具了吗？</h3>
+                <p>下载免费软件，体验AI一键抠图的便捷与高效</p>
+                <a href="download.html" class="btn">立即下载</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3>智能抠图工具</h3>
+                    <p>基于AI的一键抠图解决方案</p>
+                    <p class="copyright">© 2025 智能抠图工具 版权所有</p>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="download.html">下载</a></li>
+                        <li><a href="guide.html">使用指南</a></li>
+                        <li><a href="about.html">关于我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系方式</h3>
+                    <ul class="contact">
+                        <li><i class="fa fa-envelope"></i> <a href="mailto:support@aimatting.com">support@aimatting.com</a></li>
+                        <li><i class="fa fa-globe"></i> <a href="https://www.aimatting.com">www.aimatting.com</a></li>
+                    </ul>
+                    <div class="social-icons">
+                        <a href="#"><i class="fa fa-weixin"></i></a>
+                        <a href="#"><i class="fa fa-weibo"></i></a>
+                        <a href="#"><i class="fa fa-github"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html> 
