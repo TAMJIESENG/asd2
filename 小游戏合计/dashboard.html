@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小游戏合集 - 控制台</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="main-header">
+            <div class="logo">
+                <h1><a href="index.html">小游戏合集</a></h1>
+            </div>
+            <nav class="main-nav">
+                <ul id="main-nav-list">
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="dashboard.html" class="active">控制台</a></li>
+                    <li><a href="leaderboard.html">排行榜</a></li>
+                    <li><a href="about.html">关于</a></li>
+                    <li><a href="profile.html">个人资料</a></li>
+                    <li><a href="#" id="logout-btn">登出</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <!-- 仪表板内容 -->
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h2>欢迎回来，<span id="username-display">用户</span>！</h2>
+                <p>在这里你可以查看游戏统计和开始新游戏。</p>
+            </div>
+            
+            <!-- 统计信息 -->
+            <h3>游戏统计</h3>
+            <div class="dashboard-grid">
+                <div class="stats-box">
+                    <h3>扫雷</h3>
+                    <div class="stats-item">
+                        <div class="stats-label">最佳时间</div>
+                        <div class="stats-value" id="minesweeper-best-time">-</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">游戏次数</div>
+                        <div class="stats-value" id="minesweeper-games">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">胜率</div>
+                        <div class="stats-value" id="minesweeper-win-rate">0%</div>
+                    </div>
+                </div>
+                
+                <div class="stats-box">
+                    <h3>贪吃蛇</h3>
+                    <div class="stats-item">
+                        <div class="stats-label">最高分</div>
+                        <div class="stats-value" id="snake-high-score">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">游戏次数</div>
+                        <div class="stats-value" id="snake-games">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">平均分数</div>
+                        <div class="stats-value" id="snake-avg-score">0</div>
+                    </div>
+                </div>
+                
+                <div class="stats-box">
+                    <h3>俄罗斯方块</h3>
+                    <div class="stats-item">
+                        <div class="stats-label">最高分</div>
+                        <div class="stats-value" id="tetris-high-score">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">游戏次数</div>
+                        <div class="stats-value" id="tetris-games">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">平均消除行数</div>
+                        <div class="stats-value" id="tetris-avg-lines">0</div>
+                    </div>
+                </div>
+                
+                <div class="stats-box">
+                    <h3>猜数字</h3>
+                    <div class="stats-item">
+                        <div class="stats-label">最高分</div>
+                        <div class="stats-value" id="guess-number-high-score">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">游戏次数</div>
+                        <div class="stats-value" id="guess-number-games">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">平均猜测次数</div>
+                        <div class="stats-value" id="guess-number-avg-guesses">0</div>
+                    </div>
+                </div>
+                
+                <div class="stats-box">
+                    <h3>石头剪刀布</h3>
+                    <div class="stats-item">
+                        <div class="stats-label">胜场</div>
+                        <div class="stats-value" id="rps-wins">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">游戏次数</div>
+                        <div class="stats-value" id="rps-games">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">胜率</div>
+                        <div class="stats-value" id="rps-win-rate">0%</div>
+                    </div>
+                </div>
+                
+                <div class="stats-box">
+                    <h3>飞行射击</h3>
+                    <div class="stats-item">
+                        <div class="stats-label">最高分</div>
+                        <div class="stats-value" id="space-shooter-high-score">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">游戏次数</div>
+                        <div class="stats-value" id="space-shooter-games">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">击落敌人</div>
+                        <div class="stats-value" id="space-shooter-enemies">0</div>
+                    </div>
+                </div>
+                
+                <div class="stats-box">
+                    <h3>滑动拼图</h3>
+                    <div class="stats-item">
+                        <div class="stats-label">最佳时间</div>
+                        <div class="stats-value" id="puzzle-best-time">-</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">游戏次数</div>
+                        <div class="stats-value" id="puzzle-games">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">平均移动次数</div>
+                        <div class="stats-value" id="puzzle-avg-moves">0</div>
+                    </div>
+                </div>
+                
+                <div class="stats-box">
+                    <h3>跳跃游戏</h3>
+                    <div class="stats-item">
+                        <div class="stats-label">最高分</div>
+                        <div class="stats-value" id="jump-game-high-score">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">游戏次数</div>
+                        <div class="stats-value" id="jump-game-games">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">最远距离</div>
+                        <div class="stats-value" id="jump-game-distance">0</div>
+                    </div>
+                </div>
+                
+                <div class="stats-box">
+                    <h3>2048</h3>
+                    <div class="stats-item">
+                        <div class="stats-label">最高分</div>
+                        <div class="stats-value" id="2048-high-score">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">游戏次数</div>
+                        <div class="stats-value" id="2048-games">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">达成2048</div>
+                        <div class="stats-value" id="2048-wins">0</div>
+                    </div>
+                </div>
+                
+                <div class="stats-box">
+                    <h3>记忆翻牌</h3>
+                    <div class="stats-item">
+                        <div class="stats-label">最佳翻牌数</div>
+                        <div class="stats-value" id="memory-best-flips">-</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">游戏次数</div>
+                        <div class="stats-value" id="memory-games">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">最佳时间</div>
+                        <div class="stats-value" id="memory-best-time">-</div>
+                    </div>
+                </div>
+                
+                <div class="stats-box">
+                    <h3>打砖块</h3>
+                    <div class="stats-item">
+                        <div class="stats-label">最高分</div>
+                        <div class="stats-value" id="breakout-high-score">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">游戏次数</div>
+                        <div class="stats-value" id="breakout-games">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">胜利次数</div>
+                        <div class="stats-value" id="breakout-wins">0</div>
+                    </div>
+                </div>
+                
+                <div class="stats-box">
+                    <h3>井字棋</h3>
+                    <div class="stats-item">
+                        <div class="stats-label">胜场</div>
+                        <div class="stats-value" id="tictactoe-wins">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">游戏次数</div>
+                        <div class="stats-value" id="tictactoe-games">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="stats-label">胜率</div>
+                        <div class="stats-value" id="tictactoe-win-rate">0%</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 游戏选择 -->
+            <h3>选择游戏</h3>
+            <div class="game-buttons">
+                <div class="game-card" onclick="window.location.href='games/minesweeper.html'">
+                    <div class="icon">
+                        <i class="fas fa-bomb"></i>
+                    </div>
+                    <h3>扫雷</h3>
+                    <p>测试你的逻辑思维，小心地雷！</p>
+                    <a href="games/minesweeper.html" class="btn btn-primary">开始游戏</a>
+                </div>
+                
+                <div class="game-card" onclick="window.location.href='games/snake.html'">
+                    <div class="icon">
+                        <i class="fas fa-dragon"></i>
+                    </div>
+                    <h3>贪吃蛇</h3>
+                    <p>控制蛇吃食物并成长，不要撞到墙壁或自己！</p>
+                    <a href="games/snake.html" class="btn btn-primary">开始游戏</a>
+                </div>
+                
+                <div class="game-card" onclick="window.location.href='games/tetris.html'">
+                    <div class="icon">
+                        <i class="fas fa-th-large"></i>
+                    </div>
+                    <h3>俄罗斯方块</h3>
+                    <p>旋转和移动方块，消除行以获得高分！</p>
+                    <a href="games/tetris.html" class="btn btn-primary">开始游戏</a>
+                </div>
+                
+                <div class="game-card" onclick="window.location.href='games/2048.html'">
+                    <div class="icon">
+                        <i class="fas fa-th"></i>
+                    </div>
+                    <h3>2048</h3>
+                    <p>合并相同数字的方块，努力达到2048或更高数值！</p>
+                    <a href="games/2048.html" class="btn btn-primary">开始游戏</a>
+                </div>
+                
+                <div class="game-card" onclick="window.location.href='games/memory.html'">
+                    <div class="icon">
+                        <i class="fas fa-clone"></i>
+                    </div>
+                    <h3>记忆翻牌</h3>
+                    <p>考验记忆力的配对游戏，找出所有匹配的卡片对！</p>
+                    <a href="games/memory.html" class="btn btn-primary">开始游戏</a>
+                </div>
+                
+                <div class="game-card" onclick="window.location.href='games/breakout.html'">
+                    <div class="icon">
+                        <i class="fas fa-table-tennis"></i>
+                    </div>
+                    <h3>打砖块</h3>
+                    <p>控制挡板反弹小球，打碎所有砖块获得胜利！</p>
+                    <a href="games/breakout.html" class="btn btn-primary">开始游戏</a>
+                </div>
+                
+                <div class="game-card" onclick="window.location.href='games/tictactoe.html'">
+                    <div class="icon">
+                        <i class="fas fa-grip-horizontal"></i>
+                    </div>
+                    <h3>井字棋</h3>
+                    <p>经典的三子连线游戏，与电脑对战，谁先连成一条线谁获胜！</p>
+                    <a href="games/tictactoe.html" class="btn btn-primary">开始游戏</a>
+                </div>
+                
+                <div class="game-card" onclick="window.location.href='games/guess_number.html'">
+                    <div class="icon">
+                        <i class="fas fa-sort-numeric-up"></i>
+                    </div>
+                    <h3>猜数字</h3>
+                    <p>在规定次数内猜出系统选定的数字，越快猜对得分越高！</p>
+                    <a href="games/guess_number.html" class="btn btn-primary">开始游戏</a>
+                </div>
+                
+                <div class="game-card" onclick="window.location.href='games/rock_paper_scissors.html'">
+                    <div class="icon">
+                        <i class="fas fa-hand-rock"></i>
+                    </div>
+                    <h3>石头剪刀布</h3>
+                    <p>经典的猜拳游戏，可选择不同模式挑战电脑对手！</p>
+                    <a href="games/rock_paper_scissors.html" class="btn btn-primary">开始游戏</a>
+                </div>
+                
+                <div class="game-card" onclick="window.location.href='games/space_shooter.html'">
+                    <div class="icon">
+                        <i class="fas fa-space-shuttle"></i>
+                    </div>
+                    <h3>飞行射击</h3>
+                    <p>控制宇宙飞船躲避和消灭敌人，获得高分挑战自我！</p>
+                    <a href="games/space_shooter.html" class="btn btn-primary">开始游戏</a>
+                </div>
+                
+                <div class="game-card" onclick="window.location.href='games/puzzle.html'">
+                    <div class="icon">
+                        <i class="fas fa-puzzle-piece"></i>
+                    </div>
+                    <h3>滑动拼图</h3>
+                    <p>通过滑动拼图块还原完整图像，锻炼空间思维能力！</p>
+                    <a href="games/puzzle.html" class="btn btn-primary">开始游戏</a>
+                </div>
+                
+                <div class="game-card" onclick="window.location.href='games/jump_game.html'">
+                    <div class="icon">
+                        <i class="fas fa-running"></i>
+                    </div>
+                    <h3>跳跃游戏</h3>
+                    <p>控制角色跳跃越过障碍物，考验反应能力和操作技巧！</p>
+                    <a href="games/jump_game.html" class="btn btn-primary">开始游戏</a>
+                </div>
+            </div>
+            
+            <!-- 最近游戏记录 -->
+            <h3>最近游戏记录</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>游戏</th>
+                        <th>时间</th>
+                        <th>分数/时间</th>
+                        <th>结果</th>
+                    </tr>
+                </thead>
+                <tbody id="game-records">
+                    <tr>
+                        <td colspan="4" class="text-center">暂无游戏记录</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- 页脚 -->
+        <footer class="main-footer">
+            <p>&copy; <span id="current-year"></span> 小游戏合集 - 一个充满乐趣的游戏平台</p>
+        </footer>
+    </div>
+
+    <script>
+        // 检查用户是否登录
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem('isLoggedIn')) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const username = localStorage.getItem('username') || '用户';
+            document.getElementById('welcome-message').textContent = `欢迎回来，${username}！`;
+            
+            // 加载游戏统计数据
+            loadGameStats();
+        });
+        
+        // 注销功能
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            window.location.href = 'index.html';
+        });
+        
+        // 设置当前年份
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // 加载游戏统计数据
+        function loadGameStats() {
+            const gameStats = JSON.parse(localStorage.getItem('gameStats') || '{}');
+            
+            // 更新扫雷统计
+            if (gameStats.minesweeper) {
+                document.getElementById('minesweeper-games').textContent = gameStats.minesweeper.gamesPlayed || 0;
+                const winRate = gameStats.minesweeper.gamesPlayed > 0 
+                    ? Math.round((gameStats.minesweeper.gamesWon / gameStats.minesweeper.gamesPlayed) * 100) 
+                    : 0;
+                document.getElementById('minesweeper-win-rate').textContent = winRate + '%';
+                
+                const bestTime = gameStats.minesweeper.bestTime;
+                document.getElementById('minesweeper-best-time').textContent = 
+                    bestTime && bestTime !== Infinity ? `${bestTime}秒` : '-';
+            }
+            
+            // 更新贪吃蛇统计
+            if (gameStats.snake) {
+                document.getElementById('snake-games').textContent = gameStats.snake.gamesPlayed || 0;
+                document.getElementById('snake-high-score').textContent = gameStats.snake.highScore || 0;
+                document.getElementById('snake-avg-score').textContent = 
+                    gameStats.snake.gamesPlayed > 0 
+                        ? Math.round(gameStats.snake.totalScore / gameStats.snake.gamesPlayed) 
+                        : 0;
+            }
+            
+            // 更新俄罗斯方块统计
+            if (gameStats.tetris) {
+                document.getElementById('tetris-games').textContent = gameStats.tetris.gamesPlayed || 0;
+                document.getElementById('tetris-high-score').textContent = gameStats.tetris.highScore || 0;
+                document.getElementById('tetris-avg-lines').textContent = 
+                    gameStats.tetris.gamesPlayed > 0 
+                        ? Math.round(gameStats.tetris.totalLines / gameStats.tetris.gamesPlayed) 
+                        : 0;
+            }
+            
+            // 更新猜数字统计
+            if (gameStats.guessNumber) {
+                document.getElementById('guess-number-games').textContent = gameStats.guessNumber.gamesPlayed || 0;
+                document.getElementById('guess-number-high-score').textContent = gameStats.guessNumber.highScore || 0;
+                document.getElementById('guess-number-avg-guesses').textContent = 
+                    gameStats.guessNumber.gamesPlayed > 0 
+                        ? Math.round(gameStats.guessNumber.totalGuesses / gameStats.guessNumber.gamesPlayed) 
+                        : 0;
+            }
+            
+            // 更新石头剪刀布统计
+            if (gameStats.rockPaperScissors) {
+                document.getElementById('rps-games').textContent = gameStats.rockPaperScissors.gamesPlayed || 0;
+                document.getElementById('rps-wins').textContent = gameStats.rockPaperScissors.playerWins || 0;
+                const winRate = gameStats.rockPaperScissors.gamesPlayed > 0 
+                    ? Math.round((gameStats.rockPaperScissors.playerWins / gameStats.rockPaperScissors.gamesPlayed) * 100) 
+                    : 0;
+                document.getElementById('rps-win-rate').textContent = winRate + '%';
+            }
+            
+            // 更新飞行射击统计
+            if (gameStats.spaceShooter) {
+                document.getElementById('space-shooter-games').textContent = gameStats.spaceShooter.gamesPlayed || 0;
+                document.getElementById('space-shooter-high-score').textContent = gameStats.spaceShooter.highScore || 0;
+                document.getElementById('space-shooter-enemies').textContent = gameStats.spaceShooter.enemiesDestroyed || 0;
+            }
+            
+            // 更新滑动拼图统计
+            if (gameStats.puzzle) {
+                document.getElementById('puzzle-games').textContent = gameStats.puzzle.gamesPlayed || 0;
+                const bestTime = gameStats.puzzle.bestTime;
+                document.getElementById('puzzle-best-time').textContent = 
+                    bestTime && bestTime !== Infinity ? `${bestTime}秒` : '-';
+                document.getElementById('puzzle-avg-moves').textContent = 
+                    gameStats.puzzle.gamesPlayed > 0 
+                        ? Math.round(gameStats.puzzle.totalMoves / gameStats.puzzle.gamesPlayed) 
+                        : 0;
+            }
+            
+            // 更新跳跃游戏统计
+            if (gameStats.jumpGame) {
+                document.getElementById('jump-game-games').textContent = gameStats.jumpGame.gamesPlayed || 0;
+                document.getElementById('jump-game-high-score').textContent = gameStats.jumpGame.highScore || 0;
+                document.getElementById('jump-game-distance').textContent = gameStats.jumpGame.maxDistance || 0;
+            }
+            
+            // 更新2048统计
+            if (gameStats['2048']) {
+                document.getElementById('2048-games').textContent = gameStats['2048'].gamesPlayed || 0;
+                document.getElementById('2048-wins').textContent = gameStats['2048'].wins || 0;
+                document.getElementById('2048-high-score').textContent = gameStats['2048'].highScore || 0;
+            }
+            
+            // 更新记忆翻牌统计
+            if (gameStats.memory) {
+                document.getElementById('memory-games').textContent = gameStats.memory.gamesPlayed || 0;
+                
+                const bestFlips = gameStats.memory.bestFlips;
+                document.getElementById('memory-best-flips').textContent = 
+                    bestFlips && bestFlips !== Infinity ? bestFlips : '-';
+                    
+                const bestTime = gameStats.memory.bestTime;
+                document.getElementById('memory-best-time').textContent = 
+                    bestTime && bestTime !== Infinity ? `${bestTime}秒` : '-';
+            }
+            
+            // 更新打砖块统计
+            if (gameStats.breakout) {
+                document.getElementById('breakout-games').textContent = gameStats.breakout.gamesPlayed || 0;
+                document.getElementById('breakout-wins').textContent = gameStats.breakout.gamesWon || 0;
+                document.getElementById('breakout-high-score').textContent = gameStats.breakout.highScore || 0;
+            }
+            
+            // 更新井字棋统计
+            if (gameStats.tictactoe) {
+                document.getElementById('tictactoe-games').textContent = gameStats.tictactoe.gamesPlayed || 0;
+                document.getElementById('tictactoe-wins').textContent = gameStats.tictactoe.playerWins || 0;
+                const winRate = gameStats.tictactoe.gamesPlayed > 0 
+                    ? Math.round((gameStats.tictactoe.playerWins / gameStats.tictactoe.gamesPlayed) * 100) 
+                    : 0;
+                document.getElementById('tictactoe-win-rate').textContent = winRate + '%';
+            }
+        }
+    </script>
+</body>
+</html> 

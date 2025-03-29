@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小游戏合集 - 个人资料</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="main-header">
+            <div class="logo">
+                <h1><a href="index.html">小游戏合集</a></h1>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="dashboard.html">控制台</a></li>
+                    <li><a href="leaderboard.html">排行榜</a></li>
+                    <li><a href="about.html">关于</a></li>
+                    <li><a href="profile.html" class="active">个人资料</a></li>
+                    <li><a href="#" id="logout-btn">登出</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+                <h2 id="profile-username">用户名</h2>
+                <p>加入时间: <span id="join-date">2023年7月1日</span></p>
+            </div>
+            
+            <!-- 标签导航 -->
+            <div class="tab-panel">
+                <button class="tab-button active" data-tab="stats">游戏统计</button>
+                <button class="tab-button" data-tab="profile">个人资料</button>
+                <button class="tab-button" data-tab="password">修改密码</button>
+            </div>
+            
+            <!-- 游戏统计标签 -->
+            <div id="stats-tab" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stats-card">
+                        <h4>扫雷</h4>
+                        <div class="stats-item">
+                            <div class="stats-label">最佳时间</div>
+                            <div class="stats-value" id="minesweeper-best-time">-</div>
+                        </div>
+                        <div class="stats-item">
+                            <div class="stats-label">游戏次数</div>
+                            <div class="stats-value" id="minesweeper-games">0</div>
+                        </div>
+                        <div class="stats-item">
+                            <div class="stats-label">胜率</div>
+                            <div class="stats-value" id="minesweeper-win-rate">0%</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <h4>贪吃蛇</h4>
+                        <div class="stats-item">
+                            <div class="stats-label">最高分</div>
+                            <div class="stats-value" id="snake-high-score">0</div>
+                        </div>
+                        <div class="stats-item">
+                            <div class="stats-label">游戏次数</div>
+                            <div class="stats-value" id="snake-games">0</div>
+                        </div>
+                        <div class="stats-item">
+                            <div class="stats-label">平均分数</div>
+                            <div class="stats-value" id="snake-avg-score">0</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stats-card">
+                        <h4>俄罗斯方块</h4>
+                        <div class="stats-item">
+                            <div class="stats-label">最高分</div>
+                            <div class="stats-value" id="tetris-high-score">0</div>
+                        </div>
+                        <div class="stats-item">
+                            <div class="stats-label">游戏次数</div>
+                            <div class="stats-value" id="tetris-games">0</div>
+                        </div>
+                        <div class="stats-item">
+                            <div class="stats-label">平均消除行数</div>
+                            <div class="stats-value" id="tetris-avg-lines">0</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 个人资料标签 -->
+            <div id="profile-tab" class="tab-content" style="display: none;">
+                <div class="form-container" style="box-shadow: none; margin-top: 0;">
+                    <div id="profile-success" class="alert alert-success" style="display: none;">
+                        个人资料已更新成功！
+                    </div>
+                    
+                    <form id="profile-form">
+                        <div class="form-group">
+                            <label for="profile-username-input">用户名</label>
+                            <input type="text" id="profile-username-input" class="form-control" placeholder="请输入用户名" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profile-email">电子邮箱</label>
+                            <input type="email" id="profile-email" class="form-control" placeholder="请输入电子邮箱" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>头像</label>
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div class="avatar" style="width: 60px; height: 60px; margin: 0;">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <input type="file" id="avatar-upload" accept="image/*">
+                                <small style="color: #666;">支持 JPG/PNG 文件, 大小不超过 2MB</small>
+                            </div>
+                        </div>
+                        
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">更新资料</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- 修改密码标签 -->
+            <div id="password-tab" class="tab-content" style="display: none;">
+                <div class="form-container" style="box-shadow: none; margin-top: 0;">
+                    <div id="password-success" class="alert alert-success" style="display: none;">
+                        密码已更新成功！
+                    </div>
+                    
+                    <div id="password-error" class="alert alert-error" style="display: none;">
+                        密码更新失败，请检查当前密码是否正确。
+                    </div>
+                    
+                    <form id="password-form">
+                        <div class="form-group">
+                            <label for="current-password">当前密码</label>
+                            <input type="password" id="current-password" class="form-control" placeholder="请输入当前密码" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="new-password">新密码</label>
+                            <input type="password" id="new-password" class="form-control" placeholder="请输入新密码" minlength="6" required>
+                            <div class="error-message" id="new-password-error"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm-password">确认新密码</label>
+                            <input type="password" id="confirm-password" class="form-control" placeholder="请再次输入新密码" required>
+                            <div class="error-message" id="confirm-password-error"></div>
+                        </div>
+                        
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">更新密码</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 页脚 -->
+        <footer class="main-footer">
+            <p>&copy; <span id="current-year"></span> 小游戏合集 - 一个充满乐趣的游戏平台</p>
+        </footer>
+    </div>
+
+    <script>
+        // 检查用户是否登录
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem('isLoggedIn')) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // 设置当前年份
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+            
+            // 显示用户信息（模拟数据）
+            const username = localStorage.getItem('username') || '用户';
+            document.getElementById('profile-username').textContent = username;
+            document.getElementById('profile-username-input').value = username;
+            document.getElementById('profile-email').value = 'user@example.com';
+            document.getElementById('join-date').textContent = '2023年7月1日';
+            
+            // 加载游戏统计数据（模拟）
+            loadGameStats();
+            
+            // 标签切换
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 更新活动标签按钮
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 显示相应标签内容
+                    const tabId = this.getAttribute('data-tab');
+                    const tabContents = document.querySelectorAll('.tab-content');
+                    tabContents.forEach(content => {
+                        content.style.display = 'none';
+                    });
+                    document.getElementById(tabId + '-tab').style.display = 'block';
+                });
+            });
+            
+            // 个人资料表单提交
+            document.getElementById('profile-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 模拟更新个人资料
+                const username = document.getElementById('profile-username-input').value;
+                localStorage.setItem('username', username);
+                document.getElementById('profile-username').textContent = username;
+                
+                // 显示成功消息
+                const successMsg = document.getElementById('profile-success');
+                successMsg.style.display = 'block';
+                
+                // 3秒后隐藏成功消息
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 3000);
+            });
+            
+            // 密码表单验证
+            const newPassword = document.getElementById('new-password');
+            const confirmPassword = document.getElementById('confirm-password');
+            const newPasswordError = document.getElementById('new-password-error');
+            const confirmPasswordError = document.getElementById('confirm-password-error');
+            
+            newPassword.addEventListener('input', function() {
+                if (newPassword.value.length < 6) {
+                    newPasswordError.textContent = '密码长度至少为6个字符';
+                } else {
+                    newPasswordError.textContent = '';
+                }
+            });
+            
+            confirmPassword.addEventListener('input', function() {
+                if (confirmPassword.value !== newPassword.value) {
+                    confirmPasswordError.textContent = '两次输入的密码不匹配';
+                } else {
+                    confirmPasswordError.textContent = '';
+                }
+            });
+            
+            // 密码表单提交
+            document.getElementById('password-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // 验证密码
+                if (newPassword.value.length < 6) {
+                    newPasswordError.textContent = '密码长度至少为6个字符';
+                    return;
+                }
+                
+                if (confirmPassword.value !== newPassword.value) {
+                    confirmPasswordError.textContent = '两次输入的密码不匹配';
+                    return;
+                }
+                
+                // 模拟密码验证
+                const currentPassword = document.getElementById('current-password').value;
+                if (currentPassword === 'password') {
+                    // 显示成功消息
+                    document.getElementById('password-error').style.display = 'none';
+                    document.getElementById('password-success').style.display = 'block';
+                    
+                    // 重置表单
+                    document.getElementById('password-form').reset();
+                    
+                    // 3秒后隐藏成功消息
+                    setTimeout(() => {
+                        document.getElementById('password-success').style.display = 'none';
+                    }, 3000);
+                } else {
+                    // 显示错误消息
+                    document.getElementById('password-success').style.display = 'none';
+                    document.getElementById('password-error').style.display = 'block';
+                    
+                    // 3秒后隐藏错误消息
+                    setTimeout(() => {
+                        document.getElementById('password-error').style.display = 'none';
+                    }, 3000);
+                }
+            });
+            
+            // 注销功能
+            document.getElementById('logout-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('username');
+                window.location.href = 'index.html';
+            });
+        });
+        
+        // 加载游戏统计数据（模拟）
+        function loadGameStats() {
+            // 扫雷数据
+            document.getElementById('minesweeper-best-time').textContent = '45秒';
+            document.getElementById('minesweeper-games').textContent = '12';
+            document.getElementById('minesweeper-win-rate').textContent = '67%';
+            
+            // 贪吃蛇数据
+            document.getElementById('snake-high-score').textContent = '87';
+            document.getElementById('snake-games').textContent = '8';
+            document.getElementById('snake-avg-score').textContent = '52';
+            
+            // 俄罗斯方块数据
+            document.getElementById('tetris-high-score').textContent = '2540';
+            document.getElementById('tetris-games').textContent = '5';
+            document.getElementById('tetris-avg-lines').textContent = '18';
+        }
+    </script>
+</body>
+</html> 

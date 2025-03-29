@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小游戏合集 - 首页</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/carousel.css">
+    <!-- 引入图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="main-header">
+            <div class="logo">
+                <h1><a href="index.html">小游戏合集</a></h1>
+            </div>
+            <nav class="main-nav">
+                <ul id="main-nav-list">
+                    <li><a href="index.html" class="active">首页</a></li>
+                    <li><a href="leaderboard.html">排行榜</a></li>
+                    <li><a href="about.html">关于</a></li>
+                    <li><a href="login.html" class="login-btn">登录</a></li>
+                    <li><a href="register.html" class="register-btn">注册</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- 英雄区域 -->
+        <div class="hero-section">
+            <h1>欢迎来到小游戏合集</h1>
+            <p>体验多种经典小游戏，记录成就，挑战排行榜</p>
+            <div class="button-group">
+                <a href="register.html" class="btn btn-primary">立即注册</a>
+                <a href="login.html" class="btn">用户登录</a>
+            </div>
+        </div>
+
+        <!-- 轮播图 -->
+        <div class="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-slide">
+                    <div class="carousel-content">
+                        <h2>扫雷</h2>
+                        <p>挑战你的逻辑思维，小心地雷！</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="carousel-content">
+                        <h2>贪吃蛇</h2>
+                        <p>控制贪吃蛇吃掉食物并成长！</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="carousel-content">
+                        <h2>俄罗斯方块</h2>
+                        <p>旋转并移动方块，消除行获得高分！</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="carousel-content">
+                        <h2>猜数字</h2>
+                        <p>在规定次数内猜出系统设定的神秘数字！</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="carousel-content">
+                        <h2>石头剪刀布</h2>
+                        <p>经典的猜拳游戏，能否击败电脑？</p>
+                    </div>
+                </div>
+                <div class="carousel-slide">
+                    <div class="carousel-content">
+                        <h2>飞行射击</h2>
+                        <p>操控飞船躲避敌人并射击，保卫地球！</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-prev">❮</button>
+            <button class="carousel-next">❯</button>
+            <div class="carousel-indicators"></div>
+        </div>
+
+        <!-- 游戏区域 -->
+        <section class="games-section">
+            <div class="section-container">
+                <h2 class="section-title">游戏列表</h2>
+                <div class="games-grid">
+                    <div class="game-card">
+                        <div class="game-icon"><i class="fas fa-bomb"></i></div>
+                        <h3>扫雷</h3>
+                        <p>经典的扫雷游戏，通过标记地雷并清除安全区域获得胜利</p>
+                        <a href="games/minesweeper.html" class="btn btn-primary">开始游戏</a>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="game-icon"><i class="fas fa-dragon"></i></div>
+                        <h3>贪吃蛇</h3>
+                        <p>控制贪吃蛇吃食物并不断变长，不要撞到墙壁或自身</p>
+                        <a href="games/snake.html" class="btn btn-primary">开始游戏</a>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="game-icon"><i class="fas fa-th-large"></i></div>
+                        <h3>俄罗斯方块</h3>
+                        <p>旋转并放置各种形状的方块，消除完整的行以获得分数</p>
+                        <a href="games/tetris.html" class="btn btn-primary">开始游戏</a>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="game-icon"><i class="fas fa-th"></i></div>
+                        <h3>2048</h3>
+                        <p>合并相同数字的方块，努力达到2048或更高数值</p>
+                        <a href="games/2048.html" class="btn btn-primary">开始游戏</a>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="game-icon"><i class="fas fa-clone"></i></div>
+                        <h3>记忆翻牌</h3>
+                        <p>考验记忆力的配对游戏，找出所有匹配的卡片对</p>
+                        <a href="games/memory.html" class="btn btn-primary">开始游戏</a>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="game-icon"><i class="fas fa-table-tennis"></i></div>
+                        <h3>打砖块</h3>
+                        <p>控制挡板反弹小球，打碎所有砖块获得胜利</p>
+                        <a href="games/breakout.html" class="btn btn-primary">开始游戏</a>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="game-icon"><i class="fas fa-grip-horizontal"></i></div>
+                        <h3>井字棋</h3>
+                        <p>经典的三子连线游戏，与电脑对战，谁先连成一条线谁获胜</p>
+                        <a href="games/tictactoe.html" class="btn btn-primary">开始游戏</a>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="game-icon"><i class="fas fa-sort-numeric-up"></i></div>
+                        <h3>猜数字</h3>
+                        <p>在规定次数内猜出系统选定的数字，越快猜对得分越高</p>
+                        <a href="games/guess_number.html" class="btn btn-primary">开始游戏</a>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="game-icon"><i class="fas fa-hand-rock"></i></div>
+                        <h3>石头剪刀布</h3>
+                        <p>经典的猜拳游戏，可选择不同模式挑战电脑对手</p>
+                        <a href="games/rock_paper_scissors.html" class="btn btn-primary">开始游戏</a>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="game-icon"><i class="fas fa-space-shuttle"></i></div>
+                        <h3>飞行射击</h3>
+                        <p>控制宇宙飞船躲避和消灭敌人，获得高分挑战自我</p>
+                        <a href="games/space_shooter.html" class="btn btn-primary">开始游戏</a>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="game-icon"><i class="fas fa-puzzle-piece"></i></div>
+                        <h3>滑动拼图</h3>
+                        <p>通过滑动拼图块还原完整图像，锻炼空间思维能力</p>
+                        <a href="games/puzzle.html" class="btn btn-primary">开始游戏</a>
+                    </div>
+                    
+                    <div class="game-card">
+                        <div class="game-icon"><i class="fas fa-running"></i></div>
+                        <h3>跳跃游戏</h3>
+                        <p>控制角色跳跃越过障碍物，考验反应能力和操作技巧</p>
+                        <a href="games/jump_game.html" class="btn btn-primary">开始游戏</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 特色功能 -->
+        <div class="features-section">
+            <h3 class="section-title">特色功能</h3>
+            <div class="features-grid">
+                <div class="feature">
+                    <h4><i class="fas fa-trophy"></i> 排行榜</h4>
+                    <p>与其他玩家比拼，查看您在每个游戏中的排名，争取登上榜首！</p>
+                    <a href="leaderboard.html" class="btn">查看排行榜</a>
+                </div>
+                <div class="feature">
+                    <h4><i class="fas fa-user"></i> 个人档案</h4>
+                    <p>创建个性化的个人档案，展示您的游戏成就和统计数据。</p>
+                    <a href="register.html" class="btn">创建个人档案</a>
+                </div>
+                <div class="feature">
+                    <h4><i class="fas fa-rocket"></i> 持续更新</h4>
+                    <p>我们将持续添加新游戏和功能，敬请期待更多内容！</p>
+                    <a href="about.html" class="btn">了解更多</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="main-footer">
+            <div class="footer-columns">
+                <div class="footer-column">
+                    <h3>小游戏合集</h3>
+                    <p>提供多种经典小游戏，随时随地享受游戏乐趣！</p>
+                </div>
+                <div class="footer-column">
+                    <h3>快速链接</h3>
+                    <ul>
+                        <li><a href="index.html">首页</a></li>
+                        <li><a href="leaderboard.html">排行榜</a></li>
+                        <li><a href="about.html">关于我们</a></li>
+                        <li><a href="admin-login.html">管理员入口</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>联系我们</h3>
+                    <p>有任何问题或建议，请随时与我们联系！</p>
+                    <p><a href="mailto:contact@minigames.com">contact@minigames.com</a></p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 小游戏合集 - 保留所有权利</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // 设置当前年份
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // 检查用户是否登录
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            
+            // 更新导航菜单
+            if (isLoggedIn) {
+                const navList = document.getElementById('main-nav-list');
+                
+                // 清空原有菜单并重新创建
+                navList.innerHTML = '';
+                
+                // 添加基本导航项
+                const homeLi = document.createElement('li');
+                homeLi.innerHTML = '<a href="index.html" class="active">首页</a>';
+                
+                const leaderboardLi = document.createElement('li');
+                leaderboardLi.innerHTML = '<a href="leaderboard.html">排行榜</a>';
+                
+                const aboutLi = document.createElement('li');
+                aboutLi.innerHTML = '<a href="about.html">关于</a>';
+                
+                // 添加登录后的特有导航项
+                const dashboardLi = document.createElement('li');
+                dashboardLi.innerHTML = '<a href="dashboard.html">控制台</a>';
+                
+                const profileLi = document.createElement('li');
+                profileLi.innerHTML = '<a href="profile.html">个人资料</a>';
+                
+                const logoutLi = document.createElement('li');
+                logoutLi.innerHTML = '<a href="#" id="logout-btn">登出</a>';
+                
+                // 将所有导航项添加到菜单
+                navList.append(homeLi, leaderboardLi, aboutLi, dashboardLi, profileLi, logoutLi);
+                
+                // 绑定登出事件
+                document.getElementById('logout-btn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('username');
+                    window.location.reload();
+                });
+            }
+            
+            // 游戏卡片点击事件
+            document.querySelectorAll('.game-card .btn').forEach(function(btn) {
+                btn.addEventListener('click', function(e) {
+                    if (!isLoggedIn) {
+                        e.preventDefault();
+                        alert('请先登录!');
+                        window.location.href = 'login.html';
+                    }
+                });
+            });
+        });
+        
+        // 轮播功能
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalSlides = slides.length;
+        
+        function showSlide(index) {
+            if (index < 0) {
+                currentSlide = totalSlides - 1;
+            } else if (index >= totalSlides) {
+                currentSlide = 0;
+            } else {
+                currentSlide = index;
+            }
+            
+            const offset = -currentSlide * 100;
+            document.querySelector('.carousel-inner').style.transform = `translateX(${offset}%)`;
+            
+            // 更新指示器
+            document.querySelectorAll('.carousel-indicator').forEach((indicator, i) => {
+                indicator.classList.toggle('active', i === currentSlide);
+            });
+        }
+        
+        // 按钮事件
+        document.addEventListener('DOMContentLoaded', function() {
+            const prevBtn = document.querySelector('.carousel-prev');
+            const nextBtn = document.querySelector('.carousel-next');
+            
+            if (prevBtn) {
+                prevBtn.addEventListener('click', () => {
+                    showSlide(currentSlide - 1);
+                });
+            }
+            
+            if (nextBtn) {
+                nextBtn.addEventListener('click', () => {
+                    showSlide(currentSlide + 1);
+                });
+            }
+            
+            // 创建指示器
+            const indicatorsContainer = document.querySelector('.carousel-indicators');
+            if (indicatorsContainer) {
+                for (let i = 0; i < totalSlides; i++) {
+                    const indicator = document.createElement('div');
+                    indicator.classList.add('carousel-indicator');
+                    if (i === 0) {
+                        indicator.classList.add('active');
+                    }
+                    
+                    indicator.addEventListener('click', () => {
+                        showSlide(i);
+                    });
+                    
+                    indicatorsContainer.appendChild(indicator);
+                }
+            }
+            
+            // 初始化显示
+            showSlide(0);
+            
+            // 自动轮播
+            setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 5000);
+        });
+    </script>
+</body>
+</html> 

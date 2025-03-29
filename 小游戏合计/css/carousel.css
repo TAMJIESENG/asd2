@@ -1,0 +1,136 @@
+/* 轮播图样式 */
+.carousel {
+    margin-bottom: 50px;
+    position: relative;
+    height: 350px;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: #364d79;
+    box-shadow: var(--shadow-md);
+}
+
+.carousel-inner {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 各游戏背景 */
+.carousel-slide:nth-child(1) {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                url('https://images.unsplash.com/photo-1612278675615-7b093a4a4c0e?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8bWluZXN3ZWVwZXJ8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60') center/cover;
+}
+
+.carousel-slide:nth-child(2) {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                url('https://images.unsplash.com/photo-1615751072497-5f5169febe17?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c25ha2UlMjBnYW1lfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60') center/cover;
+}
+
+.carousel-slide:nth-child(3) {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                url('https://images.unsplash.com/photo-1626920369770-b36e603c147a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGV0cmlzfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60') center/cover;
+}
+
+.carousel-slide:nth-child(4) {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                url('https://images.unsplash.com/photo-1608111283390-2e333b9b279c?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8bnVtYmVyJTIwZ3Vlc3N8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60') center/cover;
+}
+
+.carousel-slide:nth-child(5) {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                url('https://images.unsplash.com/photo-1612692369245-a499b2df12e1?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8cm9jayUyMHBhcGVyJTIwc2Npc3NvcnN8ZW58MHx8MHx8&auto=format&fit=crop&w=800&q=60') center/cover;
+}
+
+.carousel-slide:nth-child(6) {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                url('https://images.unsplash.com/photo-1506919258185-6078bba55d2a?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8c3BhY2UlMjBzaG9vdGVyfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60') center/cover;
+}
+
+.carousel-content {
+    text-align: center;
+    padding: 0 20px;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+    color: white;
+}
+
+.carousel-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+.carousel-content p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto 30px;
+}
+
+.carousel-prev,
+.carousel-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.3);
+    color: white;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s;
+}
+
+.carousel-prev:hover,
+.carousel-next:hover {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.carousel-prev {
+    left: 15px;
+}
+
+.carousel-next {
+    right: 15px;
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+}
+
+.carousel-indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-indicator.active {
+    background-color: #fff;
+    transform: scale(1.2);
+} 

@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>游戏管理后台</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">小游戏合集</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="dashboard.html">用户中心</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="leaderboard.html">排行榜</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="admin-dashboard.html">管理后台</a>
+                    </li>
+                </ul>
+                <div class="d-flex">
+                    <span class="text-light me-3 d-none d-sm-block" id="userGreeting"></span>
+                    <button class="btn btn-outline-light" id="logoutBtn">登出</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        管理菜单
+                    </div>
+                    <div class="list-group list-group-flush">
+                        <a href="#users" class="list-group-item list-group-item-action" data-section="users">用户管理</a>
+                        <a href="#games" class="list-group-item list-group-item-action" data-section="games">游戏管理</a>
+                        <a href="#statistics" class="list-group-item list-group-item-action" data-section="statistics">数据统计</a>
+                        <a href="#settings" class="list-group-item list-group-item-action" data-section="settings">系统设置</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <!-- 用户管理 -->
+                <div class="section-content" id="users-section">
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">用户管理</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-3">
+                                <div class="input-group" style="max-width: 300px;">
+                                    <input type="text" class="form-control" id="userSearchInput" placeholder="搜索用户...">
+                                    <button class="btn btn-outline-secondary" type="button" id="userSearchBtn">
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                                </div>
+                                <button class="btn btn-success" id="addUserBtn">
+                                    <i class="bi bi-person-plus"></i> 添加用户
+                                </button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="usersTable">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>用户名</th>
+                                            <th>邮箱</th>
+                                            <th>角色</th>
+                                            <th>注册日期</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="usersTableBody">
+                                        <!-- 用户数据将通过JS动态加载 -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            <nav>
+                                <ul class="pagination justify-content-center" id="usersPagination">
+                                    <!-- 分页将通过JS动态生成 -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 游戏管理 -->
+                <div class="section-content d-none" id="games-section">
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">游戏管理</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="nav nav-tabs mb-3" id="gamesTabs">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-bs-toggle="tab" href="#gamesList">游戏列表</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-bs-toggle="tab" href="#gameRecords">游戏记录</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade show active" id="gamesList">
+                                    <div class="d-flex justify-content-end mb-3">
+                                        <button class="btn btn-success" id="addGameBtn">
+                                            <i class="bi bi-plus-circle"></i> 添加游戏
+                                        </button>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>游戏名称</th>
+                                                    <th>游戏类型</th>
+                                                    <th>游玩次数</th>
+                                                    <th>状态</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="gamesTableBody">
+                                                <!-- 游戏数据将通过JS动态加载 -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="gameRecords">
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <div class="input-group" style="max-width: 300px;">
+                                            <input type="text" class="form-control" id="recordSearchInput" placeholder="搜索记录...">
+                                            <button class="btn btn-outline-secondary" type="button" id="recordSearchBtn">
+                                                <i class="bi bi-search"></i>
+                                            </button>
+                                        </div>
+                                        <div>
+                                            <select class="form-select" id="gameTypeFilter">
+                                                <option value="all">所有游戏</option>
+                                                <option value="minesweeper">扫雷</option>
+                                                <option value="snake">贪吃蛇</option>
+                                                <option value="tetris">俄罗斯方块</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>用户</th>
+                                                    <th>游戏类型</th>
+                                                    <th>分数</th>
+                                                    <th>时间</th>
+                                                    <th>难度</th>
+                                                    <th>日期</th>
+                                                    <th>操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="recordsTableBody">
+                                                <!-- 记录数据将通过JS动态加载 -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <nav>
+                                        <ul class="pagination justify-content-center" id="recordsPagination">
+                                            <!-- 分页将通过JS动态生成 -->
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 数据统计 -->
+                <div class="section-content d-none" id="statistics-section">
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">数据统计</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-sm-4">
+                                    <div class="card bg-primary text-white">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">总用户数</h5>
+                                            <h3 id="totalUsers">-</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="card bg-success text-white">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">今日游戏次数</h5>
+                                            <h3 id="todayGames">-</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="card bg-info text-white">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">活跃用户</h5>
+                                            <h3 id="activeUsers">-</h3>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-4">
+                                <h5>游戏活跃度统计</h5>
+                                <canvas id="gameActivityChart" height="200"></canvas>
+                            </div>
+                            <div class="mb-4">
+                                <h5>用户增长趋势</h5>
+                                <canvas id="userGrowthChart" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 系统设置 -->
+                <div class="section-content d-none" id="settings-section">
+                    <div class="card mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">系统设置</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="systemSettingsForm">
+                                <div class="mb-3">
+                                    <label for="siteName" class="form-label">网站名称</label>
+                                    <input type="text" class="form-control" id="siteName" value="小游戏合集">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="adminEmail" class="form-label">管理员邮箱</label>
+                                    <input type="email" class="form-control" id="adminEmail">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">游戏功能设置</label>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="enableLeaderboard" checked>
+                                        <label class="form-check-label" for="enableLeaderboard">
+                                            启用排行榜
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="enableAchievements" checked>
+                                        <label class="form-check-label" for="enableAchievements">
+                                            启用成就系统
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="enableSocialSharing" checked>
+                                        <label class="form-check-label" for="enableSocialSharing">
+                                            启用社交分享
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="registrationSettings" class="form-label">注册设置</label>
+                                    <select class="form-select" id="registrationSettings">
+                                        <option value="open">开放注册</option>
+                                        <option value="approval">需要审核</option>
+                                        <option value="closed">关闭注册</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="siteTheme" class="form-label">网站主题</label>
+                                    <select class="form-select" id="siteTheme">
+                                        <option value="default">默认主题</option>
+                                        <option value="dark">暗黑模式</option>
+                                        <option value="colorful">多彩模式</option>
+                                        <option value="minimal">简约风格</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">系统维护</label>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="maintenanceMode">
+                                        <label class="form-check-label" for="maintenanceMode">
+                                            开启维护模式
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="backupData">
+                                        <label class="form-check-label" for="backupData">
+                                            启用自动数据备份
+                                        </label>
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="backupFrequency" class="form-label">备份频率</label>
+                                        <select class="form-select" id="backupFrequency">
+                                            <option value="daily">每天</option>
+                                            <option value="weekly">每周</option>
+                                            <option value="monthly">每月</option>
+                                        </select>
+                                    </div>
+                                    <button type="button" class="btn btn-warning mb-2" id="clearCacheBtn">清除缓存</button>
+                                    <button type="button" class="btn btn-danger mb-2" id="resetSystemBtn">重置系统</button>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="systemAnnouncement" class="form-label">系统公告</label>
+                                    <textarea class="form-control" id="systemAnnouncement" rows="3" placeholder="输入要显示在首页的系统公告..."></textarea>
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="checkbox" id="enableAnnouncement">
+                                        <label class="form-check-label" for="enableAnnouncement">
+                                            启用系统公告
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">游戏难度配置</label>
+                                    <div class="accordion" id="gameConfigAccordion">
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingMinesweeper">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseMinesweeper">
+                                                    扫雷游戏配置
+                                                </button>
+                                            </h2>
+                                            <div id="collapseMinesweeper" class="accordion-collapse collapse" data-bs-parent="#gameConfigAccordion">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-4">
+                                                            <label for="minesweeper_easy_mines" class="form-label">简单模式地雷数</label>
+                                                            <input type="number" class="form-control" id="minesweeper_easy_mines" min="1" max="100" value="10">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="minesweeper_medium_mines" class="form-label">中等模式地雷数</label>
+                                                            <input type="number" class="form-control" id="minesweeper_medium_mines" min="10" max="200" value="40">
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <label for="minesweeper_hard_mines" class="form-label">困难模式地雷数</label>
+                                                            <input type="number" class="form-control" id="minesweeper_hard_mines" min="20" max="300" value="99">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingSnake">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSnake">
+                                                    贪吃蛇游戏配置
+                                                </button>
+                                            </h2>
+                                            <div id="collapseSnake" class="accordion-collapse collapse" data-bs-parent="#gameConfigAccordion">
+                                                <div class="accordion-body">
+                                                    <div class="row mb-3">
+                                                        <div class="col-md-6">
+                                                            <label for="snake_speed_easy" class="form-label">简单模式速度</label>
+                                                            <input type="range" class="form-range" id="snake_speed_easy" min="1" max="10" value="3">
+                                                            <div class="d-flex justify-content-between">
+                                                                <small>慢</small>
+                                                                <small>快</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label for="snake_speed_hard" class="form-label">困难模式速度</label>
+                                                            <input type="range" class="form-range" id="snake_speed_hard" min="5" max="15" value="8">
+                                                            <div class="d-flex justify-content-between">
+                                                                <small>慢</small>
+                                                                <small>快</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="snake_enable_obstacles" checked>
+                                                        <label class="form-check-label" for="snake_enable_obstacles">
+                                                            启用障碍物
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="headingTetris">
+                                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTetris">
+                                                    俄罗斯方块游戏配置
+                                                </button>
+                                            </h2>
+                                            <div id="collapseTetris" class="accordion-collapse collapse" data-bs-parent="#gameConfigAccordion">
+                                                <div class="accordion-body">
+                                                    <div class="mb-3">
+                                                        <label for="tetris_initial_level" class="form-label">初始级别</label>
+                                                        <select class="form-select" id="tetris_initial_level">
+                                                            <option value="0">0级（最慢）</option>
+                                                            <option value="1">1级</option>
+                                                            <option value="2">2级</option>
+                                                            <option value="3">3级</option>
+                                                            <option value="4">4级</option>
+                                                            <option value="5">5级（最快）</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="tetris_show_next_piece" checked>
+                                                        <label class="form-check-label" for="tetris_show_next_piece">
+                                                            显示下一个方块
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" id="tetris_allow_hold" checked>
+                                                        <label class="form-check-label" for="tetris_allow_hold">
+                                                            允许保存方块
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">奖励配置</label>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="enablePointSystem" checked>
+                                        <label class="form-check-label" for="enablePointSystem">
+                                            启用积分系统
+                                        </label>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">每日登录奖励</span>
+                                        <input type="number" class="form-control" id="dailyLoginPoints" value="10" min="0">
+                                        <span class="input-group-text">积分</span>
+                                    </div>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text">完成游戏奖励</span>
+                                        <input type="number" class="form-control" id="gameCompletionPoints" value="5" min="0">
+                                        <span class="input-group-text">积分</span>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">API管理</label>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="enableApi" checked>
+                                        <label class="form-check-label" for="enableApi">
+                                            启用API接口
+                                        </label>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="apiRequireAuth" checked>
+                                        <label class="form-check-label" for="apiRequireAuth">
+                                            API请求需要认证
+                                        </label>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="apiRateLimit" class="form-label">API速率限制 (每分钟请求次数)</label>
+                                        <input type="number" class="form-control" id="apiRateLimit" min="10" max="1000" value="60">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="apiKey" class="form-label">API密钥</label>
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" id="apiKey" readonly value="api_key_will_be_generated">
+                                            <button class="btn btn-outline-secondary" type="button" id="generateApiKeyBtn">
+                                                <i class="bi bi-arrow-repeat"></i> 重新生成
+                                            </button>
+                                        </div>
+                                        <small class="text-muted">此密钥用于第三方应用访问API</small>
+                                    </div>
+                                    <div class="card mb-3">
+                                        <div class="card-header">可用API端点</div>
+                                        <div class="card-body">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="apiUsers" checked>
+                                                <label class="form-check-label" for="apiUsers">
+                                                    /api/users - 用户数据
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="apiGames" checked>
+                                                <label class="form-check-label" for="apiGames">
+                                                    /api/games - 游戏数据
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="apiStats" checked>
+                                                <label class="form-check-label" for="apiStats">
+                                                    /api/stats - 统计数据
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="apiLeaderboard" checked>
+                                                <label class="form-check-label" for="apiLeaderboard">
+                                                    /api/leaderboard - 排行榜数据
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">数据导出</label>
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <div class="mb-3">
+                                                <label for="exportDataType" class="form-label">选择导出数据</label>
+                                                <select class="form-select" id="exportDataType">
+                                                    <option value="all">所有数据</option>
+                                                    <option value="users">用户数据</option>
+                                                    <option value="games">游戏数据</option>
+                                                    <option value="records">游戏记录</option>
+                                                    <option value="statistics">统计数据</option>
+                                                </select>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="exportFormat" class="form-label">导出格式</label>
+                                                <select class="form-select" id="exportFormat">
+                                                    <option value="json">JSON</option>
+                                                    <option value="csv">CSV</option>
+                                                    <option value="xml">XML</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-check mb-3">
+                                                <input class="form-check-input" type="checkbox" id="includePersonalData" checked>
+                                                <label class="form-check-label" for="includePersonalData">
+                                                    包含个人数据
+                                                </label>
+                                            </div>
+                                            <div class="d-grid gap-2">
+                                                <button type="button" class="btn btn-info" id="exportDataBtn">
+                                                    <i class="bi bi-download"></i> 导出数据
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">保存设置</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框 - 添加/编辑用户 -->
+    <div class="modal fade" id="userModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="userModalTitle">添加用户</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="userForm">
+                        <div class="mb-3">
+                            <label for="username" class="form-label">用户名</label>
+                            <input type="text" class="form-control" id="username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">邮箱</label>
+                            <input type="email" class="form-control" id="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">密码</label>
+                            <input type="password" class="form-control" id="password">
+                            <small class="text-muted">编辑用户时留空则不修改密码</small>
+                        </div>
+                        <div class="mb-3">
+                            <label for="role" class="form-label">角色</label>
+                            <select class="form-select" id="role" required>
+                                <option value="user">普通用户</option>
+                                <option value="admin">管理员</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="saveUserBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框 - 添加/编辑游戏 -->
+    <div class="modal fade" id="gameModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="gameModalTitle">添加游戏</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="gameForm">
+                        <div class="mb-3">
+                            <label for="gameName" class="form-label">游戏名称</label>
+                            <input type="text" class="form-control" id="gameName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gameType" class="form-label">游戏类型</label>
+                            <select class="form-select" id="gameType" required>
+                                <option value="puzzle">益智</option>
+                                <option value="arcade">街机</option>
+                                <option value="strategy">策略</option>
+                                <option value="action">动作</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gameDescription" class="form-label">游戏描述</label>
+                            <textarea class="form-control" id="gameDescription" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="gameStatus" class="form-label">状态</label>
+                            <select class="form-select" id="gameStatus" required>
+                                <option value="active">启用</option>
+                                <option value="inactive">禁用</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="saveGameBtn">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-dark text-white mt-5 py-3">
+        <div class="container text-center">
+            <p class="mb-0">© 2023 小游戏合集. 保留所有权利.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 权限检查
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'admin-login.html';
+                return;
+            }
+
+            // 为本地环境添加模拟数据
+            const mockData = {
+                users: [
+                    {id: '001', username: '张三', email: 'zhangsan@example.com', role: 'user', createdAt: '2023-05-15'},
+                    {id: '002', username: '李四', email: 'lisi@example.com', role: 'user', createdAt: '2023-06-20'},
+                    {id: '003', username: '王五', email: 'wangwu@example.com', role: 'admin', createdAt: '2023-04-10'},
+                ],
+                games: [
+                    {id: '101', name: '扫雷', type: 'puzzle', playCount: 1250, status: 'active'},
+                    {id: '102', name: '贪吃蛇', type: 'arcade', playCount: 980, status: 'active'},
+                    {id: '103', name: '俄罗斯方块', type: 'puzzle', playCount: 1560, status: 'active'},
+                ],
+                statistics: {
+                    totalUsers: 256,
+                    todayGames: 78,
+                    activeUsers: 42
+                }
+            };
+
+            // 检查是否为本地模拟令牌
+            if (token.startsWith('admin_')) {
+                // 使用本地模拟数据
+                console.log('使用本地模拟管理员登录');
+                document.getElementById('userGreeting').textContent = `您好，管理员`;
+                
+                // 加载模拟数据
+                loadMockData();
+            } else {
+                // 如果不是本地模拟令牌，尝试正常API验证
+                // 检查是否为管理员
+                axios.get('/api/auth/me', {
+                    headers: { 'x-auth-token': token }
+                }).then(response => {
+                    const user = response.data;
+                    document.getElementById('userGreeting').textContent = `您好，${user.username}`;
+                    
+                    if (user.role !== 'admin') {
+                        alert('您没有管理员权限');
+                        window.location.href = 'dashboard.html';
+                    }
+                    
+                    // 加载初始数据
+                    loadUsersData();
+                    loadGamesData();
+                    loadStatisticsData();
+                    
+                }).catch(error => {
+                    console.error('认证错误:', error);
+                    // 如果API请求失败，尝试使用本地模拟数据
+                    if (error.message && error.message.includes('Network Error')) {
+                        console.log('API请求失败，使用本地模拟数据');
+                        document.getElementById('userGreeting').textContent = `您好，管理员`;
+                        loadMockData();
+                    } else {
+                        localStorage.removeItem('token');
+                        window.location.href = 'admin-login.html';
+                    }
+                });
+            }
+
+            // 加载模拟数据的函数
+            function loadMockData() {
+                // 尝试从本地存储获取保存的用户数据
+                const savedUsers = JSON.parse(localStorage.getItem('mockUsers') || 'null');
+                if (savedUsers) {
+                    mockData.users = savedUsers;
+                } else {
+                    // 首次使用，保存默认数据到本地存储
+                    localStorage.setItem('mockUsers', JSON.stringify(mockData.users));
+                }
+                
+                // 尝试从本地存储获取保存的游戏数据
+                const savedGames = JSON.parse(localStorage.getItem('mockGames') || 'null');
+                if (savedGames) {
+                    mockData.games = savedGames;
+                } else {
+                    // 首次使用，保存默认数据到本地存储
+                    localStorage.setItem('mockGames', JSON.stringify(mockData.games));
+                }
+                
+                // 加载系统设置
+                loadSystemSettings();
+                
+                // 加载用户数据
+                loadUserTable();
+                
+                // 加载游戏数据
+                loadGameTable();
+                
+                // 加载统计数据
+                document.getElementById('totalUsers').textContent = mockData.users.length;
+                document.getElementById('todayGames').textContent = mockData.statistics.todayGames;
+                document.getElementById('activeUsers').textContent = mockData.statistics.activeUsers;
+                
+                // 初始化图表
+                initCharts();
+            }
+
+            // 添加加载系统设置的函数
+            function loadSystemSettings() {
+                const savedSettings = JSON.parse(localStorage.getItem('systemSettings') || 'null');
+                if (savedSettings) {
+                    // 填充表单字段
+                    document.getElementById('siteName').value = savedSettings.siteName || '小游戏合集';
+                    document.getElementById('adminEmail').value = savedSettings.adminEmail || '';
+                    document.getElementById('enableLeaderboard').checked = savedSettings.enableLeaderboard !== undefined ? savedSettings.enableLeaderboard : true;
+                    document.getElementById('enableAchievements').checked = savedSettings.enableAchievements !== undefined ? savedSettings.enableAchievements : true;
+                    document.getElementById('enableSocialSharing').checked = savedSettings.enableSocialSharing !== undefined ? savedSettings.enableSocialSharing : true;
+                    document.getElementById('registrationSettings').value = savedSettings.registrationSettings || 'open';
+                    
+                    // 主题设置
+                    document.getElementById('siteTheme').value = savedSettings.siteTheme || 'default';
+                    document.getElementById('maintenanceMode').checked = savedSettings.maintenanceMode || false;
+                    document.getElementById('backupData').checked = savedSettings.backupData || false;
+                    document.getElementById('backupFrequency').value = savedSettings.backupFrequency || 'weekly';
+                    
+                    // 系统公告
+                    if (savedSettings.systemAnnouncement) {
+                        document.getElementById('systemAnnouncement').value = savedSettings.systemAnnouncement;
+                    }
+                    document.getElementById('enableAnnouncement').checked = savedSettings.enableAnnouncement || false;
+                    
+                    // 游戏配置 - 扫雷
+                    if (savedSettings.minesweeperConfig) {
+                        document.getElementById('minesweeper_easy_mines').value = savedSettings.minesweeperConfig.easyMines || 10;
+                        document.getElementById('minesweeper_medium_mines').value = savedSettings.minesweeperConfig.mediumMines || 40;
+                        document.getElementById('minesweeper_hard_mines').value = savedSettings.minesweeperConfig.hardMines || 99;
+                    }
+                    
+                    // 游戏配置 - 贪吃蛇
+                    if (savedSettings.snakeConfig) {
+                        document.getElementById('snake_speed_easy').value = savedSettings.snakeConfig.easySpeed || 3;
+                        document.getElementById('snake_speed_hard').value = savedSettings.snakeConfig.hardSpeed || 8;
+                        document.getElementById('snake_enable_obstacles').checked = savedSettings.snakeConfig.enableObstacles !== undefined ? 
+                            savedSettings.snakeConfig.enableObstacles : true;
+                    }
+                    
+                    // 游戏配置 - 俄罗斯方块
+                    if (savedSettings.tetrisConfig) {
+                        document.getElementById('tetris_initial_level').value = savedSettings.tetrisConfig.initialLevel || '0';
+                        document.getElementById('tetris_show_next_piece').checked = savedSettings.tetrisConfig.showNextPiece !== undefined ? 
+                            savedSettings.tetrisConfig.showNextPiece : true;
+                        document.getElementById('tetris_allow_hold').checked = savedSettings.tetrisConfig.allowHold !== undefined ? 
+                            savedSettings.tetrisConfig.allowHold : true;
+                    }
+                    
+                    // 奖励配置
+                    document.getElementById('enablePointSystem').checked = savedSettings.enablePointSystem !== undefined ? 
+                        savedSettings.enablePointSystem : true;
+                    document.getElementById('dailyLoginPoints').value = savedSettings.dailyLoginPoints || 10;
+                    document.getElementById('gameCompletionPoints').value = savedSettings.gameCompletionPoints || 5;
+                    
+                    // API管理设置
+                    if (savedSettings.apiSettings) {
+                        document.getElementById('enableApi').checked = savedSettings.apiSettings.enableApi !== undefined ?
+                            savedSettings.apiSettings.enableApi : true;
+                        document.getElementById('apiRequireAuth').checked = savedSettings.apiSettings.requireAuth !== undefined ?
+                            savedSettings.apiSettings.requireAuth : true;
+                        document.getElementById('apiRateLimit').value = savedSettings.apiSettings.rateLimit || 60;
+                        document.getElementById('apiKey').value = savedSettings.apiSettings.apiKey || generateApiKey();
+                        
+                        // API端点设置
+                        document.getElementById('apiUsers').checked = savedSettings.apiSettings.endpoints?.users !== undefined ?
+                            savedSettings.apiSettings.endpoints.users : true;
+                        document.getElementById('apiGames').checked = savedSettings.apiSettings.endpoints?.games !== undefined ?
+                            savedSettings.apiSettings.endpoints.games : true;
+                        document.getElementById('apiStats').checked = savedSettings.apiSettings.endpoints?.stats !== undefined ?
+                            savedSettings.apiSettings.endpoints.stats : true;
+                        document.getElementById('apiLeaderboard').checked = savedSettings.apiSettings.endpoints?.leaderboard !== undefined ?
+                            savedSettings.apiSettings.endpoints.leaderboard : true;
+                    } else {
+                        // 首次使用，初始化API密钥
+                        document.getElementById('apiKey').value = generateApiKey();
+                    }
+                    
+                    // 更新网站标题
+                    if (savedSettings.siteName) {
+                        document.title = savedSettings.siteName + ' - 管理后台';
+                        document.querySelector('.navbar-brand').textContent = savedSettings.siteName;
+                    }
+                    
+                    // 应用主题
+                    applyTheme(savedSettings.siteTheme || 'default');
+                    
+                    // 根据设置更新UI状态
+                    updateUIBasedOnSettings(savedSettings);
+                }
+                
+                // 添加清除缓存按钮事件
+                document.getElementById('clearCacheBtn').addEventListener('click', function() {
+                    if (confirm('确定要清除系统缓存吗？')) {
+                        // 模拟缓存清理
+                        setTimeout(() => {
+                            alert('系统缓存已清除');
+                        }, 800);
+                    }
+                });
+                
+                // 添加重置系统按钮事件
+                document.getElementById('resetSystemBtn').addEventListener('click', function() {
+                    if (confirm('警告：重置系统将清除所有数据并恢复默认设置。此操作不可逆！是否继续？')) {
+                        if (confirm('最后确认：您确定要重置系统吗？所有数据将丢失！')) {
+                            // 清除所有本地存储
+                            localStorage.removeItem('mockUsers');
+                            localStorage.removeItem('mockGames');
+                            localStorage.removeItem('systemSettings');
+                            alert('系统已重置，页面将刷新...');
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1000);
+                        }
+                    }
+                });
+
+                // 生成API密钥按钮事件
+                document.getElementById('generateApiKeyBtn').addEventListener('click', function() {
+                    document.getElementById('apiKey').value = generateApiKey();
+                });
+
+                // 导出数据按钮事件
+                document.getElementById('exportDataBtn').addEventListener('click', function() {
+                    exportData();
+                });
+            }
+
+            // 应用主题
+            function applyTheme(theme) {
+                const body = document.body;
+                // 移除所有主题类
+                body.classList.remove('theme-default', 'theme-dark', 'theme-colorful', 'theme-minimal');
+                
+                // 添加选择的主题类
+                body.classList.add('theme-' + theme);
+                
+                // 应用主题特定样式
+                switch (theme) {
+                    case 'dark':
+                        body.style.backgroundColor = '#121212';
+                        body.style.color = '#e0e0e0';
+                        document.querySelectorAll('.card').forEach(card => {
+                            card.style.backgroundColor = '#1e1e1e';
+                            card.style.color = '#e0e0e0';
+                            card.style.borderColor = '#333';
+                        });
+                        document.querySelectorAll('.list-group-item').forEach(item => {
+                            item.style.backgroundColor = '#2d2d2d';
+                            item.style.color = '#e0e0e0';
+                            item.style.borderColor = '#444';
+                        });
+                        break;
+                    case 'colorful':
+                        body.style.backgroundColor = '#f0f9ff';
+                        document.querySelectorAll('.card-header').forEach((header, index) => {
+                            const colors = ['#4285f4', '#0f9d58', '#f4b400', '#db4437', '#673ab7'];
+                            header.style.backgroundColor = colors[index % colors.length];
+                            header.style.color = 'white';
+                        });
+                        break;
+                    case 'minimal':
+                        body.style.backgroundColor = '#ffffff';
+                        body.style.color = '#333333';
+                        document.querySelectorAll('.card').forEach(card => {
+                            card.style.boxShadow = 'none';
+                            card.style.border = '1px solid #eaeaea';
+                        });
+                        document.querySelectorAll('.btn').forEach(btn => {
+                            btn.style.borderRadius = '0';
+                        });
+                        break;
+                    default: // 默认主题
+                        // 重置所有样式
+                        body.style.backgroundColor = '';
+                        body.style.color = '';
+                        document.querySelectorAll('.card, .list-group-item, .btn').forEach(element => {
+                            element.style = '';
+                        });
+                        document.querySelectorAll('.card-header').forEach(header => {
+                            header.style = '';
+                        });
+                        break;
+                }
+            }
+
+            // 根据设置更新UI
+            function updateUIBasedOnSettings(settings) {
+                // 排行榜功能开关
+                const leaderboardLink = document.querySelector('a[href="leaderboard.html"]');
+                if (leaderboardLink) {
+                    leaderboardLink.style.display = settings.enableLeaderboard ? '' : 'none';
+                }
+                
+                // 页脚更新
+                const footerText = document.querySelector('footer .mb-0');
+                if (footerText && settings.siteName) {
+                    footerText.textContent = `© ${new Date().getFullYear()} ${settings.siteName}. 保留所有权利.`;
+                }
+            }
+
+            // 更新系统设置保存函数
+            function saveSystemSettings(settings) {
+                // 保存设置到本地存储
+                localStorage.setItem('systemSettings', JSON.stringify(settings));
+                
+                // 更新UI
+                updateUIBasedOnSettings(settings);
+                
+                // 更新网站标题
+                if (settings.siteName) {
+                    document.title = settings.siteName + ' - 管理后台';
+                    document.querySelector('.navbar-brand').textContent = settings.siteName;
+                }
+                
+                // 显示成功消息
+                alert('设置已保存，部分设置可能需要刷新页面才能完全生效。');
+            }
+
+            // 加载用户表格
+            function loadUserTable() {
+                const usersTableBody = document.getElementById('usersTableBody');
+                usersTableBody.innerHTML = '';
+                
+                mockData.users.forEach(user => {
+                    const row = `
+                        <tr>
+                            <td>${user.id}</td>
+                            <td>${user.username}</td>
+                            <td>${user.email}</td>
+                            <td><span class="badge ${user.role === 'admin' ? 'bg-danger' : 'bg-primary'}">${user.role}</span></td>
+                            <td>${user.createdAt}</td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary me-1 edit-user-btn" data-id="${user.id}"><i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-sm btn-outline-danger delete-user-btn" data-id="${user.id}"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                    usersTableBody.innerHTML += row;
+                });
+                
+                // 添加编辑按钮事件监听
+                document.querySelectorAll('.edit-user-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const userId = this.getAttribute('data-id');
+                        editUser(userId);
+                    });
+                });
+                
+                // 添加删除按钮事件监听
+                document.querySelectorAll('.delete-user-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const userId = this.getAttribute('data-id');
+                        deleteUser(userId);
+                    });
+                });
+            }
+
+            // 加载游戏表格
+            function loadGameTable() {
+                const gamesTableBody = document.getElementById('gamesTableBody');
+                gamesTableBody.innerHTML = '';
+                
+                mockData.games.forEach(game => {
+                    const row = `
+                        <tr>
+                            <td>${game.name}</td>
+                            <td>${game.type}</td>
+                            <td>${game.playCount}</td>
+                            <td><span class="badge ${game.status === 'active' ? 'bg-success' : 'bg-warning'}">${game.status}</span></td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary me-1 edit-game-btn" data-id="${game.id}"><i class="bi bi-pencil"></i></button>
+                                <button class="btn btn-sm btn-outline-danger delete-game-btn" data-id="${game.id}"><i class="bi bi-trash"></i></button>
+                            </td>
+                        </tr>
+                    `;
+                    gamesTableBody.innerHTML += row;
+                });
+                
+                // 添加编辑按钮事件监听
+                document.querySelectorAll('.edit-game-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const gameId = this.getAttribute('data-id');
+                        editGame(gameId);
+                    });
+                });
+                
+                // 添加删除按钮事件监听
+                document.querySelectorAll('.delete-game-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const gameId = this.getAttribute('data-id');
+                        deleteGame(gameId);
+                    });
+                });
+            }
+
+            // 编辑用户
+            function editUser(userId) {
+                const user = mockData.users.find(u => u.id === userId);
+                if (!user) return;
+                
+                // 填充表单
+                document.getElementById('username').value = user.username;
+                document.getElementById('email').value = user.email;
+                document.getElementById('password').value = ''; // 不显示密码
+                document.getElementById('role').value = user.role;
+                
+                // 设置表单ID属性
+                document.getElementById('userForm').setAttribute('data-id', userId);
+                
+                // 更新模态框标题
+                document.getElementById('userModalTitle').textContent = '编辑用户';
+                
+                // 显示模态框
+                const userModal = new bootstrap.Modal(document.getElementById('userModal'));
+                userModal.show();
+            }
+
+            // 删除用户
+            function deleteUser(userId) {
+                if (confirm('确定要删除这个用户吗？')) {
+                    const index = mockData.users.findIndex(u => u.id === userId);
+                    if (index !== -1) {
+                        mockData.users.splice(index, 1);
+                        localStorage.setItem('mockUsers', JSON.stringify(mockData.users));
+                        loadUserTable();
+                    }
+                }
+            }
+
+            // 添加用户按钮点击事件
+            document.getElementById('addUserBtn').addEventListener('click', function() {
+                // 清空表单
+                document.getElementById('userForm').reset();
+                document.getElementById('userForm').removeAttribute('data-id');
+                
+                // 更新模态框标题
+                document.getElementById('userModalTitle').textContent = '添加用户';
+                
+                // 显示模态框
+                const userModal = new bootstrap.Modal(document.getElementById('userModal'));
+                userModal.show();
+            });
+
+            // 创建用户
+            function createUser(userData) {
+                // 生成唯一ID
+                const userId = 'user_' + Date.now();
+                
+                // 创建新用户对象
+                const newUser = {
+                    id: userId,
+                    username: userData.username,
+                    email: userData.email,
+                    role: userData.role,
+                    createdAt: new Date().toISOString().split('T')[0]
+                };
+                
+                // 添加到模拟数据
+                mockData.users.push(newUser);
+                
+                // 保存到本地存储
+                localStorage.setItem('mockUsers', JSON.stringify(mockData.users));
+                
+                // 刷新用户表格
+                loadUserTable();
+                
+                // 关闭模态框
+                const userModal = bootstrap.Modal.getInstance(document.getElementById('userModal'));
+                userModal.hide();
+                
+                // 显示成功提示
+                alert('用户添加成功');
+            }
+
+            // 更新用户
+            function updateUser(userId, userData) {
+                // 查找用户
+                const userIndex = mockData.users.findIndex(u => u.id === userId);
+                if (userIndex === -1) return;
+                
+                // 更新用户数据
+                mockData.users[userIndex].username = userData.username;
+                mockData.users[userIndex].email = userData.email;
+                mockData.users[userIndex].role = userData.role;
+                
+                // 保存到本地存储
+                localStorage.setItem('mockUsers', JSON.stringify(mockData.users));
+                
+                // 刷新用户表格
+                loadUserTable();
+                
+                // 关闭模态框
+                const userModal = bootstrap.Modal.getInstance(document.getElementById('userModal'));
+                userModal.hide();
+                
+                // 显示成功提示
+                alert('用户更新成功');
+            }
+
+            // 登出功能
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('token');
+                window.location.href = 'admin-login.html';
+            });
+
+            // 导航切换
+            const sectionLinks = document.querySelectorAll('.list-group-item-action');
+            const allSections = document.querySelectorAll('.section-content');
+            
+            sectionLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 移除所有链接的活动状态
+                    sectionLinks.forEach(item => item.classList.remove('active'));
+                    // 添加当前链接的活动状态
+                    this.classList.add('active');
+                    
+                    // 隐藏所有部分
+                    allSections.forEach(section => section.classList.add('d-none'));
+                    
+                    // 显示当前部分
+                    const sectionId = this.getAttribute('data-section') + '-section';
+                    document.getElementById(sectionId).classList.remove('d-none');
+                });
+            });
+
+            // 默认激活第一个菜单项
+            sectionLinks[0].classList.add('active');
+
+            // 用户表单保存
+            document.getElementById('saveUserBtn').addEventListener('click', function() {
+                // 实现用户保存逻辑
+                const userData = {
+                    username: document.getElementById('username').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value,
+                    role: document.getElementById('role').value
+                };
+                
+                const userId = document.getElementById('userForm').getAttribute('data-id');
+                
+                if (userId) {
+                    // 编辑用户
+                    updateUser(userId, userData);
+                } else {
+                    // 添加用户
+                    createUser(userData);
+                }
+            });
+
+            // 游戏表单保存
+            document.getElementById('saveGameBtn').addEventListener('click', function() {
+                // 实现游戏保存逻辑
+                const gameData = {
+                    name: document.getElementById('gameName').value,
+                    type: document.getElementById('gameType').value,
+                    description: document.getElementById('gameDescription').value,
+                    status: document.getElementById('gameStatus').value
+                };
+                
+                const gameId = document.getElementById('gameForm').getAttribute('data-id');
+                
+                if (gameId) {
+                    // 编辑游戏
+                    updateGame(gameId, gameData);
+                } else {
+                    // 添加游戏
+                    createGame(gameData);
+                }
+            });
+
+            // 系统设置表单保存
+            document.getElementById('systemSettingsForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                // 实现设置保存逻辑
+                const settings = {
+                    siteName: document.getElementById('siteName').value,
+                    adminEmail: document.getElementById('adminEmail').value,
+                    enableLeaderboard: document.getElementById('enableLeaderboard').checked,
+                    enableAchievements: document.getElementById('enableAchievements').checked,
+                    enableSocialSharing: document.getElementById('enableSocialSharing').checked,
+                    registrationSettings: document.getElementById('registrationSettings').value,
+                    
+                    // 主题设置
+                    siteTheme: document.getElementById('siteTheme').value,
+                    maintenanceMode: document.getElementById('maintenanceMode').checked,
+                    backupData: document.getElementById('backupData').checked,
+                    backupFrequency: document.getElementById('backupFrequency').value,
+                    
+                    // 系统公告
+                    systemAnnouncement: document.getElementById('systemAnnouncement').value,
+                    enableAnnouncement: document.getElementById('enableAnnouncement').checked,
+                    
+                    // 游戏配置 - 扫雷
+                    minesweeperConfig: {
+                        easyMines: parseInt(document.getElementById('minesweeper_easy_mines').value),
+                        mediumMines: parseInt(document.getElementById('minesweeper_medium_mines').value),
+                        hardMines: parseInt(document.getElementById('minesweeper_hard_mines').value)
+                    },
+                    
+                    // 游戏配置 - 贪吃蛇
+                    snakeConfig: {
+                        easySpeed: parseInt(document.getElementById('snake_speed_easy').value),
+                        hardSpeed: parseInt(document.getElementById('snake_speed_hard').value),
+                        enableObstacles: document.getElementById('snake_enable_obstacles').checked
+                    },
+                    
+                    // 游戏配置 - 俄罗斯方块
+                    tetrisConfig: {
+                        initialLevel: document.getElementById('tetris_initial_level').value,
+                        showNextPiece: document.getElementById('tetris_show_next_piece').checked,
+                        allowHold: document.getElementById('tetris_allow_hold').checked
+                    },
+                    
+                    // 奖励配置
+                    enablePointSystem: document.getElementById('enablePointSystem').checked,
+                    dailyLoginPoints: parseInt(document.getElementById('dailyLoginPoints').value),
+                    gameCompletionPoints: parseInt(document.getElementById('gameCompletionPoints').value),
+                    
+                    // API管理设置
+                    apiSettings: {
+                        enableApi: document.getElementById('enableApi').checked,
+                        requireAuth: document.getElementById('apiRequireAuth').checked,
+                        rateLimit: parseInt(document.getElementById('apiRateLimit').value),
+                        apiKey: document.getElementById('apiKey').value,
+                        endpoints: {
+                            users: document.getElementById('apiUsers').checked,
+                            games: document.getElementById('apiGames').checked,
+                            stats: document.getElementById('apiStats').checked,
+                            leaderboard: document.getElementById('apiLeaderboard').checked
+                        }
+                    }
+                };
+                
+                saveSystemSettings(settings);
+            });
+
+            // 这里是加载数据和其他功能的实现
+            function loadUsersData(page = 1) {
+                // 模拟用户数据加载
+                // 实际应用中应该从API获取数据
+                const usersTableBody = document.getElementById('usersTableBody');
+                usersTableBody.innerHTML = '';
+                
+                // 这里添加从API获取用户数据的代码
+                axios.get(`/api/users?page=${page}`, {
+                    headers: { 'x-auth-token': token }
+                }).then(response => {
+                    // 处理用户数据
+                }).catch(error => {
+                    console.error('获取用户数据失败:', error);
+                });
+            }
+            
+            function loadGamesData() {
+                // 游戏数据加载逻辑
+            }
+            
+            function loadStatisticsData() {
+                // 统计数据加载逻辑
+                // 这里可以添加图表初始化代码
+                initCharts();
+            }
+            
+            function initCharts() {
+                // 游戏活跃度图表
+                const gameActivityCtx = document.getElementById('gameActivityChart').getContext('2d');
+                new Chart(gameActivityCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['扫雷', '贪吃蛇', '俄罗斯方块'],
+                        datasets: [{
+                            label: '游戏次数',
+                            data: [120, 90, 150],
+                            backgroundColor: [
+                                'rgba(54, 162, 235, 0.7)',
+                                'rgba(75, 192, 192, 0.7)',
+                                'rgba(255, 159, 64, 0.7)'
+                            ],
+                            borderColor: [
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+                
+                // 用户增长趋势图表
+                const userGrowthCtx = document.getElementById('userGrowthChart').getContext('2d');
+                new Chart(userGrowthCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['1月', '2月', '3月', '4月', '5月', '6月'],
+                        datasets: [{
+                            label: '用户数量',
+                            data: [50, 65, 80, 120, 150, 180],
+                            fill: false,
+                            borderColor: 'rgb(75, 192, 192)',
+                            tension: 0.1
+                        }]
+                    }
+                });
+            }
+            
+            function createGame(gameData) {
+                // 生成唯一ID
+                const gameId = 'game_' + Date.now();
+                
+                // 创建新游戏对象
+                const newGame = {
+                    id: gameId,
+                    name: gameData.name,
+                    type: gameData.type,
+                    description: gameData.description,
+                    status: gameData.status,
+                    playCount: 0
+                };
+                
+                // 添加到模拟数据
+                mockData.games.push(newGame);
+                
+                // 保存到本地存储
+                localStorage.setItem('mockGames', JSON.stringify(mockData.games));
+                
+                // 刷新游戏表格
+                loadGameTable();
+                
+                // 关闭模态框
+                const gameModal = bootstrap.Modal.getInstance(document.getElementById('gameModal'));
+                gameModal.hide();
+                
+                // 显示成功提示
+                alert('游戏添加成功');
+            }
+            
+            function updateGame(gameId, gameData) {
+                // 查找游戏
+                const gameIndex = mockData.games.findIndex(g => g.id === gameId);
+                if (gameIndex === -1) return;
+                
+                // 更新游戏数据
+                mockData.games[gameIndex].name = gameData.name;
+                mockData.games[gameIndex].type = gameData.type;
+                mockData.games[gameIndex].description = gameData.description;
+                mockData.games[gameIndex].status = gameData.status;
+                
+                // 保存到本地存储
+                localStorage.setItem('mockGames', JSON.stringify(mockData.games));
+                
+                // 刷新游戏表格
+                loadGameTable();
+                
+                // 关闭模态框
+                const gameModal = bootstrap.Modal.getInstance(document.getElementById('gameModal'));
+                gameModal.hide();
+                
+                // 显示成功提示
+                alert('游戏更新成功');
+            }
+            
+            // 添加游戏按钮点击事件
+            document.getElementById('addGameBtn').addEventListener('click', function() {
+                // 清空表单
+                document.getElementById('gameForm').reset();
+                document.getElementById('gameForm').removeAttribute('data-id');
+                
+                // 更新模态框标题
+                document.getElementById('gameModalTitle').textContent = '添加游戏';
+                
+                // 显示模态框
+                const gameModal = new bootstrap.Modal(document.getElementById('gameModal'));
+                gameModal.show();
+            });
+            
+            // 编辑游戏功能
+            function editGame(gameId) {
+                const game = mockData.games.find(g => g.id === gameId);
+                if (!game) return;
+                
+                // 填充表单
+                document.getElementById('gameName').value = game.name;
+                document.getElementById('gameType').value = game.type;
+                document.getElementById('gameDescription').value = game.description || '';
+                document.getElementById('gameStatus').value = game.status;
+                
+                // 设置表单ID属性
+                document.getElementById('gameForm').setAttribute('data-id', gameId);
+                
+                // 更新模态框标题
+                document.getElementById('gameModalTitle').textContent = '编辑游戏';
+                
+                // 显示模态框
+                const gameModal = new bootstrap.Modal(document.getElementById('gameModal'));
+                gameModal.show();
+            }
+            
+            // 删除游戏
+            function deleteGame(gameId) {
+                if (confirm('确定要删除这个游戏吗？')) {
+                    const index = mockData.games.findIndex(g => g.id === gameId);
+                    if (index !== -1) {
+                        mockData.games.splice(index, 1);
+                        localStorage.setItem('mockGames', JSON.stringify(mockData.games));
+                        loadGameTable();
+                    }
+                }
+            }
+
+            // 生成随机API密钥
+            function generateApiKey() {
+                const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+                let key = 'api_';
+                for (let i = 0; i < 32; i++) {
+                    key += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return key;
+            }
+
+            // 数据导出功能
+            function exportData() {
+                const exportType = document.getElementById('exportDataType').value;
+                const exportFormat = document.getElementById('exportFormat').value;
+                const includePersonalData = document.getElementById('includePersonalData').checked;
+                
+                // 准备导出数据
+                let dataToExport = {};
+                
+                // 根据选择的导出类型获取相应数据
+                if (exportType === 'all' || exportType === 'users') {
+                    const users = JSON.parse(localStorage.getItem('mockUsers') || '[]');
+                    // 如果不包含个人数据，则过滤敏感信息
+                    if (!includePersonalData) {
+                        dataToExport.users = users.map(user => {
+                            const { id, username, role, createdAt } = user;
+                            return { id, username, role, createdAt };
+                        });
+                    } else {
+                        dataToExport.users = users;
+                    }
+                }
+                
+                if (exportType === 'all' || exportType === 'games') {
+                    dataToExport.games = JSON.parse(localStorage.getItem('mockGames') || '[]');
+                }
+                
+                if (exportType === 'all' || exportType === 'statistics') {
+                    // 模拟一些统计数据
+                    dataToExport.statistics = {
+                        totalUsers: document.getElementById('totalUsers').textContent,
+                        todayGames: document.getElementById('todayGames').textContent,
+                        activeUsers: document.getElementById('activeUsers').textContent,
+                        gameActivity: {
+                            minesweeper: 120,
+                            snake: 90,
+                            tetris: 150
+                        },
+                        userGrowth: [50, 65, 80, 120, 150, 180]
+                    };
+                }
+                
+                // 根据格式导出数据
+                let exportContent = '';
+                let filename = `game_data_export_${new Date().toISOString().slice(0, 10)}`;
+                let mimeType = '';
+                
+                switch (exportFormat) {
+                    case 'json':
+                        exportContent = JSON.stringify(dataToExport, null, 2);
+                        filename += '.json';
+                        mimeType = 'application/json';
+                        break;
+                    case 'csv':
+                        // 简单CSV转换（仅处理用户数据示例）
+                        if (dataToExport.users) {
+                            const headers = Object.keys(dataToExport.users[0] || {}).join(',');
+                            const rows = dataToExport.users.map(user => 
+                                Object.values(user).map(val => `"${val}"`).join(',')
+                            ).join('\n');
+                            exportContent = `${headers}\n${rows}`;
+                        }
+                        filename += '.csv';
+                        mimeType = 'text/csv';
+                        break;
+                    case 'xml':
+                        // 简单XML转换
+                        exportContent = '<export>\n';
+                        for (const key in dataToExport) {
+                            exportContent += `  <${key}>\n`;
+                            if (Array.isArray(dataToExport[key])) {
+                                dataToExport[key].forEach(item => {
+                                    exportContent += '    <item>\n';
+                                    for (const prop in item) {
+                                        exportContent += `      <${prop}>${item[prop]}</${prop}>\n`;
+                                    }
+                                    exportContent += '    </item>\n';
+                                });
+                            }
+                            exportContent += `  </${key}>\n`;
+                        }
+                        exportContent += '</export>';
+                        filename += '.xml';
+                        mimeType = 'application/xml';
+                        break;
+                }
+                
+                // 创建下载链接
+                const blob = new Blob([exportContent], { type: mimeType });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                
+                alert(`数据已导出为${exportFormat.toUpperCase()}格式！`);
+            }
+        });
+    </script>
+</body>
+</html> 

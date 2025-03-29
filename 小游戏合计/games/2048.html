@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小游戏合集 - 2048</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .game-container {
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            background-color: var(--card-bg);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .game-controls {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 10px;
+            width: 400px;
+            height: 400px;
+            margin: 0 auto;
+            background-color: #bbada0;
+            border-radius: 6px;
+            padding: 10px;
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .cell {
+            background-color: rgba(238, 228, 218, 0.35);
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #776e65;
+            transition: all 0.15s ease;
+        }
+
+        .tile {
+            width: 100%;
+            height: 100%;
+            background-color: #eee4da;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: bold;
+            color: #776e65;
+            animation: appear 200ms ease;
+        }
+
+        @keyframes appear {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .tile-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .tile-2 { background-color: #eee4da; }
+        .tile-4 { background-color: #ede0c8; }
+        .tile-8 { background-color: #f2b179; color: #f9f6f2; }
+        .tile-16 { background-color: #f59563; color: #f9f6f2; }
+        .tile-32 { background-color: #f67c5f; color: #f9f6f2; }
+        .tile-64 { background-color: #f65e3b; color: #f9f6f2; }
+        .tile-128 { background-color: #edcf72; color: #f9f6f2; font-size: 28px; }
+        .tile-256 { background-color: #edcc61; color: #f9f6f2; font-size: 28px; }
+        .tile-512 { background-color: #edc850; color: #f9f6f2; font-size: 28px; }
+        .tile-1024 { background-color: #edc53f; color: #f9f6f2; font-size: 24px; }
+        .tile-2048 { background-color: #edc22e; color: #f9f6f2; font-size: 24px; }
+        .tile-super { background-color: #3c3a32; color: #f9f6f2; font-size: 20px; }
+
+        .game-message {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(238, 228, 218, 0.5);
+            z-index: 100;
+            text-align: center;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+        }
+
+        .game-message.game-won, .game-message.game-over {
+            display: flex;
+        }
+
+        .game-message p {
+            font-size: 60px;
+            font-weight: bold;
+            margin: 0;
+            color: #776e65;
+        }
+
+        .game-message.game-won p {
+            color: #f9f6f2;
+        }
+
+        .game-message .actions {
+            margin-top: 20px;
+        }
+
+        .game-status {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .game-status.win {
+            color: #10b981;
+        }
+
+        .game-status.lose {
+            color: var(--secondary-color);
+        }
+
+        .mobile-hint {
+            margin-top: 20px;
+            display: none;
+        }
+
+        @media (max-width: 500px) {
+            .game-board {
+                width: 300px;
+                height: 300px;
+            }
+            .mobile-hint {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="main-header">
+            <div class="logo">
+                <h1><a href="../index.html">小游戏合集</a></h1>
+            </div>
+            <nav class="main-nav">
+                <ul id="main-nav-list">
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../dashboard.html">控制台</a></li>
+                    <li><a href="../leaderboard.html">排行榜</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                    <li><a href="../profile.html">个人资料</a></li>
+                    <li><a href="#" id="logout-btn">登出</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <!-- 游戏容器 -->
+        <div class="game-container">
+            <h2 class="form-title">2048</h2>
+            <p>使用方向键移动方块，合并相同数字，争取达到2048！</p>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">得分</div>
+                    <div class="stat-value" id="score">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">最高分</div>
+                    <div class="stat-value" id="best-score">0</div>
+                </div>
+            </div>
+            
+            <div class="game-controls">
+                <button id="new-game-btn" class="btn btn-primary">新游戏</button>
+            </div>
+            
+            <div class="game-board" id="game-board">
+                <!-- 游戏单元格将由JS生成 -->
+                <div class="game-message" id="game-message">
+                    <p></p>
+                    <div class="actions">
+                        <button class="btn btn-primary keep-playing-btn">继续游戏</button>
+                        <button class="btn retry-btn">再试一次</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mobile-hint">
+                <p>在手机上可以滑动屏幕来移动方块</p>
+            </div>
+            
+            <div class="game-status" id="game-status"></div>
+        </div>
+        
+        <!-- 页脚 -->
+        <footer class="main-footer">
+            <p>&copy; <span id="current-year"></span> 小游戏合集 - 一个充满乐趣的游戏平台</p>
+        </footer>
+    </div>
+
+    <script>
+        // 检查用户是否登录
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem('isLoggedIn')) {
+                window.location.href = '../login.html';
+                return;
+            }
+            
+            // 初始化游戏
+            initGame();
+        });
+        
+        // 设置当前年份
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // 注销功能
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            window.location.href = '../index.html';
+        });
+        
+        // 游戏变量
+        let grid = [];
+        let score = 0;
+        let bestScore = parseInt(localStorage.getItem('2048HighScore') || '0');
+        let gameOver = false;
+        let won = false;
+        let size = 4;
+        const gameBoard = document.getElementById('game-board');
+        const gameMessage = document.getElementById('game-message');
+        const scoreDisplay = document.getElementById('score');
+        const bestScoreDisplay = document.getElementById('best-score');
+        
+        // 初始化游戏
+        function initGame() {
+            bestScoreDisplay.textContent = bestScore.toString();
+            
+            // 清空游戏面板
+            while (gameBoard.firstChild) {
+                if (gameBoard.lastChild === gameMessage) {
+                    break;
+                }
+                gameBoard.removeChild(gameBoard.lastChild);
+            }
+            
+            // 创建游戏格子
+            for (let i = 0; i < size * size; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'cell';
+                cell.id = `cell-${Math.floor(i / size)}-${i % size}`;
+                gameBoard.appendChild(cell);
+            }
+            
+            // 重置游戏变量
+            grid = Array(size).fill().map(() => Array(size).fill(0));
+            score = 0;
+            gameOver = false;
+            won = false;
+            
+            // 更新分数显示
+            scoreDisplay.textContent = score.toString();
+            
+            // 隐藏游戏消息
+            gameMessage.className = 'game-message';
+            
+            // 添加初始方块
+            addRandomTile();
+            addRandomTile();
+            
+            // 设置键盘事件
+            document.removeEventListener('keydown', handleKeyPress);
+            document.addEventListener('keydown', handleKeyPress);
+            
+            // 设置触摸事件（对移动设备）
+            setupTouchEvents();
+            
+            // 新游戏按钮
+            document.getElementById('new-game-btn').addEventListener('click', initGame);
+            
+            // 继续游戏按钮
+            document.querySelector('.keep-playing-btn').addEventListener('click', function() {
+                if (won) {
+                    won = false;
+                    gameMessage.className = 'game-message';
+                }
+            });
+            
+            // 重试按钮
+            document.querySelector('.retry-btn').addEventListener('click', initGame);
+        }
+        
+        // 添加一个随机方块
+        function addRandomTile() {
+            if (checkAvailableCells()) {
+                let value = Math.random() < 0.9 ? 2 : 4;
+                let cellFound = false;
+                
+                while (!cellFound) {
+                    let row = Math.floor(Math.random() * size);
+                    let col = Math.floor(Math.random() * size);
+                    
+                    if (grid[row][col] === 0) {
+                        grid[row][col] = value;
+                        cellFound = true;
+                        addTileAnimation(row, col, value);
+                    }
+                }
+            }
+        }
+        
+        // 添加方块动画
+        function addTileAnimation(row, col, value) {
+            const cell = document.getElementById(`cell-${row}-${col}`);
+            const tile = document.createElement('div');
+            tile.className = `tile tile-${value}`;
+            tile.textContent = value;
+            
+            cell.appendChild(tile);
+        }
+        
+        // 检查是否有空单元格
+        function checkAvailableCells() {
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    if (grid[i][j] === 0) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        
+        // 更新游戏界面
+        function updateBoard() {
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size; j++) {
+                    const cell = document.getElementById(`cell-${i}-${j}`);
+                    cell.innerHTML = '';
+                    
+                    if (grid[i][j] !== 0) {
+                        const tile = document.createElement('div');
+                        tile.className = `tile tile-${grid[i][j]}`;
+                        
+                        if (grid[i][j] > 2048) {
+                            tile.classList.add('tile-super');
+                        }
+                        
+                        tile.textContent = grid[i][j];
+                        cell.appendChild(tile);
+                    }
+                }
+            }
+            
+            // 更新分数
+            scoreDisplay.textContent = score.toString();
+            
+            // 检查最高分
+            if (score > bestScore) {
+                bestScore = score;
+                bestScoreDisplay.textContent = bestScore.toString();
+                localStorage.setItem('2048HighScore', bestScore.toString());
+            }
+        }
+        
+        // 处理键盘输入
+        function handleKeyPress(e) {
+            if (gameOver) return;
+            
+            let moved = false;
+            
+            switch(e.key) {
+                case 'ArrowUp':
+                    moved = moveUp();
+                    break;
+                case 'ArrowDown':
+                    moved = moveDown();
+                    break;
+                case 'ArrowLeft':
+                    moved = moveLeft();
+                    break;
+                case 'ArrowRight':
+                    moved = moveRight();
+                    break;
+                default:
+                    return; // 忽略其他按键
+            }
+            
+            if (moved) {
+                // 添加新方块
+                addRandomTile();
+                
+                // 更新游戏界面
+                updateBoard();
+                
+                // 检查游戏状态
+                checkGameState();
+                
+                // 保存游戏记录
+                saveGameState();
+            }
+        }
+        
+        // 设置触摸事件
+        function setupTouchEvents() {
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchEndX = 0;
+            let touchEndY = 0;
+            
+            gameBoard.addEventListener('touchstart', function(e) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+            });
+            
+            gameBoard.addEventListener('touchend', function(e) {
+                if (gameOver) return;
+                
+                touchEndX = e.changedTouches[0].clientX;
+                touchEndY = e.changedTouches[0].clientY;
+                
+                const dx = touchEndX - touchStartX;
+                const dy = touchEndY - touchStartY;
+                
+                let moved = false;
+                
+                // 判断滑动方向
+                if (Math.abs(dx) > Math.abs(dy)) {
+                    // 水平滑动
+                    if (dx > 50) {
+                        moved = moveRight();
+                    } else if (dx < -50) {
+                        moved = moveLeft();
+                    }
+                } else {
+                    // 垂直滑动
+                    if (dy > 50) {
+                        moved = moveDown();
+                    } else if (dy < -50) {
+                        moved = moveUp();
+                    }
+                }
+                
+                if (moved) {
+                    // 添加新方块
+                    addRandomTile();
+                    
+                    // 更新游戏界面
+                    updateBoard();
+                    
+                    // 检查游戏状态
+                    checkGameState();
+                    
+                    // 保存游戏记录
+                    saveGameState();
+                }
+            });
+        }
+        
+        // 向上移动
+        function moveUp() {
+            let moved = false;
+            
+            for (let j = 0; j < size; j++) {
+                for (let i = 1; i < size; i++) {
+                    if (grid[i][j] !== 0) {
+                        let row = i;
+                        while (row > 0 && grid[row-1][j] === 0) {
+                            grid[row-1][j] = grid[row][j];
+                            grid[row][j] = 0;
+                            row--;
+                            moved = true;
+                        }
+                        
+                        if (row > 0 && grid[row-1][j] === grid[row][j]) {
+                            grid[row-1][j] *= 2;
+                            grid[row][j] = 0;
+                            score += grid[row-1][j];
+                            moved = true;
+                            
+                            // 检查是否达到2048
+                            if (grid[row-1][j] === 2048 && !won) {
+                                won = true;
+                                showGameMessage('游戏胜利！', true);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return moved;
+        }
+        
+        // 向下移动
+        function moveDown() {
+            let moved = false;
+            
+            for (let j = 0; j < size; j++) {
+                for (let i = size - 2; i >= 0; i--) {
+                    if (grid[i][j] !== 0) {
+                        let row = i;
+                        while (row < size - 1 && grid[row+1][j] === 0) {
+                            grid[row+1][j] = grid[row][j];
+                            grid[row][j] = 0;
+                            row++;
+                            moved = true;
+                        }
+                        
+                        if (row < size - 1 && grid[row+1][j] === grid[row][j]) {
+                            grid[row+1][j] *= 2;
+                            grid[row][j] = 0;
+                            score += grid[row+1][j];
+                            moved = true;
+                            
+                            // 检查是否达到2048
+                            if (grid[row+1][j] === 2048 && !won) {
+                                won = true;
+                                showGameMessage('游戏胜利！', true);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return moved;
+        }
+        
+        // 向左移动
+        function moveLeft() {
+            let moved = false;
+            
+            for (let i = 0; i < size; i++) {
+                for (let j = 1; j < size; j++) {
+                    if (grid[i][j] !== 0) {
+                        let col = j;
+                        while (col > 0 && grid[i][col-1] === 0) {
+                            grid[i][col-1] = grid[i][col];
+                            grid[i][col] = 0;
+                            col--;
+                            moved = true;
+                        }
+                        
+                        if (col > 0 && grid[i][col-1] === grid[i][col]) {
+                            grid[i][col-1] *= 2;
+                            grid[i][col] = 0;
+                            score += grid[i][col-1];
+                            moved = true;
+                            
+                            // 检查是否达到2048
+                            if (grid[i][col-1] === 2048 && !won) {
+                                won = true;
+                                showGameMessage('游戏胜利！', true);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return moved;
+        }
+        
+        // 向右移动
+        function moveRight() {
+            let moved = false;
+            
+            for (let i = 0; i < size; i++) {
+                for (let j = size - 2; j >= 0; j--) {
+                    if (grid[i][j] !== 0) {
+                        let col = j;
+                        while (col < size - 1 && grid[i][col+1] === 0) {
+                            grid[i][col+1] = grid[i][col];
+                            grid[i][col] = 0;
+                            col++;
+                            moved = true;
+                        }
+                        
+                        if (col < size - 1 && grid[i][col+1] === grid[i][col]) {
+                            grid[i][col+1] *= 2;
+                            grid[i][col] = 0;
+                            score += grid[i][col+1];
+                            moved = true;
+                            
+                            // 检查是否达到2048
+                            if (grid[i][col+1] === 2048 && !won) {
+                                won = true;
+                                showGameMessage('游戏胜利！', true);
+                            }
+                        }
+                    }
+                }
+            }
+            
+            return moved;
+        }
+        
+        // 检查游戏状态
+        function checkGameState() {
+            // 如果没有空单元格
+            if (!checkAvailableCells()) {
+                // 检查是否有可移动的方块
+                if (!canMove()) {
+                    gameOver = true;
+                    showGameMessage('游戏结束！', false);
+                }
+            }
+        }
+        
+        // 检查是否可以移动
+        function canMove() {
+            // 检查水平方向
+            for (let i = 0; i < size; i++) {
+                for (let j = 0; j < size - 1; j++) {
+                    if (grid[i][j] === grid[i][j+1]) {
+                        return true;
+                    }
+                }
+            }
+            
+            // 检查垂直方向
+            for (let i = 0; i < size - 1; i++) {
+                for (let j = 0; j < size; j++) {
+                    if (grid[i][j] === grid[i+1][j]) {
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        }
+        
+        // 显示游戏消息
+        function showGameMessage(message, isWin) {
+            gameMessage.querySelector('p').textContent = message;
+            gameMessage.className = isWin ? 'game-message game-won' : 'game-message game-over';
+            
+            // 保存游戏记录
+            saveGameResult(!isWin);
+        }
+        
+        // 保存游戏状态
+        function saveGameState() {
+            localStorage.setItem('2048GameState', JSON.stringify({
+                grid: grid,
+                score: score,
+                gameOver: gameOver,
+                won: won
+            }));
+        }
+        
+        // 保存游戏记录
+        function saveGameResult(isGameOver) {
+            console.log(`游戏${isGameOver ? '结束' : '获胜'}：得分 ${score}`);
+            
+            // 更新本地统计数据
+            const gameStats = JSON.parse(localStorage.getItem('gameStats') || '{}');
+            
+            if (!gameStats['2048']) {
+                gameStats['2048'] = {
+                    gamesPlayed: 0,
+                    totalScore: 0,
+                    highScore: 0,
+                    wins: 0
+                };
+            }
+            
+            gameStats['2048'].gamesPlayed++;
+            gameStats['2048'].totalScore += score;
+            
+            if (score > gameStats['2048'].highScore) {
+                gameStats['2048'].highScore = score;
+            }
+            
+            if (won) {
+                gameStats['2048'].wins++;
+            }
+            
+            localStorage.setItem('gameStats', JSON.stringify(gameStats));
+        }
+    </script>
+</body>
+</html> 

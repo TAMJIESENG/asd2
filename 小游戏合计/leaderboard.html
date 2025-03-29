@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小游戏合集 - 排行榜</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="main-header">
+            <div class="logo">
+                <h1><a href="index.html">小游戏合集</a></h1>
+            </div>
+            <nav class="main-nav" id="main-nav">
+                <ul>
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="leaderboard.html" class="active">排行榜</a></li>
+                    <li><a href="about.html">关于</a></li>
+                    <li><a href="login.html" class="login-btn" id="login-nav">登录</a></li>
+                    <li><a href="register.html" class="register-btn" id="register-nav">注册</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <div class="leaderboard-container">
+            <h2>游戏排行榜</h2>
+            
+            <div class="tab-panel">
+                <button class="tab-button active" data-game="minesweeper">扫雷</button>
+                <button class="tab-button" data-game="snake">贪吃蛇</button>
+                <button class="tab-button" data-game="tetris">俄罗斯方块</button>
+                <button class="tab-button" data-game="guessNumber">猜数字</button>
+                <button class="tab-button" data-game="rockPaperScissors">石头剪刀布</button>
+                <button class="tab-button" data-game="spaceShooter">飞行射击</button>
+                <button class="tab-button" data-game="puzzle">滑动拼图</button>
+                <button class="tab-button" data-game="jumpGame">跳跃游戏</button>
+                <button class="tab-button" data-game="2048">2048</button>
+                <button class="tab-button" data-game="memory">记忆翻牌</button>
+                <button class="tab-button" data-game="breakout">打砖块</button>
+                <button class="tab-button" data-game="tictactoe">井字棋</button>
+            </div>
+            
+            <div id="leaderboard-content">
+                <h3 id="game-title">扫雷排行榜</h3>
+                
+                <div id="loading" class="loading" style="display: none;">
+                    <div class="spinner"></div>
+                </div>
+                
+                <div id="error-message" class="alert alert-error" style="display: none;">
+                    加载排行榜数据时出错
+                </div>
+                
+                <table id="leaderboard-table">
+                    <thead id="leaderboard-head">
+                        <tr>
+                            <th>排名</th>
+                            <th>玩家</th>
+                            <th>最佳时间 (秒)</th>
+                            <th>胜利次数</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body"></tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 页脚 -->
+        <footer class="main-footer">
+            <p>&copy; <span id="current-year"></span> 小游戏合集 - 一个充满乐趣的游戏平台</p>
+        </footer>
+    </div>
+
+    <script>
+        // 设置当前年份
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // 检查登录状态，更新导航栏
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const mainNav = document.getElementById('main-nav');
+            
+            if (isLoggedIn) {
+                // 用户已登录，更新导航菜单
+                const navList = mainNav.querySelector('ul');
+                navList.innerHTML = `
+                    <li><a href="index.html">首页</a></li>
+                    <li><a href="dashboard.html">控制台</a></li>
+                    <li><a href="leaderboard.html" class="active">排行榜</a></li>
+                    <li><a href="about.html">关于</a></li>
+                    <li><a href="profile.html">个人资料</a></li>
+                    <li><a href="#" id="logout-btn">登出</a></li>
+                `;
+                
+                // 添加登出事件监听器
+                document.getElementById('logout-btn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    localStorage.removeItem('isLoggedIn');
+                    localStorage.removeItem('username');
+                    window.location.reload();
+                });
+            }
+            
+            // 加载默认排行榜数据
+            loadLeaderboard('minesweeper');
+            
+            // 添加标签切换事件
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 更新活动标签
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 加载相应游戏的排行榜
+                    const game = this.getAttribute('data-game');
+                    loadLeaderboard(game);
+                });
+            });
+        });
+        
+        // 加载排行榜数据
+        function loadLeaderboard(game) {
+            // 显示加载状态
+            document.getElementById('loading').style.display = 'flex';
+            document.getElementById('error-message').style.display = 'none';
+            document.getElementById('leaderboard-table').style.display = 'none';
+            
+            // 更新游戏标题
+            const gameTitle = document.getElementById('game-title');
+            const gameTitles = {
+                'minesweeper': '扫雷排行榜',
+                'snake': '贪吃蛇排行榜',
+                'tetris': '俄罗斯方块排行榜',
+                'guessNumber': '猜数字排行榜',
+                'rockPaperScissors': '石头剪刀布排行榜',
+                'spaceShooter': '飞行射击排行榜',
+                'puzzle': '滑动拼图排行榜',
+                'jumpGame': '跳跃游戏排行榜',
+                '2048': '2048排行榜',
+                'memory': '记忆翻牌排行榜',
+                'breakout': '打砖块排行榜',
+                'tictactoe': '井字棋排行榜'
+            };
+            gameTitle.textContent = gameTitles[game];
+            
+            // 更新表头
+            const tableHead = document.getElementById('leaderboard-head');
+            if (game === 'minesweeper' || game === 'puzzle' || game === 'memory') {
+                tableHead.innerHTML = `
+                    <tr>
+                        <th>排名</th>
+                        <th>玩家</th>
+                        <th>最佳时间 (秒)</th>
+                        <th>胜利次数</th>
+                    </tr>
+                `;
+            } else if (game === 'rockPaperScissors' || game === 'tictactoe') {
+                tableHead.innerHTML = `
+                    <tr>
+                        <th>排名</th>
+                        <th>玩家</th>
+                        <th>胜率</th>
+                        <th>游戏次数</th>
+                    </tr>
+                `;
+            } else {
+                tableHead.innerHTML = `
+                    <tr>
+                        <th>排名</th>
+                        <th>玩家</th>
+                        <th>最高分</th>
+                        <th>游戏次数</th>
+                    </tr>
+                `;
+            }
+            
+            // 模拟加载延迟
+            setTimeout(() => {
+                try {
+                    // 获取模拟数据
+                    const leaderboardData = getLeaderboardData(game);
+                    
+                    // 更新表格内容
+                    const tableBody = document.getElementById('leaderboard-body');
+                    tableBody.innerHTML = '';
+                    
+                    leaderboardData.forEach((item, index) => {
+                        const row = document.createElement('tr');
+                        
+                        // 添加排名样式
+                        let rankHtml = `<td>${index + 1}</td>`;
+                        if (index < 3) {
+                            const rankClass = `rank-${index + 1}`;
+                            let icon = '';
+                            if (index === 0) icon = '<i class="fas fa-trophy"></i> ';
+                            rankHtml = `<td class="${rankClass}">${icon}${index + 1}</td>`;
+                        }
+                        
+                        // 根据游戏类型生成不同的单元格
+                        if (game === 'minesweeper' || game === 'puzzle' || game === 'memory') {
+                            row.innerHTML = `
+                                ${rankHtml}
+                                <td><i class="fas fa-user"></i> ${item.username}</td>
+                                <td><i class="fas fa-clock"></i> ${item.bestTime}</td>
+                                <td>${item.gamesWon || item.completedGames}</td>
+                            `;
+                        } else if (game === 'rockPaperScissors' || game === 'tictactoe') {
+                            row.innerHTML = `
+                                ${rankHtml}
+                                <td><i class="fas fa-user"></i> ${item.username}</td>
+                                <td><i class="fas fa-percent"></i> ${item.winRate}</td>
+                                <td>${item.gamesPlayed}</td>
+                            `;
+                        } else {
+                            row.innerHTML = `
+                                ${rankHtml}
+                                <td><i class="fas fa-user"></i> ${item.username}</td>
+                                <td><i class="fas fa-star"></i> ${item.highScore}</td>
+                                <td>${item.gamesPlayed}</td>
+                            `;
+                        }
+                        
+                        tableBody.appendChild(row);
+                    });
+                    
+                    // 隐藏加载状态，显示表格
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('leaderboard-table').style.display = 'table';
+                } catch (error) {
+                    // 显示错误信息
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('error-message').style.display = 'block';
+                    document.getElementById('error-message').textContent = '加载排行榜数据时出错：' + error.message;
+                }
+            }, 500);
+        }
+        
+        // 模拟获取排行榜数据
+        function getLeaderboardData(game) {
+            // 这里应该是从服务器获取数据
+            // 这里仅用模拟数据演示
+            const leaderboards = {
+                'minesweeper': [
+                    { username: 'master123', bestTime: 32, gamesWon: 45 },
+                    { username: 'sweeper88', bestTime: 37, gamesWon: 38 },
+                    { username: 'minehunter', bestTime: 41, gamesWon: 32 },
+                    { username: 'bombfinder', bestTime: 45, gamesWon: 28 },
+                    { username: 'clickmaster', bestTime: 48, gamesWon: 25 },
+                    { username: 'minewhiz', bestTime: 52, gamesWon: 22 },
+                    { username: 'safeclicker', bestTime: 55, gamesWon: 19 },
+                    { username: 'gridchamp', bestTime: 59, gamesWon: 16 },
+                    { username: 'bombxpert', bestTime: 63, gamesWon: 14 },
+                    { username: 'sweeperking', bestTime: 67, gamesWon: 12 }
+                ],
+                'snake': [
+                    { username: 'snakepro', highScore: 143, gamesPlayed: 67 },
+                    { username: 'appleater', highScore: 132, gamesPlayed: 59 },
+                    { username: 'slitherer', highScore: 124, gamesPlayed: 52 },
+                    { username: 'serpent88', highScore: 118, gamesPlayed: 48 },
+                    { username: 'snakecharm', highScore: 110, gamesPlayed: 45 },
+                    { username: 'pythonmaster', highScore: 105, gamesPlayed: 41 },
+                    { username: 'gridmover', highScore: 98, gamesPlayed: 38 },
+                    { username: 'applechaser', highScore: 92, gamesPlayed: 35 },
+                    { username: 'tailgrow', highScore: 87, gamesPlayed: 31 },
+                    { username: 'snakeninja', highScore: 82, gamesPlayed: 28 }
+                ],
+                'tetris': [
+                    { username: 'blockmaster', highScore: 8750, gamesPlayed: 53 },
+                    { username: 'linemaker', highScore: 8120, gamesPlayed: 49 },
+                    { username: 'tetrisking', highScore: 7860, gamesPlayed: 45 },
+                    { username: 'blockdrop', highScore: 7350, gamesPlayed: 42 },
+                    { username: 'lineclear', highScore: 6980, gamesPlayed: 38 },
+                    { username: 'tetriswhiz', highScore: 6540, gamesPlayed: 35 },
+                    { username: 'blockwiz', highScore: 6120, gamesPlayed: 32 },
+                    { username: 'rotatemaster', highScore: 5880, gamesPlayed: 28 },
+                    { username: 'tetrisace', highScore: 5450, gamesPlayed: 25 },
+                    { username: 'gridstacker', highScore: 5120, gamesPlayed: 22 }
+                ],
+                'guessNumber': [
+                    { username: 'numberninja', highScore: 950, gamesPlayed: 58 },
+                    { username: 'guesswiz', highScore: 920, gamesPlayed: 52 },
+                    { username: 'numberhunter', highScore: 880, gamesPlayed: 49 },
+                    { username: 'mathpro', highScore: 850, gamesPlayed: 45 },
+                    { username: 'guesser123', highScore: 820, gamesPlayed: 42 },
+                    { username: 'quickguess', highScore: 790, gamesPlayed: 38 },
+                    { username: 'mastermind', highScore: 760, gamesPlayed: 35 },
+                    { username: 'codebreaker', highScore: 730, gamesPlayed: 32 },
+                    { username: 'numbermaster', highScore: 700, gamesPlayed: 29 },
+                    { username: 'puzzlesolver', highScore: 670, gamesPlayed: 25 }
+                ],
+                'rockPaperScissors': [
+                    { username: 'rpsmaster', winRate: '87%', gamesPlayed: 63 },
+                    { username: 'handplayer', winRate: '82%', gamesPlayed: 58 },
+                    { username: 'rockstar', winRate: '78%', gamesPlayed: 55 },
+                    { username: 'scissorking', winRate: '75%', gamesPlayed: 52 },
+                    { username: 'paperhero', winRate: '71%', gamesPlayed: 48 },
+                    { username: 'rpschamp', winRate: '68%', gamesPlayed: 45 },
+                    { username: 'handgame', winRate: '65%', gamesPlayed: 42 },
+                    { username: 'jankenmaster', winRate: '62%', gamesPlayed: 38 },
+                    { username: 'rpsplayer', winRate: '58%', gamesPlayed: 35 },
+                    { username: 'gamemaster', winRate: '55%', gamesPlayed: 32 }
+                ],
+                'spaceShooter': [
+                    { username: 'spacepilot', highScore: 9500, gamesPlayed: 62 },
+                    { username: 'alienslayer', highScore: 9100, gamesPlayed: 58 },
+                    { username: 'shooter123', highScore: 8700, gamesPlayed: 54 },
+                    { username: 'spaceace', highScore: 8300, gamesPlayed: 50 },
+                    { username: 'galaxyhunter', highScore: 7900, gamesPlayed: 47 },
+                    { username: 'cosmicpro', highScore: 7500, gamesPlayed: 43 },
+                    { username: 'starpilot', highScore: 7100, gamesPlayed: 39 },
+                    { username: 'shipcommander', highScore: 6700, gamesPlayed: 36 },
+                    { username: 'blasterking', highScore: 6300, gamesPlayed: 33 },
+                    { username: 'spaceninja', highScore: 5900, gamesPlayed: 29 }
+                ],
+                'puzzle': [
+                    { username: 'puzzlemaster', bestTime: 28, gamesWon: 53 },
+                    { username: 'slidepro', bestTime: 32, gamesWon: 48 },
+                    { username: 'tileslider', bestTime: 35, gamesWon: 45 },
+                    { username: 'puzzlesolver', bestTime: 38, gamesWon: 42 },
+                    { username: 'gridmaster', bestTime: 41, gamesWon: 39 },
+                    { username: 'imagegenius', bestTime: 44, gamesWon: 36 },
+                    { username: 'slidechamp', bestTime: 47, gamesWon: 33 },
+                    { username: 'puzzlewiz', bestTime: 50, gamesWon: 30 },
+                    { username: 'tilemaster', bestTime: 53, gamesWon: 27 },
+                    { username: 'slideninja', bestTime: 56, gamesWon: 24 }
+                ],
+                'jumpGame': [
+                    { username: 'jumpking', highScore: 8700, gamesPlayed: 61 },
+                    { username: 'runnerchamp', highScore: 8300, gamesPlayed: 57 },
+                    { username: 'obstaclepro', highScore: 7900, gamesPlayed: 53 },
+                    { username: 'jumper123', highScore: 7500, gamesPlayed: 49 },
+                    { username: 'runmaster', highScore: 7100, gamesPlayed: 46 },
+                    { username: 'platformer', highScore: 6700, gamesPlayed: 42 },
+                    { username: 'jumpninja', highScore: 6300, gamesPlayed: 38 },
+                    { username: 'runnergod', highScore: 5900, gamesPlayed: 35 },
+                    { username: 'leapmaster', highScore: 5500, gamesPlayed: 32 },
+                    { username: 'jumpingpro', highScore: 5100, gamesPlayed: 28 }
+                ],
+                '2048': [
+                    { username: '2048master', highScore: 27850, gamesPlayed: 64 },
+                    { username: 'numberguru', highScore: 25620, gamesPlayed: 59 },
+                    { username: 'slidepro', highScore: 23480, gamesPlayed: 55 },
+                    { username: 'tilewiz', highScore: 22050, gamesPlayed: 52 },
+                    { username: 'mergechamp', highScore: 20790, gamesPlayed: 48 },
+                    { username: 'mathgenius', highScore: 19320, gamesPlayed: 45 },
+                    { username: 'gridpro', highScore: 18040, gamesPlayed: 41 },
+                    { username: 'puzzleace', highScore: 16980, gamesPlayed: 38 },
+                    { username: 'swipechamp', highScore: 15720, gamesPlayed: 35 },
+                    { username: 'tileking', highScore: 14540, gamesPlayed: 32 }
+                ],
+                'memory': [
+                    { username: 'memorywiz', bestTime: 27, completedGames: 55 },
+                    { username: 'matchmaster', bestTime: 31, completedGames: 51 },
+                    { username: 'cardflip', bestTime: 34, completedGames: 48 },
+                    { username: 'pairhunter', bestTime: 38, completedGames: 45 },
+                    { username: 'memorychamp', bestTime: 42, completedGames: 42 },
+                    { username: 'cardmaster', bestTime: 45, completedGames: 39 },
+                    { username: 'rememberpro', bestTime: 48, completedGames: 36 },
+                    { username: 'brainace', bestTime: 52, completedGames: 33 },
+                    { username: 'matchpro', bestTime: 55, completedGames: 30 },
+                    { username: 'gamemind', bestTime: 59, completedGames: 27 }
+                ],
+                'breakout': [
+                    { username: 'paddlemaster', highScore: 12500, gamesPlayed: 60 },
+                    { username: 'ballchamp', highScore: 11800, gamesPlayed: 56 },
+                    { username: 'brickbreaker', highScore: 11200, gamesPlayed: 52 },
+                    { username: 'paddlepro', highScore: 10600, gamesPlayed: 48 },
+                    { username: 'destroyking', highScore: 10100, gamesPlayed: 45 },
+                    { username: 'arcadefan', highScore: 9500, gamesPlayed: 42 },
+                    { username: 'paddlewiz', highScore: 9000, gamesPlayed: 39 },
+                    { username: 'ballninja', highScore: 8600, gamesPlayed: 36 },
+                    { username: 'retrogamer', highScore: 8100, gamesPlayed: 33 },
+                    { username: 'gameclassic', highScore: 7600, gamesPlayed: 30 }
+                ],
+                'tictactoe': [
+                    { username: 'gridking', winRate: '85%', gamesPlayed: 62 },
+                    { username: 'xomaster', winRate: '81%', gamesPlayed: 58 },
+                    { username: 'tactician', winRate: '77%', gamesPlayed: 55 },
+                    { username: 'strategypro', winRate: '74%', gamesPlayed: 51 },
+                    { username: 'gameplanner', winRate: '70%', gamesPlayed: 48 },
+                    { username: 'thinksteps', winRate: '67%', gamesPlayed: 45 },
+                    { username: 'logicmind', winRate: '64%', gamesPlayed: 42 },
+                    { username: 'xochamp', winRate: '60%', gamesPlayed: 39 },
+                    { username: 'gridplayer', winRate: '57%', gamesPlayed: 36 },
+                    { username: 'boardgamer', winRate: '53%', gamesPlayed: 33 }
+                ]
+            };
+            
+            return leaderboards[game] || [];
+        }
+    </script>
+</body>
+</html> 

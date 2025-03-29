@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小游戏合集 - 猜数字</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .game-container {
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .game-board {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            margin: 20px auto;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            background-color: var(--card-bg);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .game-controls {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .game-level {
+            margin-bottom: 20px;
+        }
+
+        .game-level button {
+            margin: 0 5px;
+        }
+
+        .guess-form {
+            margin: 25px 0;
+        }
+
+        .guess-form input {
+            margin-right: 10px;
+            padding: 8px 15px;
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            width: 100px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .guess-history {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .history-item {
+            padding: 8px 15px;
+            margin: 5px 0;
+            border-radius: var(--border-radius);
+            background-color: #f0f0f0;
+            width: 80%;
+            text-align: left;
+        }
+
+        .history-item.high {
+            background-color: #ffcccc;
+        }
+
+        .history-item.low {
+            background-color: #ccccff;
+        }
+
+        .history-item.correct {
+            background-color: #ccffcc;
+            font-weight: bold;
+        }
+
+        .game-status {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .game-status.win {
+            color: #10b981;
+        }
+
+        .game-status.lose {
+            color: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="main-header">
+            <div class="logo">
+                <h1><a href="../index.html">小游戏合集</a></h1>
+            </div>
+            <nav class="main-nav">
+                <ul id="main-nav-list">
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../dashboard.html">控制台</a></li>
+                    <li><a href="../leaderboard.html">排行榜</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                    <li><a href="../profile.html">个人资料</a></li>
+                    <li><a href="#" id="logout-btn">登出</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <!-- 游戏容器 -->
+        <div class="game-container">
+            <h2 class="form-title">猜数字</h2>
+            <p>我已经想好了一个数字，你需要在规定次数内猜出这个数字是多少！</p>
+            
+            <div class="game-level">
+                <button class="btn" data-level="easy">简单 (1-50)</button>
+                <button class="btn" data-level="medium">中等 (1-100)</button>
+                <button class="btn" data-level="hard">困难 (1-200)</button>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">剩余猜测次数</div>
+                    <div class="stat-value" id="guesses-left">10</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">最高分</div>
+                    <div class="stat-value" id="high-score">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">范围</div>
+                    <div class="stat-value" id="range">1-50</div>
+                </div>
+            </div>
+            
+            <div class="game-controls">
+                <button id="start-btn" class="btn btn-primary">开始游戏</button>
+                <button id="reset-btn" class="btn">重置</button>
+            </div>
+            
+            <div class="game-board">
+                <div id="game-hint">准备好了吗？点击开始游戏按钮！</div>
+                
+                <form class="guess-form" id="guess-form">
+                    <input type="number" id="guess-input" placeholder="您的猜测" min="1" max="50" disabled>
+                    <button type="submit" class="btn btn-primary" id="guess-btn" disabled>猜！</button>
+                </form>
+                
+                <div class="guess-history" id="guess-history"></div>
+            </div>
+            
+            <div class="game-status" id="game-status"></div>
+        </div>
+        
+        <!-- 页脚 -->
+        <footer class="main-footer">
+            <p>&copy; <span id="current-year"></span> 小游戏合集 - 一个充满乐趣的游戏平台</p>
+        </footer>
+    </div>
+
+    <script>
+        // 检查用户是否登录
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem('isLoggedIn')) {
+                window.location.href = '../login.html';
+                return;
+            }
+            
+            // 初始化游戏
+            initGame();
+        });
+        
+        // 设置当前年份
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // 注销功能
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            window.location.href = '../index.html';
+        });
+        
+        // 游戏变量
+        let targetNumber;
+        let guessesLeft;
+        let maxGuesses;
+        let gameStarted = false;
+        let gameOver = false;
+        let level = 'easy';
+        let minRange = 1;
+        let maxRange = 50;
+        let highScore = parseInt(localStorage.getItem('guessNumberHighScore') || '0');
+        
+        // 难度设置
+        const levels = {
+            easy: { range: 50, guesses: 10 },
+            medium: { range: 100, guesses: 7 },
+            hard: { range: 200, guesses: 5 }
+        };
+        
+        // DOM元素
+        const guessesLeftEl = document.getElementById('guesses-left');
+        const highScoreEl = document.getElementById('high-score');
+        const rangeEl = document.getElementById('range');
+        const startBtn = document.getElementById('start-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const guessForm = document.getElementById('guess-form');
+        const guessInput = document.getElementById('guess-input');
+        const guessBtn = document.getElementById('guess-btn');
+        const gameHint = document.getElementById('game-hint');
+        const guessHistory = document.getElementById('guess-history');
+        const gameStatus = document.getElementById('game-status');
+        
+        // 初始化游戏
+        function initGame() {
+            highScoreEl.textContent = highScore.toString();
+            guessesLeftEl.textContent = maxGuesses.toString();
+            
+            // 设置游戏难度
+            document.querySelectorAll('.game-level button').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (gameStarted) return;
+                    
+                    level = this.dataset.level;
+                    minRange = 1;
+                    maxRange = levels[level].range;
+                    maxGuesses = levels[level].guesses;
+                    
+                    guessesLeftEl.textContent = maxGuesses.toString();
+                    rangeEl.textContent = `${minRange}-${maxRange}`;
+                    guessInput.setAttribute('max', maxRange);
+                    
+                    document.querySelectorAll('.game-level button').forEach(btn => {
+                        btn.classList.toggle('btn-primary', btn.dataset.level === level);
+                    });
+                });
+            });
+            
+            // 默认选择简单难度
+            document.querySelector('[data-level="easy"]').classList.add('btn-primary');
+            maxGuesses = levels.easy.guesses;
+            guessesLeft = maxGuesses;
+            
+            // 开始游戏
+            startBtn.addEventListener('click', startGame);
+            
+            // 重置游戏
+            resetBtn.addEventListener('click', resetGame);
+            
+            // 提交猜测
+            guessForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (!gameStarted || gameOver) return;
+                
+                const guess = parseInt(guessInput.value);
+                if (isNaN(guess) || guess < minRange || guess > maxRange) {
+                    alert(`请输入有效数字 (${minRange}-${maxRange})`);
+                    return;
+                }
+                
+                processGuess(guess);
+                guessInput.value = '';
+                guessInput.focus();
+            });
+        }
+        
+        // 开始游戏
+        function startGame() {
+            if (gameStarted) return;
+            
+            gameStarted = true;
+            gameOver = false;
+            guessesLeft = maxGuesses;
+            guessesLeftEl.textContent = guessesLeft.toString();
+            
+            // 生成目标数字
+            targetNumber = Math.floor(Math.random() * maxRange) + minRange;
+            
+            // 清除历史记录
+            guessHistory.innerHTML = '';
+            gameStatus.textContent = '';
+            gameStatus.className = 'game-status';
+            
+            // 启用输入
+            guessInput.disabled = false;
+            guessBtn.disabled = false;
+            
+            gameHint.textContent = `我已经想好了一个 ${minRange} 到 ${maxRange} 之间的数字，开始猜吧！`;
+            
+            startBtn.textContent = '游戏进行中';
+            startBtn.disabled = true;
+            
+            // 禁用难度选择
+            document.querySelectorAll('.game-level button').forEach(btn => {
+                btn.disabled = true;
+            });
+            
+            guessInput.focus();
+        }
+        
+        // 重置游戏
+        function resetGame() {
+            gameStarted = false;
+            gameOver = false;
+            
+            // 禁用输入
+            guessInput.disabled = true;
+            guessBtn.disabled = true;
+            
+            // 启用难度选择
+            document.querySelectorAll('.game-level button').forEach(btn => {
+                btn.disabled = false;
+            });
+            
+            // 清除历史记录
+            guessHistory.innerHTML = '';
+            gameStatus.textContent = '';
+            gameStatus.className = 'game-status';
+            
+            gameHint.textContent = '准备好了吗？点击开始游戏按钮！';
+            
+            startBtn.textContent = '开始游戏';
+            startBtn.disabled = false;
+            
+            guessesLeft = maxGuesses;
+            guessesLeftEl.textContent = guessesLeft.toString();
+        }
+        
+        // 处理猜测
+        function processGuess(guess) {
+            guessesLeft--;
+            guessesLeftEl.textContent = guessesLeft.toString();
+            
+            const historyItem = document.createElement('div');
+            historyItem.classList.add('history-item');
+            
+            if (guess === targetNumber) {
+                // 猜对了
+                historyItem.textContent = `${guess} - 恭喜，你猜对了！`;
+                historyItem.classList.add('correct');
+                gameWin();
+            } else if (guess < targetNumber) {
+                // 猜小了
+                historyItem.textContent = `${guess} - 太小了，再大一点！`;
+                historyItem.classList.add('low');
+            } else {
+                // 猜大了
+                historyItem.textContent = `${guess} - 太大了，再小一点！`;
+                historyItem.classList.add('high');
+            }
+            
+            guessHistory.prepend(historyItem);
+            
+            // 检查是否用完所有猜测机会
+            if (guessesLeft === 0 && guess !== targetNumber) {
+                gameLose();
+            }
+        }
+        
+        // 游戏胜利
+        function gameWin() {
+            gameOver = true;
+            guessInput.disabled = true;
+            guessBtn.disabled = true;
+            
+            const score = calculateScore();
+            
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem('guessNumberHighScore', highScore.toString());
+                highScoreEl.textContent = highScore.toString();
+            }
+            
+            gameStatus.textContent = `恭喜你赢了！得分：${score}`;
+            gameStatus.className = 'game-status win';
+            gameHint.textContent = `太棒了！你用了 ${maxGuesses - guessesLeft} 次猜中了数字 ${targetNumber}！`;
+            
+            startBtn.textContent = '开始游戏';
+            startBtn.disabled = false;
+        }
+        
+        // 游戏失败
+        function gameLose() {
+            gameOver = true;
+            guessInput.disabled = true;
+            guessBtn.disabled = true;
+            
+            gameStatus.textContent = '游戏结束，你输了！';
+            gameStatus.className = 'game-status lose';
+            gameHint.textContent = `很遗憾，正确的数字是 ${targetNumber}。再试一次吧！`;
+            
+            startBtn.textContent = '开始游戏';
+            startBtn.disabled = false;
+        }
+        
+        // 计算得分
+        function calculateScore() {
+            // 基于难度和剩余猜测次数计算分数
+            const levelMultiplier = {
+                easy: 1,
+                medium: 2,
+                hard: 3
+            };
+            
+            // 基础分数 + 难度系数 * 剩余猜测次数
+            return 100 + (levelMultiplier[level] * guessesLeft * 10);
+        }
+    </script>
+</body>
+</html> 

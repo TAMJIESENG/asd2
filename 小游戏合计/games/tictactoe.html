@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小游戏合集 - 井字棋</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .game-container {
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            background-color: var(--card-bg);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .game-controls {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .game-level {
+            margin-bottom: 20px;
+        }
+
+        .game-level button {
+            margin: 0 5px;
+        }
+
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 10px;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+        }
+
+        .cell {
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .cell:hover:not(.filled) {
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+
+        .cell.x {
+            color: var(--primary-color);
+        }
+
+        .cell.o {
+            color: var(--secondary-color);
+        }
+
+        .game-status {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .game-status.win {
+            color: #10b981;
+        }
+
+        .game-status.draw {
+            color: #f59e0b;
+        }
+
+        .game-status.lose {
+            color: var(--secondary-color);
+        }
+
+        .player-select {
+            margin-bottom: 20px;
+        }
+
+        .player-select button {
+            margin: 0 5px;
+        }
+
+        @media (max-width: 500px) {
+            .game-board {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .cell {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="main-header">
+            <div class="logo">
+                <h1><a href="../index.html">小游戏合集</a></h1>
+            </div>
+            <nav class="main-nav">
+                <ul id="main-nav-list">
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../dashboard.html">控制台</a></li>
+                    <li><a href="../leaderboard.html">排行榜</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                    <li><a href="../profile.html">个人资料</a></li>
+                    <li><a href="#" id="logout-btn">登出</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <!-- 游戏容器 -->
+        <div class="game-container">
+            <h2 class="form-title">井字棋</h2>
+            <p>经典的三子连线游戏，先连成一条线的玩家获胜！</p>
+            
+            <div class="player-select">
+                <button class="btn" data-mark="X">选择 X</button>
+                <button class="btn" data-mark="O">选择 O</button>
+            </div>
+            
+            <div class="game-level">
+                <button class="btn" data-level="easy">简单</button>
+                <button class="btn" data-level="medium">中等</button>
+                <button class="btn" data-level="hard">困难</button>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">玩家</div>
+                    <div class="stat-value" id="player-wins">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">平局</div>
+                    <div class="stat-value" id="draws">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">电脑</div>
+                    <div class="stat-value" id="computer-wins">0</div>
+                </div>
+            </div>
+            
+            <div class="game-controls">
+                <button id="start-btn" class="btn btn-primary">开始游戏</button>
+                <button id="reset-btn" class="btn">重置</button>
+            </div>
+            
+            <div class="game-board" id="game-board">
+                <div class="cell" data-index="0"></div>
+                <div class="cell" data-index="1"></div>
+                <div class="cell" data-index="2"></div>
+                <div class="cell" data-index="3"></div>
+                <div class="cell" data-index="4"></div>
+                <div class="cell" data-index="5"></div>
+                <div class="cell" data-index="6"></div>
+                <div class="cell" data-index="7"></div>
+                <div class="cell" data-index="8"></div>
+            </div>
+            
+            <div class="game-status" id="game-status"></div>
+        </div>
+        
+        <!-- 页脚 -->
+        <footer class="main-footer">
+            <p>&copy; <span id="current-year"></span> 小游戏合集 - 一个充满乐趣的游戏平台</p>
+        </footer>
+    </div>
+
+    <script>
+        // 检查用户是否登录
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem('isLoggedIn')) {
+                window.location.href = '../login.html';
+                return;
+            }
+            
+            // 初始化游戏
+            initGame();
+        });
+        
+        // 设置当前年份
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // 注销功能
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            window.location.href = '../index.html';
+        });
+        
+        // 游戏变量
+        let board = ['', '', '', '', '', '', '', '', ''];
+        let currentPlayer = 'X';
+        let playerMark = 'X';
+        let computerMark = 'O';
+        let gameActive = false;
+        let difficulty = 'easy';
+        
+        // 统计数据
+        let playerWins = 0;
+        let computerWins = 0;
+        let draws = 0;
+        
+        // 获取元素
+        const cells = document.querySelectorAll('.cell');
+        const statusElement = document.getElementById('game-status');
+        const playerWinsElement = document.getElementById('player-wins');
+        const computerWinsElement = document.getElementById('computer-wins');
+        const drawsElement = document.getElementById('draws');
+        
+        // 获取胜利模式
+        const winPatterns = [
+            [0, 1, 2], [3, 4, 5], [6, 7, 8], // 水平
+            [0, 3, 6], [1, 4, 7], [2, 5, 8], // 垂直
+            [0, 4, 8], [2, 4, 6]             // 对角线
+        ];
+        
+        // 初始化游戏
+        function initGame() {
+            // 设置玩家标记
+            document.querySelectorAll('.player-select button').forEach(button => {
+                button.addEventListener('click', function() {
+                    playerMark = this.dataset.mark;
+                    computerMark = playerMark === 'X' ? 'O' : 'X';
+                    
+                    document.querySelectorAll('.player-select button').forEach(btn => {
+                        btn.classList.toggle('btn-primary', btn.dataset.mark === playerMark);
+                    });
+                    
+                    if (gameActive) {
+                        resetGame();
+                    }
+                });
+            });
+            
+            // 默认选择X
+            document.querySelector('[data-mark="X"]').classList.add('btn-primary');
+            
+            // 设置游戏难度
+            document.querySelectorAll('.game-level button').forEach(button => {
+                button.addEventListener('click', function() {
+                    difficulty = this.dataset.level;
+                    
+                    document.querySelectorAll('.game-level button').forEach(btn => {
+                        btn.classList.toggle('btn-primary', btn.dataset.level === difficulty);
+                    });
+                    
+                    if (gameActive) {
+                        resetGame();
+                    }
+                });
+            });
+            
+            // 默认选择简单难度
+            document.querySelector('[data-level="easy"]').classList.add('btn-primary');
+            
+            // 单元格点击事件
+            cells.forEach(cell => {
+                cell.addEventListener('click', () => handleCellClick(cell));
+            });
+            
+            // 开始游戏按钮
+            document.getElementById('start-btn').addEventListener('click', startGame);
+            
+            // 重置游戏按钮
+            document.getElementById('reset-btn').addEventListener('click', resetGame);
+            
+            // 加载统计数据
+            loadStats();
+        }
+        
+        // 开始游戏
+        function startGame() {
+            if (gameActive) return;
+            
+            resetBoard();
+            gameActive = true;
+            currentPlayer = 'X';
+            
+            setGameStatus('', `游戏开始！${playerMark === currentPlayer ? '你的' : '电脑的'}回合`);
+            
+            // 如果电脑先行，让电脑落子
+            if (currentPlayer === computerMark) {
+                setTimeout(computerMove, 500);
+            }
+        }
+        
+        // 重置游戏
+        function resetGame() {
+            resetBoard();
+            gameActive = false;
+            setGameStatus('', '点击"开始游戏"开始新的一局');
+        }
+        
+        // 重置棋盘
+        function resetBoard() {
+            board = ['', '', '', '', '', '', '', '', ''];
+            cells.forEach(cell => {
+                cell.textContent = '';
+                cell.classList.remove('x', 'o', 'filled');
+            });
+        }
+        
+        // 处理单元格点击
+        function handleCellClick(cell) {
+            const index = cell.dataset.index;
+            
+            // 如果游戏未开始或该格子已被占用或不是玩家回合，不做任何操作
+            if (!gameActive || board[index] !== '' || currentPlayer !== playerMark) {
+                return;
+            }
+            
+            // 更新棋盘和显示
+            makeMove(index, playerMark);
+            
+            // 检查游戏状态
+            if (!checkGameState()) {
+                // 轮到电脑
+                currentPlayer = computerMark;
+                setGameStatus('', '电脑思考中...');
+                
+                // 延迟一下电脑的操作，让游戏更自然
+                setTimeout(computerMove, 500);
+            }
+        }
+        
+        // 电脑落子
+        function computerMove() {
+            if (!gameActive || currentPlayer !== computerMark) {
+                return;
+            }
+            
+            let move;
+            
+            // 根据难度选择不同的算法
+            switch(difficulty) {
+                case 'easy':
+                    move = getRandomMove();
+                    break;
+                case 'medium':
+                    // 有50%概率使用最佳策略
+                    move = Math.random() < 0.5 ? getBestMove() : getRandomMove();
+                    break;
+                case 'hard':
+                    move = getBestMove();
+                    break;
+                default:
+                    move = getRandomMove();
+            }
+            
+            // 更新棋盘和显示
+            makeMove(move, computerMark);
+            
+            // 检查游戏状态
+            if (!checkGameState()) {
+                // 轮到玩家
+                currentPlayer = playerMark;
+                setGameStatus('', '你的回合');
+            }
+        }
+        
+        // 随机选择一个空格
+        function getRandomMove() {
+            const availableMoves = [];
+            
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === '') {
+                    availableMoves.push(i);
+                }
+            }
+            
+            return availableMoves[Math.floor(Math.random() * availableMoves.length)];
+        }
+        
+        // 获取最佳移动（使用极小极大算法）
+        function getBestMove() {
+            // 检查是否有可以直接获胜的位置
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === '') {
+                    // 尝试在这个位置下棋
+                    board[i] = computerMark;
+                    
+                    // 检查是否获胜
+                    if (checkWin(computerMark)) {
+                        // 恢复棋盘并返回这个位置
+                        board[i] = '';
+                        return i;
+                    }
+                    
+                    // 恢复棋盘
+                    board[i] = '';
+                }
+            }
+            
+            // 检查是否需要阻止玩家获胜
+            for (let i = 0; i < board.length; i++) {
+                if (board[i] === '') {
+                    // 尝试在这个位置下棋
+                    board[i] = playerMark;
+                    
+                    // 检查玩家是否会获胜
+                    if (checkWin(playerMark)) {
+                        // 恢复棋盘并返回这个位置
+                        board[i] = '';
+                        return i;
+                    }
+                    
+                    // 恢复棋盘
+                    board[i] = '';
+                }
+            }
+            
+            // 如果中心位置空闲，优先选择中心
+            if (board[4] === '') {
+                return 4;
+            }
+            
+            // 选择角落
+            const corners = [0, 2, 6, 8];
+            const availableCorners = corners.filter(i => board[i] === '');
+            if (availableCorners.length > 0) {
+                return availableCorners[Math.floor(Math.random() * availableCorners.length)];
+            }
+            
+            // 选择边
+            const edges = [1, 3, 5, 7];
+            const availableEdges = edges.filter(i => board[i] === '');
+            if (availableEdges.length > 0) {
+                return availableEdges[Math.floor(Math.random() * availableEdges.length)];
+            }
+            
+            // 如果以上都不满足，随机选择一个空位
+            return getRandomMove();
+        }
+        
+        // 执行移动
+        function makeMove(index, player) {
+            board[index] = player;
+            const cell = cells[index];
+            cell.textContent = player;
+            cell.classList.add(player.toLowerCase(), 'filled');
+        }
+        
+        // 检查游戏状态（获胜、平局、继续）
+        function checkGameState() {
+            // 检查是否获胜
+            if (checkWin(currentPlayer)) {
+                gameActive = false;
+                
+                if (currentPlayer === playerMark) {
+                    setGameStatus('win', '恭喜，你赢了！');
+                    playerWins++;
+                    playerWinsElement.textContent = playerWins;
+                } else {
+                    setGameStatus('lose', '电脑赢了，再接再厉！');
+                    computerWins++;
+                    computerWinsElement.textContent = computerWins;
+                }
+                
+                // 保存统计数据
+                saveStats();
+                return true;
+            }
+            
+            // 检查是否平局
+            if (!board.includes('')) {
+                gameActive = false;
+                setGameStatus('draw', '平局！');
+                draws++;
+                drawsElement.textContent = draws;
+                
+                // 保存统计数据
+                saveStats();
+                return true;
+            }
+            
+            return false;
+        }
+        
+        // 检查是否有一方获胜
+        function checkWin(player) {
+            return winPatterns.some(pattern => {
+                return pattern.every(index => board[index] === player);
+            });
+        }
+        
+        // 设置游戏状态消息
+        function setGameStatus(type, message) {
+            statusElement.textContent = message;
+            statusElement.className = 'game-status';
+            
+            if (type) {
+                statusElement.classList.add(type);
+            }
+        }
+        
+        // 保存统计数据
+        function saveStats() {
+            // 更新本地存储的统计数据
+            const gameStats = JSON.parse(localStorage.getItem('gameStats') || '{}');
+            
+            if (!gameStats.tictactoe) {
+                gameStats.tictactoe = {
+                    gamesPlayed: 0,
+                    playerWins: 0,
+                    computerWins: 0,
+                    draws: 0
+                };
+            }
+            
+            gameStats.tictactoe.gamesPlayed = playerWins + computerWins + draws;
+            gameStats.tictactoe.playerWins = playerWins;
+            gameStats.tictactoe.computerWins = computerWins;
+            gameStats.tictactoe.draws = draws;
+            
+            localStorage.setItem('gameStats', JSON.stringify(gameStats));
+        }
+        
+        // 加载统计数据
+        function loadStats() {
+            const gameStats = JSON.parse(localStorage.getItem('gameStats') || '{}');
+            
+            if (gameStats.tictactoe) {
+                playerWins = gameStats.tictactoe.playerWins || 0;
+                computerWins = gameStats.tictactoe.computerWins || 0;
+                draws = gameStats.tictactoe.draws || 0;
+                
+                playerWinsElement.textContent = playerWins;
+                computerWinsElement.textContent = computerWins;
+                drawsElement.textContent = draws;
+            }
+        }
+    </script>
+</body>
+</html> 

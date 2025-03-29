@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小游戏合集 - 滑动拼图</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        .game-container {
+            padding: 30px;
+            margin: 40px auto;
+            max-width: 800px;
+            text-align: center;
+        }
+
+        .game-board {
+            position: relative;
+            margin: 30px auto;
+            width: 400px;
+            height: 400px;
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+
+        .puzzle-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            touch-action: none;
+        }
+
+        .puzzle-piece {
+            position: absolute;
+            background-size: 400px 400px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-sizing: border-box;
+            transition: transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .puzzle-piece:hover {
+            transform: scale(0.98);
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .puzzle-piece.empty {
+            background: transparent !important;
+            border: none;
+            cursor: default;
+        }
+
+        .puzzle-piece.correct {
+            border: 2px solid rgba(16, 185, 129, 0.7);
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            background-color: var(--card-bg);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .game-level {
+            margin-bottom: 20px;
+        }
+
+        .game-level button {
+            margin: 0 5px;
+        }
+
+        .image-selector {
+            margin-bottom: 20px;
+        }
+
+        .image-option {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            margin: 0 10px;
+            border-radius: var(--border-radius);
+            background-size: cover;
+            background-position: center;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .image-option:hover {
+            transform: scale(1.05);
+        }
+
+        .image-option.selected {
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+
+        .game-controls {
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .game-status {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .game-status.win {
+            color: #10b981;
+        }
+
+        .win-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: white;
+            z-index: 10;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .win-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .win-message {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .win-stats {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            .game-board {
+                width: 300px;
+                height: 300px;
+            }
+            
+            .puzzle-piece {
+                background-size: 300px 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 页面头部 -->
+        <header class="main-header">
+            <div class="logo">
+                <h1><a href="../index.html">小游戏合集</a></h1>
+            </div>
+            <nav class="main-nav">
+                <ul id="main-nav-list">
+                    <li><a href="../index.html">首页</a></li>
+                    <li><a href="../dashboard.html">控制台</a></li>
+                    <li><a href="../leaderboard.html">排行榜</a></li>
+                    <li><a href="../about.html">关于</a></li>
+                    <li><a href="../profile.html">个人资料</a></li>
+                    <li><a href="#" id="logout-btn">登出</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <!-- 游戏容器 -->
+        <div class="game-container">
+            <h2 class="form-title">滑动拼图</h2>
+            <p>重新排列拼图块，还原完整图像！</p>
+            
+            <div class="game-level">
+                <button class="btn" data-size="3">3×3</button>
+                <button class="btn" data-size="4">4×4</button>
+                <button class="btn" data-size="5">5×5</button>
+            </div>
+            
+            <div class="image-selector">
+                <h3>选择图片</h3>
+                <div class="image-option" data-image="landscape" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=500')"></div>
+                <div class="image-option" data-image="city" style="background-image: url('https://images.unsplash.com/photo-1514565131-fce0801e5785?w=500')"></div>
+                <div class="image-option" data-image="animal" style="background-image: url('https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=500')"></div>
+                <div class="image-option" data-image="numbers" style="background-image: none; background-color: #f3f4f6;"></div>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">移动次数</div>
+                    <div class="stat-value" id="moves">0</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">用时</div>
+                    <div class="stat-value" id="time">00:00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">最佳时间</div>
+                    <div class="stat-value" id="best-time">--:--</div>
+                </div>
+            </div>
+            
+            <div class="game-controls">
+                <button id="start-btn" class="btn btn-primary">开始游戏</button>
+                <button id="solve-btn" class="btn">显示原图</button>
+            </div>
+            
+            <div class="game-board">
+                <div class="puzzle-container" id="puzzle-container"></div>
+                
+                <div class="win-overlay" id="win-overlay">
+                    <div class="win-message">恭喜通关！</div>
+                    <div class="win-stats">
+                        <div>移动次数: <span id="final-moves">0</span></div>
+                        <div>用时: <span id="final-time">00:00</span></div>
+                    </div>
+                    <button class="btn btn-primary" id="play-again-btn">再玩一次</button>
+                </div>
+            </div>
+            
+            <div class="game-status" id="game-status"></div>
+        </div>
+        
+        <!-- 页脚 -->
+        <footer class="main-footer">
+            <p>&copy; <span id="current-year"></span> 小游戏合集 - 一个充满乐趣的游戏平台</p>
+        </footer>
+    </div>
+
+    <script>
+        // 检查用户是否登录
+        document.addEventListener('DOMContentLoaded', function() {
+            if (!localStorage.getItem('isLoggedIn')) {
+                window.location.href = '../login.html';
+                return;
+            }
+            
+            // 初始化游戏
+            initGame();
+        });
+        
+        // 设置当前年份
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // 注销功能
+        document.getElementById('logout-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            window.location.href = '../index.html';
+        });
+        
+        // 游戏变量
+        const puzzleContainer = document.getElementById('puzzle-container');
+        const movesDisplay = document.getElementById('moves');
+        const timeDisplay = document.getElementById('time');
+        const bestTimeDisplay = document.getElementById('best-time');
+        const startBtn = document.getElementById('start-btn');
+        const solveBtn = document.getElementById('solve-btn');
+        const playAgainBtn = document.getElementById('play-again-btn');
+        const winOverlay = document.getElementById('win-overlay');
+        const finalMovesDisplay = document.getElementById('final-moves');
+        const finalTimeDisplay = document.getElementById('final-time');
+        const gameStatusDisplay = document.getElementById('game-status');
+        
+        let gridSize = 3;
+        let pieceSize;
+        let pieces = [];
+        let emptyPos;
+        let moves = 0;
+        let timer;
+        let seconds = 0;
+        let gameStarted = false;
+        let selectedImage = 'landscape';
+        let images = {
+            landscape: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=500',
+            city: 'https://images.unsplash.com/photo-1514565131-fce0801e5785?w=500',
+            animal: 'https://images.unsplash.com/photo-1546182990-dffeafbe841d?w=500',
+            numbers: null
+        };
+        
+        // 初始化游戏
+        function initGame() {
+            // 设置默认选择
+            document.querySelector('[data-size="3"]').classList.add('btn-primary');
+            document.querySelector('[data-image="landscape"]').classList.add('selected');
+            
+            // 监听网格大小选择
+            document.querySelectorAll('.game-level button').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (gameStarted && !confirm('更改难度将重新开始游戏，确定要继续吗？')) {
+                        return;
+                    }
+                    
+                    gridSize = parseInt(this.dataset.size);
+                    
+                    document.querySelectorAll('.game-level button').forEach(btn => {
+                        btn.classList.toggle('btn-primary', btn.dataset.size === this.dataset.size);
+                    });
+                    
+                    if (gameStarted) {
+                        resetGame();
+                        createPuzzle();
+                    }
+                });
+            });
+            
+            // 监听图片选择
+            document.querySelectorAll('.image-option').forEach(option => {
+                option.addEventListener('click', function() {
+                    if (gameStarted && !confirm('更改图片将重新开始游戏，确定要继续吗？')) {
+                        return;
+                    }
+                    
+                    selectedImage = this.dataset.image;
+                    
+                    document.querySelectorAll('.image-option').forEach(opt => {
+                        opt.classList.toggle('selected', opt.dataset.image === selectedImage);
+                    });
+                    
+                    if (gameStarted) {
+                        resetGame();
+                        createPuzzle();
+                    }
+                });
+            });
+            
+            // 开始游戏按钮
+            startBtn.addEventListener('click', function() {
+                if (gameStarted) {
+                    resetGame();
+                }
+                createPuzzle();
+            });
+            
+            // 显示原图按钮
+            solveBtn.addEventListener('click', function() {
+                if (!gameStarted) return;
+                
+                const isSolving = this.textContent === '显示原图';
+                
+                if (isSolving) {
+                    this.textContent = '继续游戏';
+                    showSolution();
+                } else {
+                    this.textContent = '显示原图';
+                    hideSolution();
+                }
+            });
+            
+            // 再玩一次按钮
+            playAgainBtn.addEventListener('click', function() {
+                winOverlay.classList.remove('show');
+                resetGame();
+                createPuzzle();
+            });
+            
+            // 加载最佳时间
+            loadBestTime();
+        }
+        
+        // 创建拼图
+        function createPuzzle() {
+            gameStarted = true;
+            
+            // 清空容器
+            puzzleContainer.innerHTML = '';
+            
+            // 计算每个拼图块的大小
+            const boardSize = puzzleContainer.clientWidth;
+            pieceSize = boardSize / gridSize;
+            
+            // 创建拼图块
+            pieces = [];
+            for (let i = 0; i < gridSize * gridSize; i++) {
+                const piece = document.createElement('div');
+                piece.className = 'puzzle-piece';
+                piece.dataset.index = i;
+                
+                // 计算行列位置
+                const row = Math.floor(i / gridSize);
+                const col = i % gridSize;
+                
+                // 设置位置
+                piece.style.width = `${pieceSize}px`;
+                piece.style.height = `${pieceSize}px`;
+                piece.style.left = `${col * pieceSize}px`;
+                piece.style.top = `${row * pieceSize}px`;
+                
+                // 设置背景图或数字
+                if (selectedImage === 'numbers') {
+                    piece.textContent = i + 1;
+                    piece.style.backgroundColor = `hsl(${i * 10}, 70%, 60%)`;
+                } else {
+                    piece.style.backgroundImage = `url(${images[selectedImage]})`;
+                    piece.style.backgroundPosition = `-${col * pieceSize}px -${row * pieceSize}px`;
+                }
+                
+                // 最后一块是空白的
+                if (i === gridSize * gridSize - 1) {
+                    piece.classList.add('empty');
+                    piece.textContent = '';
+                    emptyPos = { row, col };
+                }
+                
+                // 添加点击事件
+                piece.addEventListener('click', function() {
+                    movePiece(this);
+                });
+                
+                // 添加触摸事件（移动设备）
+                piece.addEventListener('touchstart', function(e) {
+                    e.preventDefault();
+                    movePiece(this);
+                });
+                
+                puzzleContainer.appendChild(piece);
+                pieces.push({
+                    element: piece,
+                    row,
+                    col,
+                    originalRow: row,
+                    originalCol: col
+                });
+            }
+            
+            // 打乱拼图
+            shufflePuzzle();
+            
+            // 重置移动计数和计时器
+            moves = 0;
+            seconds = 0;
+            movesDisplay.textContent = moves;
+            updateTimer();
+            
+            // 启动计时器
+            startTimer();
+            
+            // 更改按钮文本
+            startBtn.textContent = '重新开始';
+            solveBtn.textContent = '显示原图';
+            
+            gameStatusDisplay.textContent = '';
+            gameStatusDisplay.className = 'game-status';
+        }
+        
+        // 打乱拼图
+        function shufflePuzzle() {
+            // 随机移动空白块多次来打乱拼图
+            for (let i = 0; i < 100 * gridSize; i++) {
+                const possibleMoves = getValidMoves();
+                const randomMove = possibleMoves[Math.floor(Math.random() * possibleMoves.length)];
+                
+                // 移动空白块到随机选择的方向
+                const newRow = emptyPos.row + randomMove.dr;
+                const newCol = emptyPos.col + randomMove.dc;
+                
+                // 找到要移动的拼图块
+                const pieceToMove = pieces.find(p => p.row === newRow && p.col === newCol);
+                
+                // 交换位置
+                pieceToMove.row = emptyPos.row;
+                pieceToMove.col = emptyPos.col;
+                emptyPos.row = newRow;
+                emptyPos.col = newCol;
+                
+                // 更新DOM
+                pieceToMove.element.style.top = `${pieceToMove.row * pieceSize}px`;
+                pieceToMove.element.style.left = `${pieceToMove.col * pieceSize}px`;
+            }
+        }
+        
+        // 获取有效移动方向
+        function getValidMoves() {
+            const moves = [
+                { dr: -1, dc: 0 }, // 上
+                { dr: 1, dc: 0 },  // 下
+                { dr: 0, dc: -1 }, // 左
+                { dr: 0, dc: 1 }   // 右
+            ];
+            
+            return moves.filter(move => {
+                const newRow = emptyPos.row + move.dr;
+                const newCol = emptyPos.col + move.dc;
+                return newRow >= 0 && newRow < gridSize && newCol >= 0 && newCol < gridSize;
+            });
+        }
+        
+        // 移动拼图块
+        function movePiece(pieceElement) {
+            // 获取点击的拼图块
+            const piece = pieces.find(p => p.element === pieceElement);
+            
+            // 检查是否相邻空白块
+            if (
+                (Math.abs(piece.row - emptyPos.row) === 1 && piece.col === emptyPos.col) ||
+                (Math.abs(piece.col - emptyPos.col) === 1 && piece.row === emptyPos.row)
+            ) {
+                // 交换位置
+                const tempRow = piece.row;
+                const tempCol = piece.col;
+                
+                piece.row = emptyPos.row;
+                piece.col = emptyPos.col;
+                
+                emptyPos.row = tempRow;
+                emptyPos.col = tempCol;
+                
+                // 更新DOM
+                piece.element.style.top = `${piece.row * pieceSize}px`;
+                piece.element.style.left = `${piece.col * pieceSize}px`;
+                
+                // 增加移动计数
+                moves++;
+                movesDisplay.textContent = moves;
+                
+                // 检查是否完成
+                if (checkWin()) {
+                    gameWin();
+                }
+                
+                // 检查每块是否在正确位置并添加高亮
+                pieces.forEach(p => {
+                    const isCorrect = p.row === p.originalRow && p.col === p.originalCol;
+                    p.element.classList.toggle('correct', isCorrect);
+                });
+            }
+        }
+        
+        // 检查是否完成
+        function checkWin() {
+            return pieces.every(piece => piece.row === piece.originalRow && piece.col === piece.originalCol);
+        }
+        
+        // 游戏胜利
+        function gameWin() {
+            clearInterval(timer);
+            gameStarted = false;
+            
+            // 保存最佳时间
+            const bestTimeKey = `puzzleBestTime_${gridSize}`;
+            const currentBestTime = localStorage.getItem(bestTimeKey) || 999999;
+            
+            if (seconds < currentBestTime) {
+                localStorage.setItem(bestTimeKey, seconds);
+                bestTimeDisplay.textContent = formatTime(seconds);
+            }
+            
+            // 显示胜利消息
+            finalMovesDisplay.textContent = moves;
+            finalTimeDisplay.textContent = formatTime(seconds);
+            
+            setTimeout(() => {
+                winOverlay.classList.add('show');
+            }, 500);
+            
+            gameStatusDisplay.textContent = '恭喜你成功完成了拼图！';
+            gameStatusDisplay.className = 'game-status win';
+        }
+        
+        // 显示原图
+        function showSolution() {
+            clearInterval(timer);
+            
+            pieces.forEach(piece => {
+                piece.element.style.top = `${piece.originalRow * pieceSize}px`;
+                piece.element.style.left = `${piece.originalCol * pieceSize}px`;
+            });
+        }
+        
+        // 隐藏原图
+        function hideSolution() {
+            pieces.forEach(piece => {
+                piece.element.style.top = `${piece.row * pieceSize}px`;
+                piece.element.style.left = `${piece.col * pieceSize}px`;
+            });
+            
+            startTimer();
+        }
+        
+        // 重置游戏
+        function resetGame() {
+            clearInterval(timer);
+            gameStarted = false;
+            moves = 0;
+            seconds = 0;
+            movesDisplay.textContent = moves;
+            updateTimer();
+            solveBtn.textContent = '显示原图';
+            gameStatusDisplay.textContent = '';
+            gameStatusDisplay.className = 'game-status';
+        }
+        
+        // 启动计时器
+        function startTimer() {
+            clearInterval(timer);
+            timer = setInterval(() => {
+                seconds++;
+                updateTimer();
+            }, 1000);
+        }
+        
+        // 更新计时器显示
+        function updateTimer() {
+            timeDisplay.textContent = formatTime(seconds);
+        }
+        
+        // 格式化时间
+        function formatTime(totalSeconds) {
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // 加载最佳时间
+        function loadBestTime() {
+            const bestTimeKey = `puzzleBestTime_${gridSize}`;
+            const bestTime = localStorage.getItem(bestTimeKey);
+            
+            if (bestTime) {
+                bestTimeDisplay.textContent = formatTime(bestTime);
+            } else {
+                bestTimeDisplay.textContent = '--:--';
+            }
+        }
+        
+        // 窗口调整大小时重新计算拼图大小
+        window.addEventListener('resize', function() {
+            if (!gameStarted) return;
+            
+            const boardSize = puzzleContainer.clientWidth;
+            pieceSize = boardSize / gridSize;
+            
+            pieces.forEach(piece => {
+                piece.element.style.width = `${pieceSize}px`;
+                piece.element.style.height = `${pieceSize}px`;
+                piece.element.style.top = `${piece.row * pieceSize}px`;
+                piece.element.style.left = `${piece.col * pieceSize}px`;
+                
+                if (selectedImage !== 'numbers') {
+                    piece.element.style.backgroundSize = `${boardSize}px ${boardSize}px`;
+                    piece.element.style.backgroundPosition = `-${piece.originalCol * pieceSize}px -${piece.originalRow * pieceSize}px`;
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
