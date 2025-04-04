@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>扫码支付 - 奕天Cursor助手New</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/payment.css">
+</head>
+<body>
+    <div class="payment-container">
+        <div class="payment-card">
+            <div class="payment-header">
+                <h1>请扫码支付</h1>
+                <div class="payment-close" id="close-payment">×</div>
+            </div>
+            
+            <div class="payment-body">
+                <div class="qrcode-section">
+                    <div class="qrcode-wrapper">
+                        <div class="qrcode-placeholder" id="qrcode-container">
+                            <!-- 二维码将通过JS生成 -->
+                        </div>
+                        <div class="scan-tips">
+                            <div class="scan-icon"></div>
+                            <p>请使用<span id="payment-method">支付宝</span>扫一扫</p>
+                        </div>
+                    </div>
+                    <div class="price-display">
+                        <span class="price-symbol">¥</span>
+                        <span class="price-value" id="payment-amount">100.00</span>
+                    </div>
+                </div>
+                
+                <div class="payment-info">
+                    <div class="info-row">
+                        <span class="info-label">订单编号:</span>
+                        <span class="info-value" id="order-number">2025040412345678</span>
+                        <button class="copy-btn" id="copy-order-number">复制</button>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">商品名称:</span>
+                        <span class="info-value" id="product-name">季度会员</span>
+                    </div>
+                    <div class="payment-instruction">
+                        <p>请使用<span id="payment-app-name">支付宝</span>扫描二维码完成支付</p>
+                        <p>支付完成后将自动跳转</p>
+                    </div>
+                    
+                    <div class="countdown-section">
+                        <p class="countdown-text">二维码有效期还剩: <span id="countdown">15:00</span></p>
+                        <div class="progress-bar">
+                            <div class="progress" id="countdown-progress"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payment-footer">
+                <div class="payment-methods">
+                    <div class="payment-method-item active" data-method="alipay">
+                        <div class="method-icon alipay-icon"></div>
+                        <span class="method-name">支付宝</span>
+                    </div>
+                    <div class="payment-method-item" data-method="wechat">
+                        <div class="method-icon wechat-icon"></div>
+                        <span class="method-name">微信支付</span>
+                    </div>
+                    <div class="payment-method-item" data-method="qq">
+                        <div class="method-icon qq-icon"></div>
+                        <span class="method-name">QQ钱包</span>
+                    </div>
+                </div>
+                
+                <div class="payment-actions">
+                    <button class="btn-primary" id="payment-complete-btn">我已支付完成</button>
+                    <button class="retry-btn" id="refresh-qrcode">刷新二维码</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 支付结果提示 -->
+        <div class="payment-result success hidden" id="payment-success">
+            <div class="result-icon success-icon"></div>
+            <h2>支付成功</h2>
+            <p>您的激活码已准备就绪</p>
+            <button class="btn-primary" id="view-activation-code">查看激活码</button>
+        </div>
+        
+        <div class="payment-result failed hidden" id="payment-failed">
+            <div class="result-icon failed-icon"></div>
+            <h2>支付失败</h2>
+            <p>请重新尝试支付或选择其他支付方式</p>
+            <button class="btn-primary" id="retry-payment">重新支付</button>
+            <button class="btn-secondary" id="cancel-payment">取消订单</button>
+        </div>
+    </div>
+
+    <script src="js/qrcode.min.js"></script>
+    <script src="js/payment.js"></script>
+</body>
+</html>

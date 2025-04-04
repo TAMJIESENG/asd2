@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理 - 奕天Cursor助手New</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <div id="login-container" class="login-container">
+        <div class="login-form">
+            <h2>管理员登录</h2>
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" placeholder="请输入用户名" value="admin">
+            </div>
+            <div class="form-group">
+                <label for="password">密码</label>
+                <input type="password" id="password" placeholder="请输入密码" value="admin123">
+            </div>
+            <div class="form-error" id="login-error"></div>
+            <button id="login-btn" class="btn btn-primary">登录</button>
+        </div>
+    </div>
+
+    <div id="admin-panel" class="admin-panel" style="display: none;">
+        <header>
+            <div class="container">
+                <div class="logo">
+                    <h1>奕天Cursor助手New</h1>
+                    <p>管理后台</p>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="#" class="nav-link active" data-target="activation-codes">激活码管理</a></li>
+                        <li><a href="#" class="nav-link" data-target="orders">订单管理</a></li>
+                        <li><a href="#" class="nav-link" data-target="settings">系统设置</a></li>
+                        <li><a href="index.html">返回前台</a></li>
+                        <li><a href="#" id="logout-btn">退出登录</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main class="admin-container">
+            <div class="container">
+                <!-- 激活码管理 -->
+                <section id="activation-codes" class="admin-section active">
+                    <div class="admin-header">
+                        <h2>激活码管理</h2>
+                        <div class="actions">
+                            <button id="import-codes" class="btn btn-primary">导入激活码</button>
+                        </div>
+                    </div>
+                    
+                    <div class="filter-bar">
+                        <div class="search-box">
+                            <input type="text" id="code-search" placeholder="搜索激活码...">
+                            <button class="search-btn">搜索</button>
+                        </div>
+                        <div class="filters">
+                            <select id="code-status-filter">
+                                <option value="all">全部状态</option>
+                                <option value="unused">未使用</option>
+                                <option value="used">已使用</option>
+                                <option value="pending">待发货</option>
+                            </select>
+                            <select id="code-type-filter">
+                                <option value="all">全部类型</option>
+                                <option value="month">月度会员</option>
+                                <option value="quarter">季度会员</option>
+                                <option value="year">年度会员</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>激活码</th>
+                                    <th>类型</th>
+                                    <th>有效期</th>
+                                    <th>状态</th>
+                                    <th>创建时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="codes-table-body">
+                                <!-- 激活码数据将动态填充 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button class="btn-page" data-page="prev">上一页</button>
+                        <span class="page-info">第 <span id="current-page">1</span> 页，共 <span id="total-pages">1</span> 页</span>
+                        <button class="btn-page" data-page="next">下一页</button>
+                    </div>
+                </section>
+                
+                <!-- 订单管理 -->
+                <section id="orders" class="admin-section">
+                    <div class="admin-header">
+                        <h2>订单管理</h2>
+                    </div>
+                    
+                    <div class="filter-bar">
+                        <div class="search-box">
+                            <input type="text" id="order-search" placeholder="搜索订单号/用户...">
+                            <button class="search-btn">搜索</button>
+                        </div>
+                        <div class="filters">
+                            <select id="order-status-filter">
+                                <option value="all">全部状态</option>
+                                <option value="pending">待处理</option>
+                                <option value="completed">已完成</option>
+                                <option value="cancelled">已取消</option>
+                            </select>
+                            <select id="order-date-filter">
+                                <option value="all">全部时间</option>
+                                <option value="today">今天</option>
+                                <option value="week">本周</option>
+                                <option value="month">本月</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="data-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>订单号</th>
+                                    <th>用户信息</th>
+                                    <th>产品</th>
+                                    <th>金额</th>
+                                    <th>状态</th>
+                                    <th>下单时间</th>
+                                    <th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orders-table-body">
+                                <!-- 订单数据将动态填充 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="pagination">
+                        <button class="btn-page" data-page="prev">上一页</button>
+                        <span class="page-info">第 <span id="orders-current-page">1</span> 页，共 <span id="orders-total-pages">1</span> 页</span>
+                        <button class="btn-page" data-page="next">下一页</button>
+                    </div>
+                </section>
+                
+                <!-- 系统设置 -->
+                <section id="settings" class="admin-section">
+                    <div class="admin-header">
+                        <h2>系统设置</h2>
+                    </div>
+                    
+                    <div class="settings-container">
+                        <div class="settings-group">
+                            <h3>基本设置</h3>
+                            <div class="setting-item">
+                                <label for="site-name">网站名称</label>
+                                <input type="text" id="site-name" value="奕天Cursor助手New">
+                            </div>
+                            <div class="setting-item">
+                                <label for="contact-email">联系邮箱</label>
+                                <input type="email" id="contact-email" value="support@yitian-cursor.com">
+                            </div>
+                            <div class="setting-item">
+                                <label for="qq-group">QQ群号</label>
+                                <input type="text" id="qq-group" value="123456789">
+                            </div>
+                            <button class="btn btn-primary save-settings">保存设置</button>
+                        </div>
+                        
+                        <div class="settings-group">
+                            <h3>价格设置</h3>
+                            <div class="setting-item">
+                                <label for="month-price">月度会员价格</label>
+                                <input type="number" id="month-price" value="50">
+                            </div>
+                            <div class="setting-item">
+                                <label for="quarter-price">季度会员价格</label>
+                                <input type="number" id="quarter-price" value="100">
+                            </div>
+                            <div class="setting-item">
+                                <label for="year-price">年度会员价格</label>
+                                <input type="number" id="year-price" value="288">
+                            </div>
+                            <button class="btn btn-primary save-settings">保存设置</button>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- 模态窗口 -->
+    <div id="modal-container" class="modal-hidden" style="display: none !important;">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 id="modal-title">生成激活码</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-content" id="modal-content">
+                <!-- 默认内容 -->
+                <div class="generate-form">
+                    <div class="form-row">
+                        <div class="form-field">
+                            <label for="code-type">会员类型</label>
+                            <select id="code-type">
+                                <option value="month">月度会员</option>
+                                <option value="quarter">季度会员</option>
+                                <option value="year">年度会员</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <label for="code-count">生成数量</label>
+                            <input type="number" id="code-count" min="1" max="100" value="10">
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-secondary" id="cancel-generate">取消</button>
+                        <button class="btn btn-primary" id="confirm-generate">生成</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html> 
