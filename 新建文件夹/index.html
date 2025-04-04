@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>方块冒险</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <h1>方块冒险</h1>
+        
+        <div class="game-mode">
+            <button id="singlePlayerButton" class="mode-active">单人模式</button>
+            <button id="multiPlayerButton">多人模式</button>
+        </div>
+        
+        <div class="game-info">
+            <div class="player-info" id="player1Info">
+                <div class="player-label">玩家1</div>
+                <div class="score-panel">
+                    <span>分数: </span>
+                    <span id="scoreValue">0</span>
+                </div>
+                <div class="level-panel">
+                    <span>等级: </span>
+                    <span id="levelValue">1</span>
+                </div>
+            </div>
+            
+            <div class="player-info" id="player2Info" style="display: none;">
+                <div class="player-label">玩家2</div>
+                <div class="score-panel">
+                    <span>分数: </span>
+                    <span id="scoreValue2">0</span>
+                </div>
+                <div class="level-panel">
+                    <span>等级: </span>
+                    <span id="levelValue2">1</span>
+                </div>
+            </div>
+            
+            <div class="highscore-panel">
+                <span>最高分: </span>
+                <span id="highscoreValue">0</span>
+            </div>
+        </div>
+        
+        <canvas id="gameCanvas" width="480" height="320"></canvas>
+        
+        <div class="controls">
+            <button id="startButton">开始游戏</button>
+            <button id="pauseButton" disabled>暂停</button>
+            <button id="resetButton">重新开始</button>
+        </div>
+        
+        <div class="touch-controls">
+            <div class="touch-controls-container" id="player1TouchControls">
+                <div class="touch-control" id="upButton">↑</div>
+                <div class="touch-row">
+                    <div class="touch-control" id="leftButton">←</div>
+                    <div class="touch-control" id="rightButton">→</div>
+                </div>
+                <div class="touch-control" id="downButton">↓</div>
+            </div>
+            
+            <div class="touch-controls-container" id="player2TouchControls" style="display: none;">
+                <div class="touch-control player2" id="upButton2">↑</div>
+                <div class="touch-row">
+                    <div class="touch-control player2" id="leftButton2">←</div>
+                    <div class="touch-control player2" id="rightButton2">→</div>
+                </div>
+                <div class="touch-control player2" id="downButton2">↓</div>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>游戏说明</h3>
+            <p>使用键盘方向键移动蓝色方块，触碰所有目标方块获得分数。</p>
+            <p>红色方块: 10分 × 当前等级</p>
+            <p>黄色方块: 20分 × 当前等级</p>
+            <p>绿色方块: 30分 × 当前等级</p>
+            <p>避开灰色障碍物，收集尽可能多的目标，达到高分！</p>
+            <div id="multiplayerInstructions" style="display: none;">
+                <h3>多人模式</h3>
+                <p>玩家1: 方向键(↑↓←→)控制蓝色方块</p>
+                <p>玩家2: WASD键控制绿色方块</p>
+                <p>两名玩家竞争收集目标方块，获得最高分的玩家获胜！</p>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

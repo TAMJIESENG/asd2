@@ -1,0 +1,132 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.chat-container {
+    width: 90%;
+    max-width: 800px;
+    height: 80vh;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.chat-header {
+    background-color: #4a90e2;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+.chat-header h1 {
+    font-size: 1.5rem;
+    font-weight: normal;
+}
+
+.chat-messages {
+    flex: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+}
+
+.message {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.message-content {
+    max-width: 80%;
+    padding: 10px 15px;
+    border-radius: 18px;
+    word-break: break-word;
+}
+
+.message.sent {
+    align-items: flex-end;
+}
+
+.message.received {
+    align-items: flex-start;
+}
+
+.message.sent .message-content {
+    background-color: #4a90e2;
+    color: white;
+    border-bottom-right-radius: 5px;
+}
+
+.message.received .message-content {
+    background-color: #e5e5ea;
+    color: #333;
+    border-bottom-left-radius: 5px;
+}
+
+.message-time {
+    font-size: 0.7rem;
+    color: #999;
+    margin-top: 5px;
+}
+
+.chat-input {
+    display: flex;
+    padding: 15px;
+    background-color: #fff;
+    border-top: 1px solid #eee;
+}
+
+#messageInput {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+    font-size: 1rem;
+}
+
+#sendButton {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+#sendButton:hover {
+    background-color: #3a80d2;
+}
+
+@media (max-width: 600px) {
+    .chat-container {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+    }
+    
+    .chat-header h1 {
+        font-size: 1.2rem;
+    }
+    
+    #messageInput, #sendButton {
+        font-size: 0.9rem;
+    }
+}

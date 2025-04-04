@@ -1,0 +1,639 @@
+/* 基础样式重置 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', '微软雅黑', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #f9f9f9;
+}
+
+a {
+    text-decoration: none;
+    color: #3498db;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+ul {
+    list-style: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+    font-size: 2.5em;
+    color: #2c3e50;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
+
+.btn {
+    display: inline-block;
+    padding: 12px 24px;
+    border-radius: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+    box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+}
+
+.btn-secondary {
+    background-color: #2ecc71;
+    color: white;
+    box-shadow: 0 4px 10px rgba(46, 204, 113, 0.3);
+}
+
+.btn-secondary:hover {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(46, 204, 113, 0.4);
+}
+
+/* 英雄区域样式 */
+.hero {
+    height: 100vh;
+    background: linear-gradient(135deg, #3498db, #2ecc71);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('hero-bg.png') center/cover no-repeat;
+    opacity: 0.15;
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.game-title {
+    font-size: 5em;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    animation: float 3s ease-in-out infinite;
+}
+
+.game-subtitle {
+    font-size: 1.5em;
+    margin-bottom: 40px;
+    opacity: 0.9;
+}
+
+.cta-buttons {
+    margin-top: 30px;
+}
+
+.cta-buttons .btn {
+    margin: 0 10px;
+    font-size: 1.1em;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* 导航样式 */
+.main-nav {
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.main-nav ul {
+    display: flex;
+    justify-content: center;
+}
+
+.main-nav li {
+    position: relative;
+}
+
+.main-nav a {
+    display: block;
+    padding: 20px 25px;
+    color: #2c3e50;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.main-nav a:hover {
+    color: #3498db;
+}
+
+.main-nav a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 3px;
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    transition: width 0.3s;
+}
+
+.main-nav a:hover::after {
+    width: 70%;
+}
+
+/* 游戏特点样式 */
+.features {
+    padding: 100px 0;
+    background-color: white;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.feature-card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+}
+
+.feature-icon {
+    font-size: 2.5em;
+    color: #3498db;
+    margin-bottom: 20px;
+}
+
+.feature-card:nth-child(2) .feature-icon {
+    color: #e74c3c;
+}
+
+.feature-card:nth-child(3) .feature-icon {
+    color: #f39c12;
+}
+
+.feature-card:nth-child(4) .feature-icon {
+    color: #2ecc71;
+}
+
+.feature-card h3 {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    color: #2c3e50;
+}
+
+/* 玩法介绍样式 */
+.gameplay {
+    padding: 100px 0;
+    background-color: #f9f9f9;
+}
+
+.gameplay-content {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 50px;
+}
+
+.gameplay-text {
+    flex: 1;
+    min-width: 300px;
+}
+
+.gameplay-image {
+    flex: 1;
+    min-width: 300px;
+    text-align: center;
+}
+
+.gameplay-image img {
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.gameplay-text p, .gameplay-text ul {
+    margin-bottom: 20px;
+}
+
+.gameplay-text h3 {
+    margin: 30px 0 15px;
+    color: #2c3e50;
+}
+
+.gameplay-text li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 25px;
+}
+
+.gameplay-text li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #3498db;
+    font-weight: bold;
+}
+
+.color-box {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.color-box.red {
+    background-color: #e74c3c;
+}
+
+.color-box.yellow {
+    background-color: #f39c12;
+}
+
+.color-box.green {
+    background-color: #2ecc71;
+}
+
+/* 游戏模式样式 */
+.modes {
+    padding: 100px 0;
+    background-color: white;
+}
+
+.modes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+}
+
+.mode-card {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.mode-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+}
+
+.mode-card h3 {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(to right, #3498db, #2ecc71);
+    color: white;
+    font-size: 1.8em;
+}
+
+.mode-card:nth-child(2) h3 {
+    background: linear-gradient(to right, #2ecc71, #3498db);
+}
+
+.mode-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.mode-card p {
+    padding: 20px 20px 10px;
+}
+
+.mode-card ul {
+    padding: 0 20px 20px;
+}
+
+.mode-card li {
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 25px;
+}
+
+.mode-card li::before {
+    content: '•';
+    position: absolute;
+    left: 0;
+    color: #3498db;
+    font-weight: bold;
+    font-size: 1.5em;
+    line-height: 1;
+}
+
+.mode-card:nth-child(2) li::before {
+    color: #2ecc71;
+}
+
+/* 截图样式 */
+.screenshots {
+    padding: 100px 0;
+    background-color: #f9f9f9;
+}
+
+.screenshots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.screenshot {
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.screenshot:hover {
+    transform: translateY(-10px);
+}
+
+.screenshot img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.screenshot:hover img {
+    transform: scale(1.05);
+}
+
+/* 下载区域样式 */
+.download {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #3498db, #2ecc71);
+    color: white;
+}
+
+.download .section-title {
+    color: white;
+}
+
+.download .section-title::after {
+    background: white;
+}
+
+.download-options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 40px;
+}
+
+.download-option {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 40px;
+    border-radius: 10px;
+    text-align: center;
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    backdrop-filter: blur(5px);
+    transition: transform 0.3s, background-color 0.3s;
+}
+
+.download-option:hover {
+    transform: translateY(-10px);
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.download-option i {
+    font-size: 3em;
+    margin-bottom: 20px;
+}
+
+.download-option h3 {
+    margin-bottom: 15px;
+    font-size: 1.8em;
+}
+
+.download-option p {
+    margin-bottom: 25px;
+    opacity: 0.9;
+}
+
+.download-option .btn {
+    margin-top: 10px;
+}
+
+.download-option:first-child .btn {
+    background-color: white;
+    color: #3498db;
+}
+
+.download-option:first-child .btn:hover {
+    background-color: #f5f5f5;
+}
+
+.download-option:last-child .btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: 2px solid white;
+}
+
+.download-option:last-child .btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 页脚样式 */
+.footer {
+    background-color: #2c3e50;
+    color: white;
+    padding: 80px 0 20px;
+}
+
+.footer-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 50px;
+}
+
+.footer-logo {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 30px;
+}
+
+.footer-logo h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.footer-logo p {
+    opacity: 0.7;
+}
+
+.footer-links, .footer-contact {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 30px;
+}
+
+.footer-links h3, .footer-contact h3 {
+    color: #3498db;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+}
+
+.footer-links ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links a {
+    color: #ecf0f1;
+    transition: color 0.3s;
+}
+
+.footer-links a:hover {
+    color: #3498db;
+}
+
+.footer-contact p {
+    margin-bottom: 20px;
+}
+
+.footer-contact i {
+    margin-right: 10px;
+    color: #3498db;
+}
+
+.social-icons {
+    display: flex;
+    gap: 15px;
+}
+
+.social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.social-icons a:hover {
+    background-color: #3498db;
+    transform: translateY(-5px);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-bottom p {
+    opacity: 0.7;
+    font-size: 0.9em;
+}
+
+/* 响应式样式 */
+@media (max-width: 768px) {
+    .game-title {
+        font-size: 3.5em;
+    }
+    
+    .main-nav ul {
+        flex-wrap: wrap;
+    }
+    
+    .main-nav a {
+        padding: 15px;
+    }
+    
+    .section-title {
+        font-size: 2em;
+    }
+    
+    .gameplay-content {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 480px) {
+    .game-title {
+        font-size: 2.5em;
+    }
+    
+    .section-title {
+        font-size: 1.8em;
+    }
+    
+    .btn {
+        padding: 10px 20px;
+        font-size: 0.9em;
+    }
+    
+    .cta-buttons .btn {
+        display: block;
+        margin: 10px auto;
+        width: 80%;
+    }
+} 

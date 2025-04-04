@@ -1,0 +1,247 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #1c92d2, #f2fcfe);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+.game-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    padding: 25px;
+    max-width: 600px;
+    width: 95%;
+    text-align: center;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    font-size: 2.5em;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+h3 {
+    margin: 15px 0 10px;
+    color: #3498db;
+}
+
+/* 游戏模式选择器 */
+.game-mode {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.game-mode button {
+    background: #ecf0f1;
+    color: #7f8c8d;
+    border: none;
+    padding: 8px 15px;
+    font-weight: bold;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.game-mode button.mode-active {
+    background: #3498db;
+    color: white;
+}
+
+/* 玩家信息 */
+.game-info {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+    font-weight: bold;
+    flex-wrap: wrap;
+}
+
+.player-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 5px;
+}
+
+.player-label {
+    font-size: 1em;
+    margin-bottom: 5px;
+    color: #3498db;
+}
+
+#player2Info .player-label {
+    color: #2ecc71;
+}
+
+.score-panel, .level-panel, .highscore-panel {
+    background-color: #f0f8ff;
+    padding: 10px 15px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    min-width: 100px;
+    margin: 5px;
+}
+
+.highscore-panel {
+    background-color: #fff8e1;
+    color: #ff9800;
+}
+
+canvas {
+    border: 1px solid #ccc;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+button {
+    background: #3498db;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-transform: uppercase;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.3s, transform 0.2s;
+}
+
+button:hover {
+    background: #2980b9;
+    transform: translateY(-2px);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+button:disabled {
+    background: #95a5a6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+#pauseButton {
+    background: #f39c12;
+}
+
+#pauseButton:hover {
+    background: #e67e22;
+}
+
+#pauseButton.resumed {
+    background: #27ae60;
+}
+
+/* 触摸控制样式 */
+.touch-controls {
+    display: none; /* 默认隐藏，在移动设备上显示 */
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    touch-action: manipulation; /* 防止触摸手势冲突 */
+    width: 100%;
+}
+
+.touch-controls-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.touch-row {
+    display: flex;
+    gap: 20px;
+}
+
+.touch-control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+    background: rgba(52, 152, 219, 0.8);
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 50%;
+    margin: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    user-select: none;
+    cursor: pointer;
+}
+
+.touch-control.player2 {
+    background: rgba(46, 204, 113, 0.8);
+}
+
+.touch-control:active {
+    background: rgba(41, 128, 185, 0.9);
+    transform: scale(0.95);
+}
+
+.touch-control.player2:active {
+    background: rgba(39, 174, 96, 0.9);
+}
+
+.instructions {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: left;
+    line-height: 1.5;
+}
+
+.instructions p {
+    margin-bottom: 10px;
+}
+
+#multiplayerInstructions {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+}
+
+@media (max-width: 600px) {
+    .game-container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    canvas {
+        width: 100%;
+        height: auto;
+    }
+    
+    .touch-controls {
+        display: flex; /* 在移动设备上显示触摸控制 */
+    }
+} 
