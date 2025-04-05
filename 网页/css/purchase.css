@@ -1,0 +1,534 @@
+/* 购买流程样式 */
+#purchase-process {
+    padding: 60px 0;
+    background-color: #F9FAFB;
+}
+
+#purchase-process h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: #1F2937;
+}
+
+/* 购买步骤导航 */
+.purchase-steps {
+    display: flex;
+    justify-content: space-between;
+    max-width: 800px;
+    margin: 0 auto 50px;
+    position: relative;
+    padding: 0 20px;
+}
+
+.purchase-steps::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #E5E7EB;
+    z-index: 1;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.step-number {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #E5E7EB;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6B7280;
+    font-weight: 600;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+}
+
+.step.active .step-number,
+.step.completed .step-number {
+    background-color: #3B82F6;
+    color: white;
+}
+
+.step-name {
+    font-size: 0.9rem;
+    color: #6B7280;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.step.active .step-name,
+.step.completed .step-name {
+    color: #3B82F6;
+}
+
+/* 购买容器 */
+.purchase-container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.purchase-section {
+    display: none;
+    padding: 40px;
+}
+
+.purchase-section.active {
+    display: block;
+}
+
+.purchase-section h3 {
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: #1F2937;
+    font-size: 1.4rem;
+    text-align: center;
+}
+
+/* 产品选择 */
+.product-selection {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+}
+
+.product-card {
+    background-color: #F9FAFB;
+    border-radius: 8px;
+    padding: 25px;
+    width: 250px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.product-card.featured {
+    border-color: #3B82F6;
+    transform: scale(1.05);
+}
+
+.product-card.selected {
+    border-color: #10B981;
+    background-color: #F0FDF4;
+}
+
+.product-tag {
+    position: absolute;
+    top: -10px;
+    right: 20px;
+    background-color: #3B82F6;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.product-card.selected .product-tag {
+    background-color: #10B981;
+}
+
+.product-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.product-header h4 {
+    margin: 0 0 10px 0;
+    color: #1F2937;
+    font-size: 1.2rem;
+}
+
+.product-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #3B82F6;
+}
+
+.product-card.selected .product-price {
+    color: #10B981;
+}
+
+.product-features {
+    margin-bottom: 25px;
+}
+
+.product-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.product-features ul li {
+    padding: 8px 0;
+    position: relative;
+    padding-left: 25px;
+    font-size: 0.95rem;
+}
+
+.product-features ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 7px;
+    color: #3B82F6;
+    font-weight: bold;
+}
+
+.product-card.selected .product-features ul li::before {
+    color: #10B981;
+}
+
+.product-card .btn {
+    width: 100%;
+}
+
+/* 用户信息表单 */
+.user-info-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #374151;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #D1D5DB;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+}
+
+.form-tip {
+    font-size: 0.85rem;
+    color: #6B7280;
+    margin-top: 5px;
+}
+
+.required {
+    color: #EF4444;
+}
+
+.form-group.checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-group.checkbox input {
+    width: auto;
+}
+
+.form-group.checkbox label {
+    margin-bottom: 0;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.form-actions.center {
+    justify-content: center;
+    gap: 20px;
+}
+
+/* 订单确认 */
+.order-summary {
+    background-color: #F9FAFB;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 30px;
+}
+
+.order-summary h4 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #1F2937;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #E5E7EB;
+}
+
+.order-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.order-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.order-row.price {
+    margin-top: 10px;
+    padding-top: 15px;
+    border-top: 1px dashed #E5E7EB;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.order-row span:last-child {
+    font-weight: 600;
+}
+
+/* 支付方式 */
+.payment-methods {
+    margin-bottom: 30px;
+}
+
+.payment-methods h4 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #1F2937;
+}
+
+.payment-options {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.payment-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px;
+    border: 2px solid #E5E7EB;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    min-width: 150px;
+}
+
+.payment-option:hover {
+    border-color: #D1D5DB;
+    background-color: #F9FAFB;
+}
+
+.payment-option.selected {
+    border-color: #3B82F6;
+    background-color: #EFF6FF;
+}
+
+.payment-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+/* 成功页面 */
+.success-message {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.success-message .success-icon {
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    font-size: 2.5rem;
+    background-color: #ECFDF5;
+    color: #10B981;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+}
+
+.success-message h3 {
+    color: #10B981;
+    margin-bottom: 10px;
+}
+
+.activation-code-box {
+    background-color: #F9FAFB;
+    border-radius: 8px;
+    padding: 25px;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.activation-code-box h4 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #1F2937;
+}
+
+.code-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.code-display code {
+    font-size: 1.4rem;
+    font-family: monospace;
+    background-color: #fff;
+    padding: 15px 20px;
+    border-radius: 4px;
+    border: 1px dashed #D1D5DB;
+    letter-spacing: 2px;
+}
+
+.btn-small {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+}
+
+.code-tip {
+    color: #6B7280;
+    font-size: 0.9rem;
+}
+
+.activation-instructions {
+    max-width: 600px;
+    margin: 0 auto 40px;
+}
+
+.activation-instructions h4 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    color: #1F2937;
+}
+
+.activation-instructions ol {
+    padding-left: 20px;
+}
+
+.activation-instructions ol li {
+    margin-bottom: 10px;
+}
+
+/* 支付二维码模态框 */
+.payment-modal {
+    max-width: 450px;
+}
+
+.qrcode-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+#payment-qrcode {
+    width: 200px;
+    height: 200px;
+    background-color: #F3F4F6;
+    margin-bottom: 15px;
+    border: 1px solid #E5E7EB;
+}
+
+.amount {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #3B82F6;
+}
+
+.payment-info {
+    text-align: center;
+}
+
+.payment-info p {
+    margin-bottom: 10px;
+}
+
+.payment-timer {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px dashed #E5E7EB;
+}
+
+.progress-bar {
+    height: 8px;
+    background-color: #E5E7EB;
+    border-radius: 4px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: #3B82F6;
+    width: 100%;
+    transition: width 1s linear;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .purchase-steps {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+    
+    .purchase-steps::before {
+        display: none;
+    }
+    
+    .purchase-section {
+        padding: 30px 20px;
+    }
+    
+    .product-selection {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .product-card {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .product-card.featured {
+        transform: none;
+    }
+    
+    .form-actions {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .form-actions button {
+        width: 100%;
+    }
+    
+    .payment-options {
+        flex-direction: column;
+    }
+    
+    .payment-option {
+        width: 100%;
+    }
+} 
