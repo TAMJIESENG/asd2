@@ -1,0 +1,449 @@
+/* 支付页面样式 */
+:root {
+    --primary-color: #4a7bff;
+    --primary-light: #e6f0ff;
+    --primary-gradient: linear-gradient(135deg, #4a7bff 0%, #2a5ae9 100%);
+    --success-color: #4CAF50;
+    --danger-color: #F44336;
+    --warning-color: #FFC107;
+    --gray-light: #f5f7fa;
+    --gray: #dfdfdf;
+    --gray-dark: #888;
+    --text-color: #333;
+    --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f8f9fa;
+    color: var(--text-color);
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.payment-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+.payment-card {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    overflow: hidden;
+    position: relative;
+}
+
+.payment-header {
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--gray);
+}
+
+.payment-header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.payment-close {
+    cursor: pointer;
+    font-size: 28px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gray-dark);
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.payment-close:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+    color: var(--text-color);
+}
+
+.payment-body {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 25px;
+}
+
+.qrcode-section {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 25px;
+    border-right: 1px solid var(--gray);
+}
+
+.qrcode-wrapper {
+    width: 240px;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.qrcode-placeholder {
+    width: 220px;
+    height: 220px;
+    background-color: white;
+    border: 1px solid var(--gray);
+    border-radius: 8px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+}
+
+.scan-tips {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    color: var(--gray-dark);
+}
+
+.scan-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 8px;
+    background-color: var(--primary-color);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9.5 6.5v3h-3v-3h3M11 5H5v6h6V5zm-1.5 9.5v3h-3v-3h3M11 13H5v6h6v-6zm6.5-6.5v3h-3v-3h3M19 5h-6v6h6V5zm-6 8h1.5v1.5H13V13zm1.5 1.5H16V16h-1.5v-1.5zM16 13h1.5v1.5H16V13zm-3 3h1.5v1.5H13V16zm1.5 1.5H16V19h-1.5v-1.5zM16 16h1.5v1.5H16V16zm1.5-1.5H19V16h-1.5v-1.5zm0 3H19V19h-1.5v-1.5zM22 7h-2V4h-3V2h5v5zm0 15v-5h-2v3h-3v2h5zM2 22h5v-2H4v-3H2v5zM2 2v5h2V4h3V2H2z'/%3E%3C/svg%3E");
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M9.5 6.5v3h-3v-3h3M11 5H5v6h6V5zm-1.5 9.5v3h-3v-3h3M11 13H5v6h6v-6zm6.5-6.5v3h-3v-3h3M19 5h-6v6h6V5zm-6 8h1.5v1.5H13V13zm1.5 1.5H16V16h-1.5v-1.5zM16 13h1.5v1.5H16V13zm-3 3h1.5v1.5H13V16zm1.5 1.5H16V19h-1.5v-1.5zM16 16h1.5v1.5H16V16zm1.5-1.5H19V16h-1.5v-1.5zm0 3H19V19h-1.5v-1.5zM22 7h-2V4h-3V2h5v5zm0 15v-5h-2v3h-3v2h5zM2 22h5v-2H4v-3H2v5zM2 2v5h2V4h3V2H2z'/%3E%3C/svg%3E");
+    -webkit-mask-size: cover;
+    mask-size: cover;
+}
+
+.scan-tips p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.price-display {
+    margin-top: 15px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+.price-symbol {
+    font-size: 24px;
+    vertical-align: middle;
+}
+
+.price-value {
+    font-size: 36px;
+    vertical-align: middle;
+}
+
+.payment-info {
+    flex: 1;
+    min-width: 300px;
+    padding-left: 25px;
+}
+
+.info-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+.info-label {
+    color: var(--gray-dark);
+    margin-right: 10px;
+    width: 70px;
+    flex-shrink: 0;
+}
+
+.info-value {
+    color: var(--text-color);
+    font-weight: 500;
+    flex-grow: 1;
+}
+
+.copy-btn {
+    background-color: transparent;
+    border: 1px solid var(--gray);
+    border-radius: 4px;
+    padding: 4px 10px;
+    font-size: 12px;
+    color: var(--gray-dark);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-left: 10px;
+}
+
+.copy-btn:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.payment-instruction {
+    margin: 20px 0;
+    color: var(--gray-dark);
+}
+
+.payment-instruction p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+.countdown-section {
+    margin-top: 25px;
+}
+
+.countdown-text {
+    font-size: 14px;
+    color: var(--gray-dark);
+    margin-bottom: 10px;
+}
+
+#countdown {
+    font-weight: 600;
+    color: var(--warning-color);
+}
+
+.progress-bar {
+    height: 6px;
+    background-color: var(--gray-light);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress {
+    height: 100%;
+    background-color: var(--warning-color);
+    width: 100%;
+    transition: width 1s linear;
+}
+
+.payment-footer {
+    padding: 20px 25px;
+    background-color: var(--gray-light);
+    border-top: 1px solid var(--gray);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.payment-methods {
+    display: flex;
+    gap: 15px;
+}
+
+.payment-method-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    background-color: white;
+    border: 1px solid var(--gray);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.payment-method-item.active {
+    border-color: var(--primary-color);
+    background-color: var(--primary-light);
+}
+
+.method-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.alipay-icon {
+    background-image: url('data:image/svg+xml;utf8,<svg t="1586320215605" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1113" width="200" height="200"><path d="M1023.795 853.64v-6.348a163.807 163.807 0 0 0-7.124-43.655l-0.252-0.855c-1.266-4.004-2.727-7.812-4.325-11.632l-0.366-0.969c-1.969-5.015-4.242-9.983-6.676-14.678a176.205 176.205 0 0 0-16.872-25.851l-0.268-0.314a176.403 176.403 0 0 0-12.823-13.285l-0.456-0.408c-5.647-5.105-11.659-9.67-17.922-13.807l-0.537-0.346c-6.347-4.003-12.96-7.583-19.772-10.751l-0.618-0.268c-6.919-2.962-14.053-5.589-21.313-7.75l-0.723-0.198c-7.188-2.086-14.58-3.737-22.218-4.892l-14.701 64.261c-13.333 58.496-50.004 111.212-98.985 156.198-41.87 38.347-91.447 71.899-148.176 101.388-62.082 32.305-124.333 59.306-185.751 59.306-113.47 0-215.818-55.426-215.818-142.997 0-45.864 27.237-91.948 76.847-131.047 41.431-32.701 92.231-53.857 144.433-67.894 52.478-14.198 115.945-23.768 193.428-28.366 22.559-1.34 44.575-2.145 65.916-2.498 0.67-0.011 1.339-0.027 2.009-0.036a1422.968 1422.968 0 0 0 42.925-0.211l0.573-3.007c-4.623-28.913-19.203-74.346-43.669-99.067-32.788-33.03-73.933-48.438-127.928-48.438-53.693 0-99.903 20.013-134.841 36.042l-9.108 4.155-0.592 0.266-8.516 3.883c-1.16 0.527-2.431 1.131-3.653 1.7a128.574 128.574 0 0 0-4.938 2.324c-23.24 11.182-43.417 20.772-83.647 41.309-2.445 1.246-5.59 2.818-6.849 3.442l-36.144-65.376 2.271-1.416c53.276-33.192 116.599-59.088 179.704-73.037 34.446-7.605 68.944-11.428 103.576-11.428 74.836 0 137.353 16.515 185.893 49.054 54.645 36.634 81.954 85.099 81.954 144.514 0 6.984-0.622 15.179-1.743 24.117 54.612 6.661 120.106 25.9 120.106 118.851z m-530.658 144.338c102.889 0 195.313-40.605 265.567-92.652 41.87-31.192 72.652-68.885 88.972-115.103l-0.422-0.209-7.535-3.749-10.553-5.24-0.422-0.211-10.071-5.008-11.177-5.559-0.396-0.198-44.971-22.381-15.043-7.489-0.367-0.184-15.308-7.63-13.905-6.933-0.396-0.196-14.144-7.049-0.591-0.295-21.392-10.661-4.591-2.29-0.395-0.198-27.211-13.561-0.197-0.099-0.197-0.098-28.475-14.199-0.198-0.099-0.197-0.099-16.872-8.416-0.197-0.099-0.197-0.098-15.829-7.895-0.592-0.295-27.785-13.859-0.396-0.197-0.591-0.296-1.576-0.785c-0.606-0.303-1.268-0.633-1.956-0.98-76.701 5.226-134.577 15.631-177.639 31.961-65.562 24.868-106.427 62.153-106.427 97.204-0.001 56.787 71.001 108.868 169.428 108.868z" p-id="1114" fill="%231296db"></path></svg>');
+}
+
+.wechat-icon {
+    background-image: url('data:image/svg+xml;utf8,<svg t="1586320296718" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2732" width="200" height="200"><path d="M664.250054 368.541681c10.015098 0 19.892049 0.732687 29.67281 1.795902-26.647917-122.810047-159.358451-214.077703-310.826188-214.077703-169.353083 0-308.085358 114.232694-308.085358 259.274068 0 83.708494 46.165436 152.460344 123.281791 205.78483l-30.80868 91.730191 107.750445-53.455469c38.558178 7.53665 69.459978 15.308661 107.859791 15.308661 9.66308 0 19.230994-0.470721 28.752858-1.225921-6.025227-20.36584-9.521864-41.723264-9.521864-63.862493C402.328213 476.632491 517.908058 368.541681 664.250054 368.541681zM498.62897 285.627186c23.200398 0 38.557154 15.120372 38.557154 38.061874 0 22.846334-15.356756 38.156018-38.557154 38.156018-23.107277 0-46.260603-15.309684-46.260603-38.156018C452.368366 300.747558 475.522716 285.627186 498.62897 285.627186zM283.016307 362.031951c-23.107277 0-46.402843-15.309684-46.402843-38.156018 0-22.941502 23.295566-38.061874 46.402843-38.061874 23.081695 0 38.46301 15.120372 38.46301 38.061874C321.479317 346.723291 306.098002 362.031951 283.016307 362.031951zM945.448458 606.151333c0-121.888048-123.258255-221.236753-261.683954-221.236753-146.57838 0-262.015505 99.348706-262.015505 221.236753 0 122.06508 115.437126 221.200938 262.015505 221.200938 30.66644 0 61.617359-7.609305 92.423993-15.262612l84.513836 45.786813-23.178909-76.17082C899.379213 735.776599 945.448458 674.90216 945.448458 606.151333zM598.803483 567.896282c-15.332197 0-30.807656-15.096843-30.807656-30.501688 0-15.190981 15.47546-30.477129 30.807656-30.477129 23.295566 0 38.558178 15.286148 38.558178 30.477129C637.361661 552.800463 622.099049 567.896282 598.803483 567.896282zM768.25071 567.896282c-15.213543 0-30.594809-15.096843-30.594809-30.501688 0-15.190981 15.381267-30.477129 30.594809-30.477129 23.107277 0 38.558178 15.286148 38.558178 30.477129C806.808888 552.800463 791.357987 567.896282 768.25071 567.896282z" p-id="2733" fill="%2307c160"></path></svg>');
+}
+
+.qq-icon {
+    background-image: url('data:image/svg+xml;utf8,<svg t="1586320382606" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3640" width="200" height="200"><path d="M511.09761 957.257c-80.159 0-153.737-25.019-201.11-62.386-24.057 6.702-54.831 17.489-74.252 30.864-16.617 11.439-14.546 23.106-11.55 27.816 13.15 20.689 225.583 13.211 286.912 6.767v-3.061z" fill="%23FAAD08" p-id="3641"></path><path d="M496.65061 957.257c80.157 0 153.737-25.019 201.11-62.386 24.057 6.702 54.83 17.489 74.253 30.864 16.616 11.439 14.543 23.106 11.55 27.816-13.15 20.689-225.584 13.211-286.914 6.767v-3.061z" fill="%23FAAD08" p-id="3642"></path><path d="M497.12861 474.524c131.934-0.876 237.669-25.783 273.497-35.34 8.541-2.28 13.11-6.364 13.11-6.364 0.03-1.172 0.542-20.952 0.542-31.155C784.27761 229.833 701.12561 57.173 496.64061 57.162 292.15661 57.173 209.00061 229.832 209.00061 401.665c0 10.203 0.516 29.983 0.547 31.155 0 0 3.717 3.821 10.529 5.67 33.078 8.98 140.803 35.139 276.08 36.034h0.972z" fill="%23FAAD08" p-id="3643"></path><path d="M860.28261 619.782c-8.12-26.086-19.204-56.506-30.427-85.72 0 0-6.456-0.795-9.718 0.148-100.71 29.205-222.773 47.818-315.792 46.695h-0.962C410.88561 582.017 289.65061 563.617 189.27961 534.698c-3.22-0.926-9.48-0.148-9.48-0.148-11.226 29.214-22.307 59.634-30.43 85.72-41.303 133.14-26.016 189.34-16.556 192.563 20.738 7.055 82.165-51.473 82.165-51.473 0 33.15 16.978 121.149 53.608 193.722 33.736 66.916 71.323 95.16 128.157 95.16 56.848 0 81.315-16.294 103.884-45.884l0.283-0.38c11.911-15.637 20.694-35.984 20.694-35.984s18.223 50.95 76.173 52.145c29.435 0.6 55.445-8.771 79.613-34.43 35.172-37.397 60.315-125.178 60.315-125.178s62.046 57.916 82.12 51.335c10.84-3.53 19.783-62.913-20.99-191.976zM426.67461 758.085c-15.784 25.736-32.292 30.661-41.425 31.296-22.131 1.554-41.16-17.519-56.49-44.522-15.874-28.07-26.438-61.539-31.666-96.712-1.346-9.068-0.514-17.074 0.221-20.842 1.017-5.18 5.262-7.201 10.412-7.201 5.279 0 11.723 2.2 19.147 6.584 16.843 9.977 46.934 33.887 94.14 76.052-0.287 1.574-1.018 3.309-1.916 5.67h0.962c-12.365 0.356 6.208-0.22 6.615-0.22v-0.007c3.766 1.01 0.05 24.305 0 49.902z m299.83-125.093c-5.439 35.95-16.697 70.13-33.35 98.619-17.651 30.244-35.925 47.356-57.062 45.648-8.382-0.798-23.96-6.818-38.563-31.277-1.795-2.966-2.88-5.094-2.88-5.094s72.297-61.634 87.971-72.182c8.74-5.87 16.383-9.584 22.37-9.584 3.729 0 6.246 1.301 7.447 4.936 0.858 2.654 1.151 7.917-0.925 18.054-0.13 0.644-3.207 15.828-3.645 20.642 0.665-3.891-1.061 15.296-0.961 28.747-0.114-15.122-0.91-28.749-0.951-29.635 0.129-0.202 19.538-3.857 20.549-68.874z" fill="%23000000" p-id="3644"></path><path d="M671.82761 356.754c-2.03 0-4.096 0.115-6.166 0.3-20.422 1.886-36.284 20.26-35.968 41.775 0.3 20.599 16.908 37.15 37.371 37.15l5.93-0.177c19.677-1.861 34.934-19.31 35.001-40.04 0.061-21.133-16.253-38.639-36.168-39.008" fill="%23FFFFFF" p-id="3645"></path><path d="M580.56861 361.525c-27.903 1.24-50.044 26.884-49.511 57.212 0.547 31.277 25.062 50.245 53.126 49.542l11.694-0.558c27.904-1.236 50.042-26.886 49.508-57.208-0.552-31.281-25.065-50.251-53.123-49.546-4.499 0.201-7.803 0.342-11.694 0.558" fill="%23FFFFFF" p-id="3646"></path><path d="M668.29861 382.447c-1.022 0-1.982 0.288-2.842 0.716-0.109 0.056-0.22 0.098-0.327 0.162-0.967 0.515-1.934 22.864-1.934 22.864l16.191 0.004c0.009-0.694 0.052-1.338 0.166-1.982-0.075-10.643-5.027-21.765-11.254-21.765m-94.012 8.834c-7.08 0-12.811 11.303-12.811 25.221 0.02 13.921 5.728 25.196 12.811 25.196 7.078 0 12.813-11.274 12.813-25.196 0-13.918-5.736-25.221-12.813-25.221" fill="%23EB1C26" p-id="3647"></path><path d="M381.78661 356.754c2.03 0 4.094 0.115 6.164 0.3 20.422 1.886 36.282 20.26 35.968 41.775-0.297 20.599-16.906 37.15-37.368 37.15l-5.932-0.177c-19.673-1.861-34.93-19.31-34.999-40.04-0.06-21.133 16.251-38.639 36.167-39.008" fill="%23FFFFFF" p-id="3648"></path><path d="M473.04561 361.525c27.903 1.24 50.046 26.884 49.513 57.212-0.547 31.277-25.064 50.245-53.128 49.542l-11.694-0.558c-27.9-1.236-50.04-26.886-49.508-57.208 0.547-31.281 25.065-50.251 53.126-49.546 4.495 0.201 7.802 0.342 11.691 0.558" fill="%23FFFFFF" p-id="3649"></path><path d="M385.31561 382.447c1.024 0 1.98 0.288 2.842 0.716 0.112 0.056 0.22 0.098 0.329 0.162 0.967 0.515 1.934 22.864 1.934 22.864l-16.188 0.004c-0.014-0.694-0.057-1.338-0.168-1.982 0.075-10.643 5.024-21.765 11.251-21.765m94.01 8.834c7.08 0 12.813 11.303 12.813 25.221-0.023 13.921-5.732 25.196-12.813 25.196-7.082 0-12.815-11.274-12.815-25.196 0-13.918 5.733-25.221 12.815-25.221" fill="%23EB1C26" p-id="3650"></path></svg>');
+}
+
+.method-name {
+    font-size: 14px;
+}
+
+.retry-btn {
+    padding: 8px 16px;
+    border: 1px solid var(--primary-color);
+    border-radius: 6px;
+    background-color: white;
+    color: var(--primary-color);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.retry-btn:hover {
+    background-color: var(--primary-light);
+}
+
+/* 支付结果 */
+.payment-result {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: var(--card-shadow);
+    z-index: 10;
+    padding: 40px;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.payment-result.hidden {
+    display: none;
+}
+
+.result-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.success-icon {
+    background-color: var(--success-color);
+    position: relative;
+}
+
+.success-icon:before {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 20px;
+    border-left: 4px solid white;
+    border-bottom: 4px solid white;
+    transform: rotate(-45deg);
+    margin-top: -5px;
+}
+
+.failed-icon {
+    background-color: var(--danger-color);
+    position: relative;
+}
+
+.failed-icon:before, .failed-icon:after {
+    content: "";
+    position: absolute;
+    width: 40px;
+    height: 4px;
+    background-color: white;
+    top: 50%;
+    left: 50%;
+}
+
+.failed-icon:before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.failed-icon:after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.payment-result h2 {
+    margin: 0 0 10px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.payment-result p {
+    margin: 0 0 30px;
+    color: var(--gray-dark);
+    font-size: 16px;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    margin: 0 10px;
+}
+
+.btn-primary {
+    background: var(--primary-gradient);
+    color: white;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 15px rgba(42, 90, 233, 0.3);
+}
+
+.btn-secondary {
+    background-color: white;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--primary-light);
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .payment-body {
+        flex-direction: column;
+    }
+    
+    .qrcode-section {
+        padding-right: 0;
+        padding-bottom: 25px;
+        margin-bottom: 25px;
+        border-right: none;
+        border-bottom: 1px solid var(--gray);
+    }
+    
+    .payment-info {
+        padding-left: 0;
+    }
+    
+    .payment-footer {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .payment-methods {
+        width: 100%;
+        justify-content: center;
+    }
+} 

@@ -1,0 +1,18 @@
+{
+  "serverStatus": "运行中",
+  "lastUpdated": "2025-04-18T14:56:14.548Z",
+  "activeUsers": 3,
+  "systemLoad": {
+    "cpu": 14,
+    "memory": 70
+  },
+  "latestNews": [
+    {
+      "id": 1,
+      "title": "奕天Cursor助手v3.6版本即将发布",
+      "content": "带来更智能的代码补全和更快的响应速度",
+      "date": "2025-04-18T14:55:10.450Z"
+    }
+  ],
+  "productUpdates": []
+}

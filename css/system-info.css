@@ -1,0 +1,262 @@
+/* 系统信息区域样式 */
+.system-info-section {
+  padding: 60px 0;
+  background-color: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.system-info-section h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #1F2937;
+}
+
+/* 系统状态面板 */
+.system-status-panel {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.status-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.status-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #F9FAFB;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.status-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+}
+
+.status-label {
+  font-size: 0.9rem;
+  color: #6B7280;
+  margin-bottom: 8px;
+}
+
+.status-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1F2937;
+}
+
+.server-status {
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 1.2rem;
+}
+
+.status-online {
+  background-color: #D1FAE5;
+  color: #047857;
+}
+
+.status-offline {
+  background-color: #FEE2E2;
+  color: #B91C1C;
+}
+
+.status-error {
+  background-color: #FEF3C7;
+  color: #92400E;
+}
+
+.last-update {
+  text-align: right;
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #6B7280;
+}
+
+/* 信息标签页 */
+.info-tabs {
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.tab-header {
+  display: flex;
+  border-bottom: 1px solid #E5E7EB;
+}
+
+.tab-btn {
+  padding: 15px 20px;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6B7280;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.tab-btn:hover {
+  color: #3B82F6;
+}
+
+.tab-btn.active {
+  color: #3B82F6;
+}
+
+.tab-btn.active:after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #3B82F6;
+}
+
+.tab-content {
+  padding: 20px;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+/* 新闻列表 */
+.news-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.news-item {
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #F9FAFB;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.news-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.news-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #1F2937;
+}
+
+.news-date {
+  font-size: 0.9rem;
+  color: #6B7280;
+}
+
+.news-item p {
+  margin: 0;
+  color: #4B5563;
+  line-height: 1.6;
+}
+
+/* 更新列表 */
+.update-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.update-item {
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #F0F9FF;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.update-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.update-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.update-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #0369A1;
+}
+
+.update-date {
+  font-size: 0.9rem;
+  color: #6B7280;
+}
+
+.feature-list {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.feature-list li {
+  margin-bottom: 5px;
+  color: #4B5563;
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+  .status-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .tab-header {
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .news-header, .update-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .news-date, .update-date {
+    margin-top: 5px;
+  }
+}
+
+/* 内容更新动画 */
+@keyframes flash {
+  0% { background-color: rgba(59, 130, 246, 0.1); }
+  100% { background-color: transparent; }
+}
+
+.content-updated {
+  animation: flash 1.5s ease;
+} 
