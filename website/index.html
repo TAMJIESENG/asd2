@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能计算器 - 您的数学好帮手</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="智能计算器" width="40" height="40" class="d-inline-block align-text-top me-2">
+                智能计算器
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="features.html">功能特点</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="download.html">下载</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="documentation.html">使用文档</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">关于我们</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主横幅 -->
+    <header class="hero-section py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">智能化计算，轻松解决数学问题</h1>
+                    <p class="lead mb-4">我们的智能计算器不仅提供标准计算功能，还支持自然语言输入、AI智能解析，多种模式满足您的各类计算需求。</p>
+                    <div class="d-flex gap-3">
+                        <a href="download.html" class="btn btn-primary btn-lg">立即下载</a>
+                        <a href="features.html" class="btn btn-outline-secondary btn-lg">了解更多</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <img src="images/calculator-preview.png" alt="智能计算器界面" class="img-fluid rounded shadow-lg mt-4 mt-lg-0">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主要特点 -->
+    <section class="features-section py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">为什么选择我们的智能计算器？</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="feature-icon bg-primary text-white mb-3">
+                                <i class="bi bi-robot"></i>
+                            </div>
+                            <h3 class="card-title">AI智能辅助</h3>
+                            <p class="card-text">支持自然语言输入，能够理解您的问题并智能推荐计算方法。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="feature-icon bg-primary text-white mb-3">
+                                <i class="bi bi-palette"></i>
+                            </div>
+                            <h3 class="card-title">多种主题</h3>
+                            <p class="card-text">提供默认、深色、浅色和高对比度多种主题，满足不同视觉偏好。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <div class="feature-icon bg-primary text-white mb-3">
+                                <i class="bi bi-calculator"></i>
+                            </div>
+                            <h3 class="card-title">多功能计算模式</h3>
+                            <p class="card-text">标准、科学、程序员三种模式满足从基础到专业的各类计算需求。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 计算器模式 -->
+    <section class="modes-section py-5">
+        <div class="container">
+            <h2 class="text-center mb-5">适合各种需求的计算模式</h2>
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6 order-lg-2">
+                    <img src="images/standard-mode.png" alt="标准模式" class="img-fluid rounded shadow-lg">
+                </div>
+                <div class="col-lg-6 order-lg-1">
+                    <h3>标准模式</h3>
+                    <p>适合日常计算需求，提供基本的加减乘除、百分比等常用功能，界面简洁易用。</p>
+                    <ul class="features-list">
+                        <li>简单的数学运算</li>
+                        <li>百分比计算</li>
+                        <li>记忆功能</li>
+                        <li>历史记录</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6">
+                    <img src="images/scientific-mode.png" alt="科学模式" class="img-fluid rounded shadow-lg">
+                </div>
+                <div class="col-lg-6">
+                    <h3>科学模式</h3>
+                    <p>为学生、工程师和科研人员设计，提供高级数学函数和计算功能。</p>
+                    <ul class="features-list">
+                        <li>三角函数与反三角函数</li>
+                        <li>对数和指数函数</li>
+                        <li>平方、立方和根号</li>
+                        <li>变量存储与运算</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="col-lg-6 order-lg-2">
+                    <img src="images/programmer-mode.png" alt="程序员模式" class="img-fluid rounded shadow-lg">
+                </div>
+                <div class="col-lg-6 order-lg-1">
+                    <h3>程序员模式</h3>
+                    <p>专为软件开发人员打造，支持多种进制转换和位运算。</p>
+                    <ul class="features-list">
+                        <li>二进制、八进制、十进制和十六进制转换</li>
+                        <li>位运算（AND、OR、XOR、NOT）</li>
+                        <li>移位操作</li>
+                        <li>字节和字显示</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 用户评价 -->
+    <section class="testimonials-section py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center mb-5">用户评价</h2>
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="testimonial-avatar">
+                                    <img src="images/avatar1.jpg" alt="用户头像" class="rounded-circle">
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="mb-0">张先生</h5>
+                                    <div class="text-warning">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text">"作为一名工程师，这款计算器的科学模式大大提高了我的工作效率。界面设计也很人性化，强烈推荐！"</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="testimonial-avatar">
+                                    <img src="images/avatar2.jpg" alt="用户头像" class="rounded-circle">
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="mb-0">李女士</h5>
+                                    <div class="text-warning">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-half"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text">"AI辅助功能太实用了！我可以直接输入'23乘以45加上78'这样的语句，计算器就能理解并给出结果，非常智能。"</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="testimonial-avatar">
+                                    <img src="images/avatar3.jpg" alt="用户头像" class="rounded-circle">
+                                </div>
+                                <div class="ms-3">
+                                    <h5 class="mb-0">王同学</h5>
+                                    <div class="text-warning">
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star-fill"></i>
+                                        <i class="bi bi-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="card-text">"作为计算机专业的学生，程序员模式帮了我大忙，特别是进制转换功能。深色主题也让我可以舒适地在晚上使用。"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 下载引导 -->
+    <section class="cta-section py-5 text-center">
+        <div class="container">
+            <h2 class="mb-4">准备好体验智能计算器了吗？</h2>
+            <p class="lead mb-4">免费下载，让计算变得简单而智能</p>
+            <a href="download.html" class="btn btn-primary btn-lg">立即下载</a>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>智能计算器</h5>
+                    <p>让数学计算变得简单而智能</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-2"><i class="bi bi-github"></i></a>
+                        <a href="#" class="text-white me-2"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <h5>链接</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">首页</a></li>
+                        <li><a href="features.html" class="text-white">功能特点</a></li>
+                        <li><a href="download.html" class="text-white">下载</a></li>
+                        <li><a href="documentation.html" class="text-white">文档</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h5>支持</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="faq.html" class="text-white">常见问题</a></li>
+                        <li><a href="contact.html" class="text-white">联系我们</a></li>
+                        <li><a href="privacy.html" class="text-white">隐私政策</a></li>
+                        <li><a href="terms.html" class="text-white">使用条款</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h5>资源</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="blog.html" class="text-white">博客</a></li>
+                        <li><a href="tutorials.html" class="text-white">教程</a></li>
+                        <li><a href="changelog.html" class="text-white">更新日志</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="mb-0">&copy; 2023 智能计算器 版权所有</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

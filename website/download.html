@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>下载智能计算器 - 您的数学好帮手</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logo.png" alt="智能计算器" width="40" height="40" class="d-inline-block align-text-top me-2">
+                智能计算器
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="features.html">功能特点</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="download.html">下载</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="documentation.html">使用文档</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.html">关于我们</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 下载横幅 -->
+    <header class="hero-section py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <h1 class="display-4 fw-bold mb-4">下载智能计算器</h1>
+                    <p class="lead mb-4">获取最新版本的智能计算器，体验高效、智能的数学计算工具。</p>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <img src="images/download-hero.png" alt="智能计算器下载" class="img-fluid rounded shadow-lg mt-4 mt-lg-0">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 版本信息 -->
+    <section class="version-section py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-12">
+                    <div class="card border-0 shadow">
+                        <div class="card-body p-4">
+                            <h2 class="card-title mb-3">最新版本: v1.2.5</h2>
+                            <p class="text-muted mb-3">发布日期: 2023年4月15日</p>
+                            <div class="d-flex flex-wrap gap-3 mb-4">
+                                <a href="#" class="btn btn-primary btn-lg">
+                                    <i class="bi bi-windows me-2"></i>Windows 版本
+                                </a>
+                                <a href="#" class="btn btn-success btn-lg">
+                                    <i class="bi bi-apple me-2"></i>macOS 版本
+                                </a>
+                                <a href="#" class="btn btn-info btn-lg text-white">
+                                    <i class="bi bi-ubuntu me-2"></i>Linux 版本
+                                </a>
+                            </div>
+                            <div class="alert alert-primary" role="alert">
+                                <i class="bi bi-info-circle-fill me-2"></i>此版本需要 Windows 7/macOS 10.12/Ubuntu 18.04 或更高版本
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="mb-4">此版本更新内容</h3>
+            <div class="row mb-5">
+                <div class="col-md-12">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body p-4">
+                            <ul class="changelog-list">
+                                <li><strong>新增:</strong> 自然语言解析引擎升级，理解能力提高30%</li>
+                                <li><strong>优化:</strong> 程序员模式下的位运算性能提升</li>
+                                <li><strong>修复:</strong> 科学模式下三角函数计算精度问题</li>
+                                <li><strong>改进:</strong> 深色主题下对比度优化，提升用户体验</li>
+                                <li><strong>新增:</strong> 支持更多常用数学常量和函数</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 历史版本 -->
+    <section class="history-section py-5 bg-light">
+        <div class="container">
+            <h2 class="mb-4">历史版本</h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="accordion" id="versionAccordion">
+                        <!-- 版本 v1.2.0 -->
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    <div>
+                                        <strong>版本 v1.2.0</strong>
+                                        <span class="ms-3 text-muted">2023年2月20日</span>
+                                    </div>
+                                </button>
+                            </h2>
+                            <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#versionAccordion">
+                                <div class="accordion-body">
+                                    <ul class="changelog-list">
+                                        <li><strong>新增:</strong> AI功能初步集成，支持自然语言输入</li>
+                                        <li><strong>新增:</strong> 高对比度主题，提升可访问性</li>
+                                        <li><strong>优化:</strong> 计算性能大幅提升，复杂计算速度提高50%</li>
+                                        <li><strong>改进:</strong> 用户界面调整，使用体验更加流畅</li>
+                                    </ul>
+                                    <div class="mt-3">
+                                        <a href="#" class="btn btn-outline-primary">
+                                            <i class="bi bi-download me-2"></i>下载此版本
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 版本 v1.1.5 -->
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header" id="headingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    <div>
+                                        <strong>版本 v1.1.5</strong>
+                                        <span class="ms-3 text-muted">2022年12月10日</span>
+                                    </div>
+                                </button>
+                            </h2>
+                            <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#versionAccordion">
+                                <div class="accordion-body">
+                                    <ul class="changelog-list">
+                                        <li><strong>新增:</strong> 程序员模式，支持多种进制转换和位运算</li>
+                                        <li><strong>优化:</strong> 历史记录功能，增加导出和分享选项</li>
+                                        <li><strong>修复:</strong> 多个界面布局在不同分辨率下的显示问题</li>
+                                        <li><strong>改进:</strong> 计算表达式解析引擎，支持更复杂的表达式</li>
+                                    </ul>
+                                    <div class="mt-3">
+                                        <a href="#" class="btn btn-outline-primary">
+                                            <i class="bi bi-download me-2"></i>下载此版本
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 版本 v1.0.0 -->
+                        <div class="accordion-item border-0 shadow-sm">
+                            <h2 class="accordion-header" id="headingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    <div>
+                                        <strong>版本 v1.0.0</strong>
+                                        <span class="ms-3 text-muted">2022年8月5日</span>
+                                    </div>
+                                </button>
+                            </h2>
+                            <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#versionAccordion">
+                                <div class="accordion-body">
+                                    <ul class="changelog-list">
+                                        <li><strong>新增:</strong> 首次发布，提供标准和科学两种计算模式</li>
+                                        <li><strong>新增:</strong> 变量存储功能，支持复杂计算</li>
+                                        <li><strong>新增:</strong> 多种主题切换，支持深色和浅色两种模式</li>
+                                        <li><strong>新增:</strong> 历史记录功能，记录最近30条计算记录</li>
+                                    </ul>
+                                    <div class="mt-3">
+                                        <a href="#" class="btn btn-outline-primary">
+                                            <i class="bi bi-download me-2"></i>下载此版本
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 系统要求 -->
+    <section class="requirements-section py-5">
+        <div class="container">
+            <h2 class="mb-4">系统要求</h2>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <i class="bi bi-windows text-primary me-2"></i>Windows
+                            </h3>
+                            <ul class="list-unstyled mt-3">
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Windows 7/8/10/11</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>处理器: 2GHz 双核</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>内存: 4GB RAM</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>存储: 100MB 可用空间</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>显示: 1280 x 720 分辨率</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <i class="bi bi-apple text-dark me-2"></i>macOS
+                            </h3>
+                            <ul class="list-unstyled mt-3">
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>macOS 10.12 及以上</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>处理器: Intel 或 Apple M1</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>内存: 4GB RAM</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>存储: 120MB 可用空间</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>显示: 1280 x 720 分辨率</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h3 class="card-title">
+                                <i class="bi bi-ubuntu text-danger me-2"></i>Linux
+                            </h3>
+                            <ul class="list-unstyled mt-3">
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>Ubuntu 18.04 及以上</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>处理器: 2GHz 双核</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>内存: 4GB RAM</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>存储: 100MB 可用空间</li>
+                                <li><i class="bi bi-check-circle-fill text-success me-2"></i>显示: 1280 x 720 分辨率</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 常见问题 -->
+    <section class="faq-section py-5 bg-light">
+        <div class="container">
+            <h2 class="mb-4">下载常见问题</h2>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="accordion" id="faqAccordion">
+                        <!-- 问题 1 -->
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header" id="faqHeadingOne">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseOne" aria-expanded="false" aria-controls="faqCollapseOne">
+                                    智能计算器是免费的吗？
+                                </button>
+                            </h2>
+                            <div id="faqCollapseOne" class="accordion-collapse collapse" aria-labelledby="faqHeadingOne" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    是的，智能计算器是完全免费的软件。我们提供基础版本的所有功能都是免费使用的，未来可能会推出付费的专业版，但基础版将永久免费。
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 问题 2 -->
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header" id="faqHeadingTwo">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseTwo" aria-expanded="false" aria-controls="faqCollapseTwo">
+                                    如何安装智能计算器？
+                                </button>
+                            </h2>
+                            <div id="faqCollapseTwo" class="accordion-collapse collapse" aria-labelledby="faqHeadingTwo" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    下载相应操作系统的安装包后，双击安装文件按照提示完成安装即可。Windows用户可能需要管理员权限才能完成安装。安装完成后，您可以在开始菜单或应用程序列表中找到"智能计算器"图标。
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 问题 3 -->
+                        <div class="accordion-item border-0 shadow-sm mb-3">
+                            <h2 class="accordion-header" id="faqHeadingThree">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseThree" aria-expanded="false" aria-controls="faqCollapseThree">
+                                    如何更新到最新版本？
+                                </button>
+                            </h2>
+                            <div id="faqCollapseThree" class="accordion-collapse collapse" aria-labelledby="faqHeadingThree" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    智能计算器会自动检查更新，当有新版本可用时会提示您。您也可以在软件的"设置"菜单中手动检查更新。如果您想重新安装最新版本，只需下载并运行新的安装程序，它会自动替换旧版本，您的个人设置和历史记录会被保留。
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 问题 4 -->
+                        <div class="accordion-item border-0 shadow-sm">
+                            <h2 class="accordion-header" id="faqHeadingFour">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFour" aria-expanded="false" aria-controls="faqCollapseFour">
+                                    下载后打开提示安全警告怎么办？
+                                </button>
+                            </h2>
+                            <div id="faqCollapseFour" class="accordion-collapse collapse" aria-labelledby="faqHeadingFour" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    这是因为部分操作系统的安全机制所致。我们的软件是完全安全的，您可以安心使用。在Windows中，可以点击"更多信息"然后选择"仍要运行"；在macOS中，可以在系统偏好设置的安全性与隐私中允许应用运行；在Linux中，确保给予执行权限即可。
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>智能计算器</h5>
+                    <p>让数学计算变得简单而智能</p>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-2"><i class="bi bi-github"></i></a>
+                        <a href="#" class="text-white me-2"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white me-2"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white"><i class="bi bi-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <h5>链接</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="text-white">首页</a></li>
+                        <li><a href="features.html" class="text-white">功能特点</a></li>
+                        <li><a href="download.html" class="text-white">下载</a></li>
+                        <li><a href="documentation.html" class="text-white">文档</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h5>支持</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="faq.html" class="text-white">常见问题</a></li>
+                        <li><a href="contact.html" class="text-white">联系我们</a></li>
+                        <li><a href="privacy.html" class="text-white">隐私政策</a></li>
+                        <li><a href="terms.html" class="text-white">使用条款</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-2">
+                    <h5>资源</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="blog.html" class="text-white">博客</a></li>
+                        <li><a href="tutorials.html" class="text-white">教程</a></li>
+                        <li><a href="changelog.html" class="text-white">更新日志</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4 bg-secondary">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="mb-0">&copy; 2023 智能计算器 版权所有</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- 下载统计脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 下载按钮点击统计
+            const downloadButtons = document.querySelectorAll('.btn-primary, .btn-success, .btn-info, .btn-outline-primary');
+            downloadButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    // 这里可以添加下载统计代码
+                    console.log('下载按钮点击: ' + this.innerText);
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
