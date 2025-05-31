@@ -2514,6 +2514,247 @@
         }
 
         // 权限验证已集成到原始showView函数中
+        
+        // ==================== 防护功能 ====================
+        
+        // 禁用右键菜单
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            showToast('右键功能已被禁用', 'warning');
+            return false;
+        });
+        
+        // 禁用F12、Ctrl+Shift+I、Ctrl+Shift+J、Ctrl+U等开发者工具快捷键
+        document.addEventListener('keydown', function(e) {
+            // 禁用F12
+            if (e.keyCode === 123) {
+                e.preventDefault();
+                showToast('开发者工具已被禁用', 'warning');
+                return false;
+            }
+            
+            // 禁用Ctrl+Shift+I (开发者工具)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+                e.preventDefault();
+                showToast('开发者工具已被禁用', 'warning');
+                return false;
+            }
+            
+            // 禁用Ctrl+Shift+J (控制台)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+                e.preventDefault();
+                showToast('控制台已被禁用', 'warning');
+                return false;
+            }
+            
+            // 禁用Ctrl+U (查看源代码)
+            if (e.ctrlKey && e.keyCode === 85) {
+                e.preventDefault();
+                showToast('查看源代码已被禁用', 'warning');
+                return false;
+            }
+            
+            // 禁用Ctrl+S (保存页面)
+            if (e.ctrlKey && e.keyCode === 83) {
+                e.preventDefault();
+                showToast('保存页面已被禁用', 'warning');
+                return false;
+            }
+            
+            // 禁用Ctrl+A (全选)
+            if (e.ctrlKey && e.keyCode === 65) {
+                e.preventDefault();
+                showToast('全选功能已被禁用', 'warning');
+                return false;
+            }
+            
+            // 禁用Ctrl+P (打印)
+            if (e.ctrlKey && e.keyCode === 80) {
+                e.preventDefault();
+                showToast('打印功能已被禁用', 'warning');
+                return false;
+            }
+            
+            // 禁用Ctrl+Shift+C (选择元素)
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 67) {
+                e.preventDefault();
+                showToast('元素选择已被禁用', 'warning');
+                return false;
+            }
+        });
+        
+        // 检测开发者工具是否打开
+        let devtools = {
+            open: false,
+            orientation: null
+        };
+        
+        const threshold = 160;
+        
+        setInterval(function() {
+            if (window.outerHeight - window.innerHeight > threshold || 
+                window.outerWidth - window.innerWidth > threshold) {
+                if (!devtools.open) {
+                    devtools.open = true;
+                    showToast('检测到开发者工具，页面将被保护', 'error');
+                    // 可以选择重定向到其他页面或显示警告
+                    document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;background:#000;color:#fff;font-size:24px;">⚠️ 检测到开发者工具，访问被拒绝</div>';
+                }
+            } else {
+                devtools.open = false;
+            }
+        }, 500);
+        
+        // 禁用文本选择
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // 禁用拖拽
+        document.addEventListener('dragstart', function(e) {
+            e.preventDefault();
+            return false;
+        });
+        
+        // 清除控制台
+        if (typeof console !== 'undefined') {
+            console.clear();
+            console.log('%c⚠️ 警告', 'color: red; font-size: 30px; font-weight: bold;');
+            console.log('%c此页面已启用防护模式，禁止查看源代码和调试！', 'color: red; font-size: 16px;');
+            console.log('%c如果您是开发者，请联系管理员获取授权。', 'color: orange; font-size: 14px;');
+        }
+        
+        // 重写console方法
+        const originalLog = console.log;
+        const originalError = console.error;
+        const originalWarn = console.warn;
+        const originalInfo = console.info;
+        
+        console.log = function() {
+            originalLog.apply(console, ['%c🔒 控制台已被保护', 'color: red; font-weight: bold;']);
+        };
+        
+        console.error = function() {
+            originalError.apply(console, ['%c🔒 控制台已被保护', 'color: red; font-weight: bold;']);
+        };
+        
+        console.warn = function() {
+            originalWarn.apply(console, ['%c🔒 控制台已被保护', 'color: red; font-weight: bold;']);
+        };
+        
+        console.info = function() {
+            originalInfo.apply(console, ['%c🔒 控制台已被保护', 'color: red; font-weight: bold;']);
+        };
+        
+        // 防止通过iframe嵌入
+        if (window.top !== window.self) {
+            window.top.location = window.self.location;
+        }
+        
+        // 添加页面离开时的警告
+        window.addEventListener('beforeunload', function(e) {
+            const confirmationMessage = '确定要离开此页面吗？未保存的数据可能会丢失。';
+            e.returnValue = confirmationMessage;
+            return confirmationMessage;
+        });
+        
+        // 禁用图片拖拽保存
+        document.addEventListener('DOMContentLoaded', function() {
+            const images = document.querySelectorAll('img');
+            images.forEach(function(img) {
+                img.addEventListener('dragstart', function(e) {
+                    e.preventDefault();
+                });
+                img.style.userSelect = 'none';
+                img.style.webkitUserSelect = 'none';
+                img.style.mozUserSelect = 'none';
+                img.style.msUserSelect = 'none';
+            });
+        });
+        
+        // 监控页面焦点，防止通过其他方式访问开发者工具
+        let focusTime = Date.now();
+        window.addEventListener('focus', function() {
+            const currentTime = Date.now();
+            if (currentTime - focusTime > 1000) {
+                // 如果页面失去焦点超过1秒，可能是在使用开发者工具
+                console.clear();
+                showToast('检测到可疑操作，页面已重新加载保护机制', 'warning');
+            }
+            focusTime = currentTime;
+        });
+        
+        window.addEventListener('blur', function() {
+            focusTime = Date.now();
+        });
+        
+        // 添加CSS防护样式
+        const protectionStyle = document.createElement('style');
+        protectionStyle.textContent = `
+            /* 禁用文本选择 */
+            * {
+                -webkit-user-select: none !important;
+                -moz-user-select: none !important;
+                -ms-user-select: none !important;
+                user-select: none !important;
+                -webkit-touch-callout: none !important;
+                -webkit-tap-highlight-color: transparent !important;
+            }
+            
+            /* 允许输入框选择文本 */
+            input, textarea {
+                -webkit-user-select: text !important;
+                -moz-user-select: text !important;
+                -ms-user-select: text !important;
+                user-select: text !important;
+            }
+            
+            /* 禁用图片拖拽 */
+            img {
+                -webkit-user-drag: none !important;
+                -khtml-user-drag: none !important;
+                -moz-user-drag: none !important;
+                -o-user-drag: none !important;
+                user-drag: none !important;
+                pointer-events: none !important;
+            }
+            
+            /* 防止通过CSS查看源码 */
+            body::before {
+                content: "" !important;
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                background: transparent !important;
+                z-index: -9999 !important;
+                pointer-events: none !important;
+            }
+        `;
+        document.head.appendChild(protectionStyle);
+        
+        // 最终保护：定期检查页面完整性
+        setInterval(function() {
+            // 检查关键元素是否被篡改
+            const navbar = document.querySelector('.navbar');
+            const mainContent = document.querySelector('main');
+            
+            if (!navbar || !mainContent) {
+                // 如果关键元素被删除，重新加载页面
+                location.reload();
+            }
+            
+            // 清除可能的调试断点
+            debugger;
+        }, 3000);
+        
+        // 显示防护启用提示
+        setTimeout(function() {
+            showToast('🔒 页面防护功能已启用', 'info');
+        }, 1000);
+        
     </script>
 </body>
 </html>
