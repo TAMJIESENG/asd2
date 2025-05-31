@@ -1,0 +1,2519 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>同学录</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        /* 导入Google字体 */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap');
+        
+        /* CSS变量定义 - 增强版 */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --warning-gradient: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+            --danger-gradient: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            --dark-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --shadow-light: 0 8px 32px rgba(31, 38, 135, 0.37);
+            --shadow-medium: 0 15px 35px rgba(31, 38, 135, 0.2);
+            --shadow-heavy: 0 25px 50px rgba(31, 38, 135, 0.3);
+            --border-radius: 20px;
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* 新增高级效果变量 */
+            --metal-gradient: linear-gradient(145deg, #e8e8e8 0%, #ffffff 25%, #f5f5f5 50%, #e0e0e0 75%, #d5d5d5 100%);
+            --metal-shadow: inset 0 1px 3px rgba(255,255,255,0.8), inset 0 -1px 3px rgba(0,0,0,0.2), 0 8px 25px rgba(0,0,0,0.3);
+            --glass-gradient: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.1) 100%);
+            --neon-glow: 0 0 20px rgba(102, 126, 234, 0.6), 0 0 40px rgba(102, 126, 234, 0.4), 0 0 60px rgba(102, 126, 234, 0.2);
+            --hologram-gradient: linear-gradient(45deg, #ff006e, #8338ec, #3a86ff, #06ffa5, #ffbe0b, #fb5607);
+            --chrome-gradient: linear-gradient(135deg, #eee 0%, #999 25%, #eee 50%, #ddd 75%, #ccc 100%);
+            --liquid-metal: linear-gradient(135deg, #c9d6ff 0%, #e2e2e2 25%, #ffffff 50%, #e2e2e2 75%, #c9d6ff 100%);
+        }
+
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: 
+                radial-gradient(ellipse at top left, rgba(102, 126, 234, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at top right, rgba(118, 75, 162, 0.3) 0%, transparent 50%),
+                radial-gradient(ellipse at bottom, rgba(240, 147, 251, 0.2) 0%, transparent 50%),
+                linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #533483 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 20s ease infinite;
+            background-attachment: fixed;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        /* 多层次背景效果 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(
+                    90deg,
+                    transparent,
+                    transparent 98px,
+                    rgba(102, 126, 234, 0.03) 100px
+                ),
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 98px,
+                    rgba(118, 75, 162, 0.03) 100px
+                );
+            pointer-events: none;
+            z-index: -2;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 15% 85%, rgba(102, 126, 234, 0.4) 0%, transparent 50%),
+                radial-gradient(circle at 85% 15%, rgba(240, 147, 251, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(118, 75, 162, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 25% 25%, rgba(79, 172, 254, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(255, 255, 255, 0.1) 0%, transparent 30%);
+            animation: float 30s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 100% 25%; }
+            50% { background-position: 100% 50%; }
+            75% { background-position: 0% 75%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            20% { transform: translateY(-15px) rotate(72deg) scale(1.05); }
+            40% { transform: translateY(10px) rotate(144deg) scale(0.95); }
+            60% { transform: translateY(-20px) rotate(216deg) scale(1.02); }
+            80% { transform: translateY(5px) rotate(288deg) scale(0.98); }
+        }
+
+        /* 玻璃态效果基础类 - 增强版 */
+        .glass {
+            background: var(--glass-gradient);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                var(--shadow-light),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+        }
+
+        /* 金属质感效果 */
+        .metal {
+            background: var(--metal-gradient);
+            box-shadow: var(--metal-shadow);
+            border: 1px solid rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metal::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+            transform: rotate(45deg);
+            animation: metalShine 3s ease-in-out infinite;
+        }
+
+        @keyframes metalShine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            50% { transform: translateX(0%) translateY(0%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        /* 液态金属效果 */
+        .liquid-metal {
+            background: var(--liquid-metal);
+            background-size: 200% 200%;
+            animation: liquidFlow 4s ease-in-out infinite;
+            box-shadow: 
+                0 8px 32px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.8),
+                inset 0 -1px 0 rgba(0,0,0,0.2);
+        }
+
+        @keyframes liquidFlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        /* 全息效果 */
+        .hologram {
+            background: var(--hologram-gradient);
+            background-size: 300% 300%;
+            animation: hologramShift 2s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            filter: drop-shadow(0 0 10px rgba(102, 126, 234, 0.5));
+        }
+
+        @keyframes hologramShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        /* 导航栏样式 - 增强版 */
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 
+                0 8px 32px rgba(31, 38, 135, 0.37),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            position: relative;
+        }
+        
+        /* 模态框专用渐变背景 */
+        .modal-header.bg-gradient-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+            backdrop-filter: none;
+            -webkit-backdrop-filter: none;
+        }
+
+        .bg-gradient-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--hologram-gradient);
+            background-size: 300% 100%;
+            animation: hologramShift 3s linear infinite;
+        }
+
+        .animated-brand {
+            transition: var(--transition);
+            font-weight: 900;
+            font-size: 1.8rem;
+            font-family: 'Orbitron', monospace;
+            background: linear-gradient(45deg, #fff, #f0f0f0, #fff);
+            background-size: 200% 200%;
+            animation: brandShine 3s ease-in-out infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
+
+        @keyframes brandShine {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .animated-brand::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--hologram-gradient);
+            background-size: 300% 300%;
+            animation: hologramShift 2s linear infinite;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .animated-brand:hover::before {
+            opacity: 1;
+        }
+
+        .animated-brand:hover {
+            transform: scale(1.05) rotate(1deg);
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5)) drop-shadow(0 0 30px rgba(102, 126, 234, 0.3));
+        }
+
+        .nav-item-animated {
+            position: relative;
+            transition: var(--transition);
+            border-radius: 15px;
+            margin: 0 8px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-item-animated::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-item-animated::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--hologram-gradient);
+            background-size: 300% 100%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            animation: hologramShift 2s linear infinite;
+        }
+
+        .nav-item-animated:hover::before {
+            left: 100%;
+        }
+
+        .nav-item-animated:hover::after {
+            opacity: 0.1;
+        }
+
+        .nav-item-animated:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.2),
+                0 0 20px rgba(102, 126, 234, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .nav-item-animated.active {
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 
+                0 8px 25px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(102, 126, 234, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .nav-item-animated.active::after {
+            opacity: 0.2;
+        }
+
+        /* 主内容区域 */
+        .main-content {
+            margin-top: 90px;
+            padding: 30px 0;
+            position: relative;
+        }
+
+        /* 浮动粒子背景 */
+        .main-content::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(120, 200, 255, 0.3) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(120deg); }
+            66% { transform: translateY(30px) rotate(240deg); }
+        }
+
+        /* 卡片样式 - 增强版 */
+        .card {
+            border: none;
+            border-radius: var(--border-radius);
+            background: var(--glass-gradient);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border: 1px solid var(--glass-border);
+            box-shadow: 
+                var(--shadow-medium),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--hologram-gradient);
+            background-size: 300% 100%;
+            animation: hologramShift 3s linear infinite;
+        }
+
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 
+                var(--shadow-heavy),
+                0 0 40px rgba(102, 126, 234, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .card:hover::after {
+            opacity: 1;
+        }
+
+        /* 博客卡片特殊效果 */
+        .blog-card {
+            margin-bottom: 25px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .blog-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: var(--border-radius);
+        }
+
+        .blog-card:hover::after {
+            opacity: 1;
+        }
+
+        .blog-meta {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* 表单样式 */
+        .form-control {
+            border-radius: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #333;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 12px 20px;
+        }
+
+        .form-control::placeholder {
+            color: rgba(0, 0, 0, 0.6);
+            font-weight: 400;
+        }
+
+        .form-control:focus {
+            border-color: rgba(102, 126, 234, 0.8);
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25), 0 0 20px rgba(102, 126, 234, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        /* 按钮样式 - 增强版 */
+        .btn {
+            border-radius: 15px;
+            font-weight: 600;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            padding: 12px 30px;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(10px);
+            box-shadow: 
+                0 4px 15px rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--hologram-gradient);
+            background-size: 300% 100%;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            animation: hologramShift 2s linear infinite;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:hover::after {
+            opacity: 0.1;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 
+                0 10px 25px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(102, 126, 234, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        }
+
+        .btn:active {
+            transform: translateY(-1px) scale(1.02);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+        }
+
+        .btn-outline-secondary {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .btn-outline-secondary:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: white;
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            box-shadow: var(--shadow-medium);
+            transition: var(--transition);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .back-to-top-btn:hover {
+            transform: scale(1.1) rotate(360deg);
+            background: linear-gradient(135deg, #764ba2 0%, #f093fb 100%);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        /* 隐藏类 */
+        .d-none {
+            display: none !important;
+        }
+
+        /* 动画 */
+        .fade-in {
+            animation: fadeInUp 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px) scale(0.95); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+
+        /* 搜索框样式 */
+        .search-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .search-input {
+            padding-left: 60px;
+            border-radius: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            height: 55px;
+            font-size: 1.1rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .search-input:focus {
+            transform: scale(1.02);
+            box-shadow: 0 0 0 0.25rem rgba(102, 126, 234, 0.25), var(--shadow-medium);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.2rem;
+            z-index: 10;
+        }
+
+        /* 标签样式 */
+        .tag {
+            display: inline-block;
+            padding: 8px 16px;
+            margin: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .tag:hover::before {
+            left: 100%;
+        }
+
+        .tag:hover {
+            transform: scale(1.05) translateY(-2px);
+            background: linear-gradient(135deg, #764ba2 0%, #f093fb 100%);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .tag.active {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 编辑器样式 */
+        .editor-container {
+            min-height: 450px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+        }
+
+        .editor-toolbar {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .editor-content {
+            min-height: 350px;
+            padding: 25px;
+            border: none;
+            outline: none;
+            resize: vertical;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(5px);
+            color: #333;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* 用户资料样式 */
+        .profile-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            box-shadow: var(--shadow-medium);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .profile-avatar:hover {
+            transform: scale(1.05) rotate(5deg);
+            box-shadow: var(--shadow-heavy);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .stats-card {
+            text-align: center;
+            padding: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .stats-card:hover::before {
+            opacity: 1;
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            transition: var(--transition);
+            position: relative;
+            z-index: 1;
+        }
+
+        .stats-card:hover .stats-number {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* 表单标签样式 */
+        .form-label {
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        /* 卡片头部样式 */
+        .card-header {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            padding: 20px;
+        }
+
+        .card-header h4, .card-header h5 {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            margin: 0;
+        }
+
+        /* 导航标签样式 */
+        .nav-tabs {
+            border-bottom: none;
+        }
+
+        .nav-tabs .nav-link {
+            border: none;
+            border-radius: 15px;
+            margin-right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .nav-tabs .nav-link:hover {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-tabs .nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Toast 通知样式 */
+        .toast {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            color: white;
+        }
+
+        /* 加载动画 */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 20px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .animated-brand {
+                font-size: 1.6rem;
+            }
+            
+            .nav-item-animated {
+                margin: 0 4px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                margin-top: 80px;
+                padding: 20px 0;
+            }
+            
+            .card {
+                margin-bottom: 20px;
+                border-radius: 15px;
+            }
+            
+            .profile-avatar {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .stats-number {
+                font-size: 2rem;
+            }
+            
+            .search-input {
+                height: 50px;
+                font-size: 1rem;
+                padding-left: 50px;
+            }
+            
+            .search-icon {
+                left: 15px;
+                font-size: 1.1rem;
+            }
+            
+            .btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .back-to-top-btn {
+                width: 50px;
+                height: 50px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .animated-brand {
+                font-size: 1.4rem;
+            }
+            
+            .main-content {
+                padding: 15px 0;
+            }
+            
+            .card {
+                border-radius: 12px;
+            }
+            
+            .form-control {
+                border-radius: 12px;
+                padding: 10px 15px;
+            }
+            
+            .btn {
+                border-radius: 12px;
+                padding: 8px 16px;
+            }
+            
+            .tag {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+            
+            .editor-content {
+                min-height: 250px;
+                padding: 15px;
+            }
+        }
+
+        /* 深色模式支持 */
+        @media (prefers-color-scheme: dark) {
+            .form-control {
+                color: #fff;
+            }
+            
+            .form-control::placeholder {
+                color: rgba(255, 255, 255, 0.6);
+            }
+            
+            .editor-content {
+                color: #fff;
+            }
+        }
+
+        /* 高对比度模式支持 */
+        @media (prefers-contrast: high) {
+            .card {
+                border: 2px solid rgba(255, 255, 255, 0.5);
+            }
+            
+            .btn {
+                border: 2px solid rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        /* 减少动画模式支持 */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-gradient-primary shadow-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand animated-brand" href="#" onclick="showView('classmate-list')">
+                <i class="bi bi-people-fill me-2"></i>同学录
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="navbar-nav ms-auto">
+                    <a class="nav-link nav-item-animated active" href="#" onclick="showView('classmate-list')" id="nav-classmate-list">
+                        <i class="bi bi-people me-1"></i>同学列表
+                    </a>
+                    <a class="nav-link nav-item-animated" href="#" onclick="showView('add-classmate')" id="nav-add-classmate">
+                        <i class="bi bi-person-plus me-1"></i>添加同学
+                    </a>
+                    <a class="nav-link nav-item-animated" href="#" onclick="showView('user-profile')" id="nav-user-profile">
+                        <i class="bi bi-person-circle me-1"></i>我的资料
+                    </a>
+                    <a class="nav-link nav-item-animated" href="#" onclick="showView('admin-view')" id="nav-admin" style="display: none;">
+                        <i class="bi bi-gear me-1"></i>后台管理
+                    </a>
+                    <a class="nav-link nav-item-animated" href="#" onclick="showView('user-auth')" id="nav-user-auth">
+                        <i class="bi bi-box-arrow-in-right me-1"></i>登录/注册
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主内容区域 -->
+    <main class="main-content">
+        <div class="container">
+            <!-- 同学列表视图 -->
+            <div id="classmate-list-view" class="view-content">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="search-container">
+                            <i class="bi bi-search search-icon"></i>
+                            <input type="text" class="form-control search-input" placeholder="搜索同学..." id="search-input">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h5 class="card-title">分类筛选</h5>
+                                <div id="category-tags">
+                                    <span class="tag active" onclick="filterByCategory('all')">全部</span>
+                            <span class="tag" onclick="filterByCategory('小学')">小学</span>
+                            <span class="tag" onclick="filterByCategory('初中')">初中</span>
+                            <span class="tag" onclick="filterByCategory('高中')">高中</span>
+                            <span class="tag" onclick="filterByCategory('大学')">大学</span>
+                            <span class="tag" onclick="filterByCategory('兄弟')">兄弟</span>
+                            <span class="tag" onclick="filterByCategory('朋友')">朋友</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" id="classmate-container">
+                    <!-- 同学列表将通过JavaScript动态生成 -->
+                </div>
+            </div>
+
+            <!-- 添加同学视图 -->
+            <div id="add-classmate-view" class="view-content d-none">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4><i class="bi bi-person-plus me-2"></i>添加同学</h4>
+                            </div>
+                            <div class="card-body">
+                                <form id="classmate-form">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="classmate-name" class="form-label">姓名</label>
+                                            <input type="text" class="form-control" id="classmate-name" placeholder="请输入同学姓名">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="classmate-nickname" class="form-label">昵称</label>
+                                            <input type="text" class="form-control" id="classmate-nickname" placeholder="请输入昵称（可选）">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="classmate-class" class="form-label">分类</label>
+                                            <select class="form-control" id="classmate-class">
+                                                <option value="">请选择分类</option>
+                                                <option value="小学">小学</option>
+                                                <option value="初中">初中</option>
+                                                <option value="高中">高中</option>
+                                                <option value="大学">大学</option>
+                                                <option value="兄弟">兄弟</option>
+                                                <option value="朋友">朋友</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="classmate-phone" class="form-label">手机号</label>
+                                            <input type="tel" class="form-control" id="classmate-phone" placeholder="请输入手机号">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="classmate-email" class="form-label">邮箱</label>
+                                            <input type="email" class="form-control" id="classmate-email" placeholder="请输入邮箱地址">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="classmate-qq" class="form-label">QQ号</label>
+                                            <input type="text" class="form-control" id="classmate-qq" placeholder="请输入QQ号（可选）">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="classmate-hobbies" class="form-label">兴趣爱好</label>
+                                        <input type="text" class="form-control" id="classmate-hobbies" placeholder="请输入兴趣爱好，用逗号分隔">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="classmate-intro" class="form-label">个人简介</label>
+                                        <textarea class="form-control" id="classmate-intro" rows="4" placeholder="请输入个人简介..."></textarea>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button type="button" class="btn btn-primary" onclick="saveClassmate()">添加同学</button>
+                                        <button type="button" class="btn btn-outline-secondary" onclick="clearClassmateForm()">清空</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 用户资料视图 -->
+            <div id="user-profile-view" class="view-content d-none">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <img src="https://via.placeholder.com/120" alt="头像" class="profile-avatar mb-3" id="profile-avatar">
+                                <h5 id="profile-name">用户名</h5>
+                                <p class="text-muted" id="profile-email">user@example.com</p>
+                                <button class="btn btn-primary" onclick="changeAvatar()">更换头像</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>个人信息</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="profile-form">
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="profile-username" class="form-label">用户名</label>
+                                            <input type="text" class="form-control" id="profile-username" value="用户名">
+                                        </div>
+                                        <div class="col-md-6 mb-3">
+                                            <label for="profile-email-input" class="form-label">邮箱</label>
+                                            <input type="email" class="form-control" id="profile-email-input" value="user@example.com">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="profile-bio" class="form-label">个人简介</label>
+                                        <textarea class="form-control" id="profile-bio" rows="3" placeholder="介绍一下自己..."></textarea>
+                                    </div>
+                                    <button type="button" class="btn btn-success" onclick="saveProfile()">保存资料</button>
+                                    <button type="button" class="btn btn-danger ms-2" onclick="logout()">退出登录</button>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <h5>统计信息</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 stats-card">
+                                        <div class="stats-number" id="stats-classmates">0</div>
+                                        <div class="text-muted">同学数量</div>
+                                    </div>
+                                    <div class="col-md-4 stats-card">
+                                        <div class="stats-number" id="stats-classes">0</div>
+                                        <div class="text-muted">分类数量</div>
+                                    </div>
+                                    <div class="col-md-4 stats-card">
+                                        <div class="stats-number" id="stats-contacts">0</div>
+                                        <div class="text-muted">联系人数</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 登录注册视图 -->
+            <div id="user-auth-view" class="view-content d-none">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <ul class="nav nav-tabs card-header-tabs">
+                                    <li class="nav-item">
+                                        <button class="nav-link active" onclick="showAuthTab('login')" id="login-tab">登录</button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button class="nav-link" onclick="showAuthTab('register')" id="register-tab">注册</button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <!-- 登录表单 -->
+                                <div id="login-form" class="auth-form">
+                                    <form onsubmit="event.preventDefault(); login(); return false;">
+                                        <div class="mb-3">
+                                            <label for="login-email" class="form-label">邮箱</label>
+                                            <input type="email" class="form-control" id="login-email" placeholder="请输入邮箱">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="login-password" class="form-label">密码</label>
+                                            <input type="password" class="form-control" id="login-password" placeholder="请输入密码">
+                                        </div>
+                                        <div class="mb-3 form-check">
+                                            <input type="checkbox" class="form-check-input" id="remember-me">
+                                            <label class="form-check-label" for="remember-me">记住我</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary w-100">登录</button>
+                                    </form>
+                                </div>
+                                
+                                <!-- 注册表单 -->
+                                <div id="register-form" class="auth-form d-none">
+                                    <form onsubmit="event.preventDefault(); register(); return false;">
+                                        <div class="mb-3">
+                                            <label for="register-username" class="form-label">用户名</label>
+                                            <input type="text" class="form-control" id="register-username" placeholder="请输入用户名">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="register-email" class="form-label">邮箱</label>
+                                            <input type="email" class="form-control" id="register-email" placeholder="请输入邮箱">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="register-password" class="form-label">密码</label>
+                                            <input type="password" class="form-control" id="register-password" placeholder="请输入密码">
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="confirm-password" class="form-label">确认密码</label>
+                                            <input type="password" class="form-control" id="confirm-password" placeholder="请确认密码">
+                                        </div>
+                                        <button type="submit" class="btn btn-success w-100">注册</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 返回顶部按钮 -->
+    <button id="back-to-top" class="back-to-top-btn d-none" onclick="scrollToTop()">
+        <i class="bi bi-arrow-up"></i>
+    </button>
+
+    <!-- Toast 容器 -->
+    <div id="toast-container" class="position-fixed top-0 end-0 p-3" style="z-index: 9999;"></div>
+
+    <!-- 同学详情模态框 -->
+    <div class="modal fade" id="classmateDetailModal" tabindex="-1">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-gradient-primary text-white border-0">
+                    <h5 class="modal-title d-flex align-items-center">
+                        <i class="bi bi-person-circle me-2"></i>
+                        同学详情
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                    <div class="row g-4">
+                        <!-- 左侧个人信息卡片 -->
+                        <div class="col-lg-4">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-body text-center p-4">
+                                    <div class="position-relative d-inline-block mb-3">
+                                        <img id="detail-avatar" src="" alt="" class="profile-avatar border border-3 border-white shadow" style="width: 140px; height: 140px;">
+                                        <div class="position-absolute bottom-0 end-0 bg-success rounded-circle" style="width: 20px; height: 20px; border: 3px solid white;"></div>
+                                    </div>
+                                    <h4 id="detail-name" class="mb-2 text-dark"></h4>
+                                    <p class="text-muted mb-3" id="detail-nickname"></p>
+                                    <span class="badge bg-gradient-primary fs-6 px-3 py-2" id="detail-class"></span>
+                                    <div class="mt-3 pt-3 border-top">
+                                        <small class="text-muted">添加时间</small>
+                                        <p class="mb-0 fw-bold" id="detail-add-date"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 右侧详细信息 -->
+                        <div class="col-lg-8">
+                            <div class="card border-0 shadow-sm h-100">
+                                <div class="card-header bg-white border-0 pb-0">
+                                    <h6 class="text-muted mb-0">联系方式</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <div class="d-flex align-items-center p-3 bg-light rounded">
+                                                <div class="flex-shrink-0">
+                                                    <i class="bi bi-telephone-fill text-success fs-4"></i>
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <small class="text-muted d-block">手机号</small>
+                                                    <strong id="detail-phone" class="text-dark"></strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="d-flex align-items-center p-3 bg-light rounded">
+                                                <div class="flex-shrink-0">
+                                                    <i class="bi bi-envelope-fill text-primary fs-4"></i>
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <small class="text-muted d-block">邮箱</small>
+                                                    <strong id="detail-email" class="text-dark"></strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="d-flex align-items-center p-3 bg-light rounded">
+                                                <div class="flex-shrink-0">
+                                                    <i class="bi bi-chat-dots-fill text-info fs-4"></i>
+                                                </div>
+                                                <div class="flex-grow-1 ms-3">
+                                                    <small class="text-muted d-block">QQ号</small>
+                                                    <strong id="detail-qq" class="text-dark"></strong>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-4">
+                                        <h6 class="text-muted mb-3">兴趣爱好</h6>
+                                        <div id="detail-hobbies" class="d-flex flex-wrap gap-2"></div>
+                                    </div>
+                                    
+                                    <div class="mt-4">
+                                        <h6 class="text-muted mb-3">个人简介</h6>
+                                        <div class="p-3 bg-light rounded">
+                                            <p id="detail-intro" class="mb-0 text-dark lh-lg"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer bg-white border-0 pt-0">
+                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-1"></i>关闭
+                    </button>
+                    <button type="button" class="btn btn-primary px-4" id="edit-classmate-btn" onclick="editClassmate()">
+                        <i class="bi bi-pencil-square me-1"></i>编辑
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 后台管理界面 -->
+    <div class="view-content" id="admin-view" style="display: none;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h5 class="card-title mb-0">后台管理</h5>
+                        </div>
+                        <div class="card-body">
+                            <!-- 统计卡片 -->
+                            <div class="row mb-4">
+                                <div class="col-md-3">
+                                    <div class="card text-center bg-primary text-white">
+                                        <div class="card-body">
+                                            <i class="bi bi-people-fill fs-1 mb-2"></i>
+                                            <h3 id="admin-total-classmates">0</h3>
+                                            <p class="card-text">总同学数</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card text-center bg-success text-white">
+                                        <div class="card-body">
+                                            <i class="bi bi-tags-fill fs-1 mb-2"></i>
+                                            <h3 id="admin-total-classes">0</h3>
+                                            <p class="card-text">分类数</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card text-center bg-info text-white">
+                                        <div class="card-body">
+                                            <i class="bi bi-telephone-fill fs-1 mb-2"></i>
+                                            <h3 id="admin-total-contacts">0</h3>
+                                            <p class="card-text">联系人数</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card text-center bg-warning text-white">
+                                        <div class="card-body">
+                                            <i class="bi bi-calendar-event fs-1 mb-2"></i>
+                                            <h3 id="admin-recent-added">0</h3>
+                                            <p class="card-text">本月新增</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 功能操作区 -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h6 class="card-title mb-0"><i class="bi bi-tools me-2"></i>管理工具</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-2">
+                                                    <button class="btn btn-outline-primary w-100 mb-2" onclick="exportData()">
+                                                        <i class="bi bi-download me-1"></i>导出数据
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button class="btn btn-outline-success w-100 mb-2" onclick="importData()">
+                                                        <i class="bi bi-upload me-1"></i>导入数据
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button class="btn btn-outline-info w-100 mb-2" onclick="backupData()">
+                                                        <i class="bi bi-shield-check me-1"></i>备份数据
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button class="btn btn-outline-warning w-100 mb-2" onclick="showSystemSettings()">
+                                                        <i class="bi bi-gear me-1"></i>系统设置
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button class="btn btn-outline-secondary w-100 mb-2" onclick="showUserManagement()">
+                                                        <i class="bi bi-person-gear me-1"></i>用户管理
+                                                    </button>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button class="btn btn-outline-danger w-100 mb-2" onclick="clearAllData()">
+                                                        <i class="bi bi-trash me-1"></i>清空数据
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 批量操作区 -->
+                            <div class="row mb-4">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <h6 class="card-title mb-0"><i class="bi bi-list-check me-2"></i>批量操作</h6>
+                                            <div>
+                                                <button class="btn btn-sm btn-outline-primary" onclick="selectAllClassmates()">
+                                                    <i class="bi bi-check-all me-1"></i>全选
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-secondary" onclick="clearSelection()">
+                                                    <i class="bi bi-x-circle me-1"></i>清除选择
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger" onclick="batchDelete()" id="batch-delete-btn" disabled>
+                                                    <i class="bi bi-trash me-1"></i>批量删除
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <label class="form-label">批量修改分类：</label>
+                                                    <div class="input-group">
+                                                        <select class="form-select" id="batch-category">
+                                                            <option value="">选择分类</option>
+                                                            <option value="同班同学">同班同学</option>
+                                                            <option value="室友">室友</option>
+                                                            <option value="朋友">朋友</option>
+                                                            <option value="其他">其他</option>
+                                                        </select>
+                                                        <button class="btn btn-outline-primary" onclick="batchUpdateCategory()">
+                                                            <i class="bi bi-arrow-repeat me-1"></i>应用
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">搜索过滤：</label>
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" id="admin-search" placeholder="搜索姓名、昵称、分类...">
+                                                        <button class="btn btn-outline-primary" onclick="adminSearch()">
+                                                            <i class="bi bi-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label class="form-label">分类筛选：</label>
+                                                    <select class="form-select" id="admin-filter" onchange="adminFilter()">
+                                                        <option value="all">全部分类</option>
+                                                        <option value="同班同学">同班同学</option>
+                                                        <option value="室友">室友</option>
+                                                        <option value="朋友">朋友</option>
+                                                        <option value="其他">其他</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 同学数据表格 -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                            <h6 class="card-title mb-0"><i class="bi bi-table me-2"></i>同学信息列表</h6>
+                                            <div>
+                                                <span class="badge bg-primary" id="selected-count">已选择: 0</span>
+                                                <span class="badge bg-secondary ms-2" id="total-count">总计: 0</span>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped table-hover">
+                                                    <thead class="table-dark">
+                                                        <tr>
+                                                            <th width="50">
+                                                                <input type="checkbox" class="form-check-input" id="select-all-checkbox" onchange="toggleSelectAll()">
+                                                            </th>
+                                                            <th>ID</th>
+                                                            <th>姓名</th>
+                                                            <th>昵称</th>
+                                                            <th>分类</th>
+                                                            <th>手机号</th>
+                                                            <th>邮箱</th>
+                                                            <th>添加时间</th>
+                                                            <th width="200">操作</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="admin-classmates-table">
+                                                        <!-- 数据将通过JavaScript动态生成 -->
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // 全局变量
+        let currentView = 'classmate-list';
+        let classmates = [];
+        let currentCategory = 'all';
+        let currentUser = null;
+
+        // 模拟同学数据
+        // 模拟数据已删除，现在使用空数组
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 恢复同学数据 - 根据用户隔离数据
+            const savedUser = localStorage.getItem('currentUser') || sessionStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                const userKey = 'classmates_' + currentUser.email;
+                const savedClassmates = localStorage.getItem(userKey);
+                if (savedClassmates) {
+                    classmates = JSON.parse(savedClassmates);
+                } else {
+                    classmates = []; // 使用空数组，不再加载模拟数据
+                }
+            } else {
+                classmates = [];
+            }
+            
+            // 恢复登录状态
+            if (currentUser) {
+                updateUserProfile();
+                checkAdminAccess();
+                showView('classmate-list');
+            } else {
+                // 未登录用户显示登录页面
+                showView('user-auth');
+            }
+            
+            loadClassmates();
+            updateStats();
+            
+            // 搜索功能
+            document.getElementById('search-input').addEventListener('input', function() {
+                filterClassmates();
+            });
+            
+            // 滚动监听
+            window.addEventListener('scroll', function() {
+                const backToTop = document.getElementById('back-to-top');
+                if (window.scrollY > 300) {
+                    backToTop.classList.remove('d-none');
+                } else {
+                    backToTop.classList.add('d-none');
+                }
+            });
+        });
+
+        // 视图切换
+        function showView(viewName) {
+            // 检查需要登录的功能
+            if (['add-classmate', 'user-profile'].includes(viewName) && !currentUser) {
+                showToast('请先登录', 'warning');
+                viewName = 'user-auth';
+            }
+            
+            // 检查管理员权限
+            if (viewName === 'admin-view') {
+                if (!currentUser) {
+                    showToast('请先登录', 'warning');
+                    viewName = 'user-auth';
+                } else if (currentUser.email !== 'admin@school.com') {
+                    showToast('只有管理员可以访问后台管理', 'warning');
+                    return;
+                } else {
+                    updateAdminStats();
+                }
+            }
+            
+            // 隐藏所有视图
+            const views = document.querySelectorAll('.view-content');
+            views.forEach(view => view.classList.add('d-none'));
+            
+            // 显示目标视图
+            const targetView = document.getElementById(viewName + '-view');
+            if (targetView) {
+                targetView.classList.remove('d-none');
+                targetView.classList.add('fade-in');
+            }
+            
+            // 更新导航状态
+            const navItems = document.querySelectorAll('.nav-item-animated');
+            navItems.forEach(item => item.classList.remove('active'));
+            
+            const activeNav = document.getElementById('nav-' + viewName);
+            if (activeNav) {
+                activeNav.classList.add('active');
+            }
+            
+            currentView = viewName;
+        }
+
+        // 加载同学列表
+        function loadClassmates() {
+            const container = document.getElementById('classmate-container');
+            container.innerHTML = '';
+            
+            const filteredClassmates = getFilteredClassmates();
+            
+            filteredClassmates.forEach(classmate => {
+                const classmateCard = createClassmateCard(classmate);
+                container.appendChild(classmateCard);
+            });
+        }
+
+        // 创建同学卡片
+        function createClassmateCard(classmate) {
+            const col = document.createElement('div');
+            col.className = 'col-md-6 col-lg-4';
+            
+            col.innerHTML = `
+                <div class="card blog-card" onclick="viewClassmate(${classmate.id})">
+                    <div class="card-body text-center">
+                        <img src="${classmate.avatar}" alt="${classmate.name}" class="profile-avatar mb-3" style="width: 80px; height: 80px;">
+                        <h5 class="card-title">${classmate.name}</h5>
+                        <p class="text-muted">${classmate.nickname ? '(' + classmate.nickname + ')' : ''}</p>
+                        <div class="blog-meta mb-2">
+                            <span class="badge bg-primary me-2">${classmate.class}</span>
+                        </div>
+                        <p class="card-text">${classmate.intro.substring(0, 60)}...</p>
+                        <div class="blog-meta mb-2">
+                            <small><i class="bi bi-telephone me-1"></i>${classmate.phone}</small><br>
+                            <small><i class="bi bi-envelope me-1"></i>${classmate.email}</small>
+                        </div>
+                        <div class="mt-2">
+                            ${classmate.hobbies.map(hobby => `<span class="badge bg-secondary me-1">${hobby}</span>`).join('')}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            return col;
+        }
+
+        // 获取过滤后的同学
+        function getFilteredClassmates() {
+            let filtered = classmates;
+            
+            // 按分类过滤
+            if (currentCategory !== 'all') {
+                filtered = filtered.filter(classmate => classmate.class === currentCategory);
+            }
+            
+            // 按搜索关键词过滤
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            if (searchTerm) {
+                filtered = filtered.filter(classmate => 
+                    classmate.name.toLowerCase().includes(searchTerm) ||
+                    classmate.nickname.toLowerCase().includes(searchTerm) ||
+                    classmate.class.toLowerCase().includes(searchTerm) ||
+                    classmate.intro.toLowerCase().includes(searchTerm) ||
+                    classmate.hobbies.some(hobby => hobby.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            return filtered;
+        }
+
+        // 分类筛选
+        function filterByCategory(category) {
+            currentCategory = category;
+            
+            // 更新标签状态
+            const tags = document.querySelectorAll('#category-tags .tag');
+            tags.forEach(tag => tag.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            loadClassmates();
+        }
+
+        // 搜索过滤
+        function filterClassmates() {
+            loadClassmates();
+        }
+
+        // 查看同学详情
+        function viewClassmate(id) {
+            if (!currentUser) {
+                showToast('请先登录后查看同学详情', 'warning');
+                showView('user-auth');
+                return;
+            }
+            
+            const classmate = classmates.find(c => c.id === id);
+            if (classmate) {
+                // 填充模态框数据
+                document.getElementById('detail-avatar').src = classmate.avatar;
+                document.getElementById('detail-avatar').alt = classmate.name;
+                document.getElementById('detail-name').textContent = classmate.name;
+                document.getElementById('detail-nickname').textContent = classmate.nickname ? `(${classmate.nickname})` : '';
+                document.getElementById('detail-class').textContent = classmate.class;
+                document.getElementById('detail-phone').textContent = classmate.phone || '未填写';
+                document.getElementById('detail-email').textContent = classmate.email || '未填写';
+                document.getElementById('detail-qq').textContent = classmate.qq || '未填写';
+                
+                // 优化兴趣爱好显示 - 使用彩色标签
+                const hobbiesColors = ['primary', 'success', 'info', 'warning', 'danger', 'secondary'];
+                const hobbiesHtml = classmate.hobbies.map((hobby, index) => {
+                    const color = hobbiesColors[index % hobbiesColors.length];
+                    return `<span class="badge bg-${color} me-2 mb-2 px-3 py-2">${hobby}</span>`;
+                }).join('');
+                document.getElementById('detail-hobbies').innerHTML = hobbiesHtml || '<span class="text-muted">暂无兴趣爱好</span>';
+                
+                document.getElementById('detail-intro').textContent = classmate.intro || '暂无个人简介';
+                
+                // 显示添加时间
+                const addDate = classmate.addDate ? new Date(classmate.addDate).toLocaleDateString('zh-CN') : '未知';
+                document.getElementById('detail-add-date').textContent = addDate;
+                
+                // 设置编辑按钮的onclick事件
+                const editBtn = document.getElementById('edit-classmate-btn');
+                editBtn.setAttribute('onclick', `editClassmate(${id})`);
+                
+                // 显示模态框
+                const modal = new bootstrap.Modal(document.getElementById('classmateDetailModal'));
+                modal.show();
+            }
+        }
+
+        // 博客编辑器功能
+        function formatText(command) {
+            const textarea = document.getElementById('blog-content');
+            textarea.focus();
+            
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const selectedText = textarea.value.substring(start, end);
+            
+            let formattedText = '';
+            switch(command) {
+                case 'bold':
+                    formattedText = `**${selectedText}**`;
+                    break;
+                case 'italic':
+                    formattedText = `*${selectedText}*`;
+                    break;
+                case 'underline':
+                    formattedText = `<u>${selectedText}</u>`;
+                    break;
+            }
+            
+            textarea.value = textarea.value.substring(0, start) + formattedText + textarea.value.substring(end);
+        }
+
+        // 保存同学信息
+        function saveClassmate() {
+            if (!currentUser) {
+                showToast('请先登录后添加同学信息', 'warning');
+                showView('user-auth');
+                return;
+            }
+            
+            const name = document.getElementById('classmate-name').value;
+            const nickname = document.getElementById('classmate-nickname').value;
+            const classs = document.getElementById('classmate-class').value;
+            const phone = document.getElementById('classmate-phone').value;
+            const email = document.getElementById('classmate-email').value;
+            const qq = document.getElementById('classmate-qq').value;
+            const hobbies = document.getElementById('classmate-hobbies').value.split(',').map(hobby => hobby.trim());
+            const intro = document.getElementById('classmate-intro').value;
+            
+            if (!name || !classs) {
+                showToast('请填写姓名和分类', 'warning');
+                return;
+            }
+            
+            const newClassmate = {
+                id: classmates.length + 1,
+                name,
+                nickname,
+                class: classs,
+                phone,
+                email,
+                qq,
+                hobbies,
+                intro,
+                avatar: 'https://via.placeholder.com/80x80?text=' + name.charAt(0),
+                addDate: new Date().toISOString()
+            };
+            
+            classmates.unshift(newClassmate);
+            
+            // 保存到localStorage - 使用用户特定的键
+            if (currentUser) {
+                const userKey = 'classmates_' + currentUser.email;
+                localStorage.setItem(userKey, JSON.stringify(classmates));
+            }
+            
+            showToast('同学信息添加成功！', 'success');
+            clearForm();
+            updateStats();
+            loadClassmates();
+            updateAdminStats();
+        }
+
+        // 保存草稿
+        function saveDraft() {
+            showToast('草稿已保存', 'info');
+        }
+
+        // 清空表单
+        function clearForm() {
+            document.getElementById('classmate-form').reset();
+        }
+        
+        // 清空同学表单
+        function clearClassmateForm() {
+            // 清空所有表单字段
+            document.getElementById('classmate-name').value = '';
+            document.getElementById('classmate-nickname').value = '';
+            document.getElementById('classmate-class').value = '';
+            document.getElementById('classmate-phone').value = '';
+            document.getElementById('classmate-email').value = '';
+            document.getElementById('classmate-qq').value = '';
+            document.getElementById('classmate-hobbies').value = '';
+            document.getElementById('classmate-intro').value = '';
+            
+            // 如果当前处于编辑模式，重置为添加模式
+            if (window.editingClassmateId) {
+                resetEditMode();
+            }
+        }
+
+        // 用户认证功能
+        function showAuthTab(tab) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const loginTab = document.getElementById('login-tab');
+            const registerTab = document.getElementById('register-tab');
+            
+            if (tab === 'login') {
+                loginForm.classList.remove('d-none');
+                registerForm.classList.add('d-none');
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+            } else {
+                loginForm.classList.add('d-none');
+                registerForm.classList.remove('d-none');
+                loginTab.classList.remove('active');
+                registerTab.classList.add('active');
+            }
+        }
+
+        // 登录函数已在后面重新定义
+
+        // 注册
+        function register() {
+            const username = document.getElementById('register-username').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            if (!username || !email || !password || !confirmPassword) {
+                showToast('请填写所有字段', 'warning');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showToast('两次密码输入不一致', 'error');
+                return;
+            }
+            
+            // 模拟注册
+            currentUser = {
+                name: username,
+                email: email
+            };
+            
+            showToast('注册成功！', 'success');
+            updateUserProfile();
+        }
+
+        // 更新用户资料显示
+        function updateUserProfile() {
+            if (currentUser) {
+                document.getElementById('profile-name').textContent = currentUser.name;
+                document.getElementById('profile-email').textContent = currentUser.email;
+                document.getElementById('profile-username').value = currentUser.name;
+                document.getElementById('profile-email-input').value = currentUser.email;
+            }
+        }
+
+        // 保存用户资料
+        function saveProfile() {
+            const username = document.getElementById('profile-username').value;
+            const email = document.getElementById('profile-email-input').value;
+            const bio = document.getElementById('profile-bio').value;
+            
+            if (currentUser) {
+                currentUser.name = username;
+                currentUser.email = email;
+                currentUser.bio = bio;
+                
+                updateUserProfile();
+                showToast('资料保存成功！', 'success');
+            }
+        }
+
+        // 更换头像
+        function changeAvatar() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profile-avatar').src = e.target.result;
+                        showToast('头像更新成功！', 'success');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            };
+            input.click();
+        }
+
+        // 更新统计信息
+        function updateStats() {
+            const totalClassmates = classmates.length;
+            const totalClasses = [...new Set(classmates.map(c => c.class))].length;
+            const totalContacts = classmates.filter(c => c.phone || c.email || c.qq).length;
+            
+            document.getElementById('stats-classmates').textContent = totalClassmates;
+            document.getElementById('stats-classes').textContent = totalClasses;
+            document.getElementById('stats-contacts').textContent = totalContacts;
+        }
+
+        // 返回顶部
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Toast 通知
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toast-container');
+            const toastId = 'toast-' + Date.now();
+            
+            const colors = {
+                success: 'success',
+                error: 'danger',
+                warning: 'warning',
+                info: 'primary'
+            };
+            
+            const icons = {
+                success: 'bi-check-circle-fill',
+                error: 'bi-x-circle-fill',
+                warning: 'bi-exclamation-triangle-fill',
+                info: 'bi-info-circle-fill'
+            };
+            
+            const toastHtml = `
+                <div class="toast show" role="alert" id="${toastId}">
+                    <div class="toast-header bg-${colors[type]} text-white">
+                        <i class="bi ${icons[type]} me-2"></i>
+                        <strong class="me-auto">${type.charAt(0).toUpperCase() + type.slice(1)}</strong>
+                        <button type="button" class="btn-close btn-close-white" onclick="removeToast('${toastId}')"></button>
+                    </div>
+                    <div class="toast-body">
+                        ${message}
+                    </div>
+                </div>
+            `;
+            
+            toastContainer.insertAdjacentHTML('beforeend', toastHtml);
+            
+            // 3秒后自动移除
+            setTimeout(() => {
+                removeToast(toastId);
+            }, 3000);
+        }
+
+        // 移除 Toast
+        function removeToast(toastId) {
+            const toast = document.getElementById(toastId);
+            if (toast) {
+                toast.remove();
+            }
+        }
+
+        // 编辑同学信息
+        function editClassmate(id) {
+            if (!currentUser) {
+                showToast('请先登录后编辑同学信息', 'warning');
+                showView('user-auth');
+                return;
+            }
+            
+            const classmate = classmates.find(c => c.id === id);
+            if (!classmate) {
+                showToast('未找到该同学信息', 'error');
+                return;
+            }
+            
+            // 填充编辑表单
+            document.getElementById('classmate-name').value = classmate.name || '';
+            document.getElementById('classmate-nickname').value = classmate.nickname || '';
+            document.getElementById('classmate-class').value = classmate.class || '';
+            document.getElementById('classmate-phone').value = classmate.phone || '';
+            document.getElementById('classmate-email').value = classmate.email || '';
+            document.getElementById('classmate-qq').value = classmate.qq || '';
+            document.getElementById('classmate-hobbies').value = classmate.hobbies ? classmate.hobbies.join(', ') : '';
+            document.getElementById('classmate-intro').value = classmate.intro || '';
+            
+            // 设置编辑模式
+            window.editingClassmateId = id;
+            
+            // 更新按钮文本和功能
+            const saveBtn = document.querySelector('#add-classmate-view .btn-primary');
+            saveBtn.textContent = '保存修改';
+            saveBtn.setAttribute('onclick', 'updateClassmate()');
+            
+            // 更新页面标题
+            document.querySelector('#add-classmate-view h4').innerHTML = '<i class="bi bi-pencil-square me-2"></i>编辑同学信息';
+            
+            // 关闭详情模态框并显示编辑页面
+            const modal = bootstrap.Modal.getInstance(document.getElementById('classmateDetailModal'));
+            if (modal) {
+                modal.hide();
+            }
+            showView('add-classmate');
+            
+            showToast('已进入编辑模式', 'info');
+        }
+        
+        // 更新同学信息
+        function updateClassmate() {
+            if (!currentUser) {
+                showToast('请先登录后编辑同学信息', 'warning');
+                showView('user-auth');
+                return;
+            }
+            
+            const name = document.getElementById('classmate-name').value;
+            const nickname = document.getElementById('classmate-nickname').value;
+            const classs = document.getElementById('classmate-class').value;
+            const phone = document.getElementById('classmate-phone').value;
+            const email = document.getElementById('classmate-email').value;
+            const qq = document.getElementById('classmate-qq').value;
+            const hobbies = document.getElementById('classmate-hobbies').value.split(',').map(hobby => hobby.trim()).filter(hobby => hobby);
+            const intro = document.getElementById('classmate-intro').value;
+            
+            if (!name || !classs) {
+                showToast('请填写姓名和分类', 'warning');
+                return;
+            }
+            
+            // 查找并更新同学信息
+            const classmateIndex = classmates.findIndex(c => c.id === window.editingClassmateId);
+            if (classmateIndex === -1) {
+                showToast('未找到该同学信息', 'error');
+                return;
+            }
+            
+            // 更新同学信息
+            classmates[classmateIndex] = {
+                ...classmates[classmateIndex],
+                name,
+                nickname,
+                class: classs,
+                phone,
+                email,
+                qq,
+                hobbies,
+                intro,
+                avatar: 'https://via.placeholder.com/80x80?text=' + name.charAt(0)
+            };
+            
+            // 保存到localStorage - 使用用户特定的键
+            if (currentUser) {
+                const userKey = 'classmates_' + currentUser.email;
+                localStorage.setItem(userKey, JSON.stringify(classmates));
+            }
+            
+            showToast('同学信息更新成功！', 'success');
+            resetEditMode();
+            updateStats();
+            loadClassmates();
+            updateAdminStats();
+            showView('classmate-list');
+        }
+        
+        // 重置编辑模式
+        function resetEditMode() {
+            window.editingClassmateId = null;
+            
+            // 恢复按钮文本和功能
+            const saveBtn = document.querySelector('#add-classmate-view .btn-primary');
+            if (saveBtn) {
+                saveBtn.textContent = '添加同学';
+                saveBtn.setAttribute('onclick', 'saveClassmate()');
+            }
+            
+            // 恢复页面标题
+            const titleElement = document.querySelector('#add-classmate-view h4');
+            if (titleElement) {
+                titleElement.innerHTML = '<i class="bi bi-person-plus me-2"></i>添加同学';
+            }
+            
+            // 清空表单字段
+            document.getElementById('classmate-name').value = '';
+            document.getElementById('classmate-nickname').value = '';
+            document.getElementById('classmate-class').value = '';
+            document.getElementById('classmate-phone').value = '';
+            document.getElementById('classmate-email').value = '';
+            document.getElementById('classmate-qq').value = '';
+            document.getElementById('classmate-hobbies').value = '';
+            document.getElementById('classmate-intro').value = '';
+        }
+
+        // 更新后台管理统计
+        function updateAdminStats() {
+            const totalClassmates = classmates.length;
+            const totalClasses = [...new Set(classmates.map(c => c.class))].length;
+            const totalContacts = classmates.filter(c => c.phone || c.email || c.qq).length;
+            
+            // 计算本月新增
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+            const recentAdded = classmates.filter(c => {
+                if (!c.addDate) return false;
+                const addDate = new Date(c.addDate);
+                return addDate.getMonth() === currentMonth && addDate.getFullYear() === currentYear;
+            }).length;
+            
+            document.getElementById('admin-total-classmates').textContent = totalClassmates;
+            document.getElementById('admin-total-classes').textContent = totalClasses;
+            document.getElementById('admin-total-contacts').textContent = totalContacts;
+            document.getElementById('admin-recent-added').textContent = recentAdded;
+            
+            loadAdminTable();
+        }
+
+        // 加载后台管理表格
+        function loadAdminTable() {
+            const tbody = document.getElementById('admin-classmates-table');
+            tbody.innerHTML = '';
+            
+            // 更新总计数量
+            document.getElementById('total-count').textContent = `总计: ${classmates.length}`;
+            
+            classmates.forEach(classmate => {
+                const row = document.createElement('tr');
+                const addDate = classmate.addDate ? new Date(classmate.addDate).toLocaleDateString() : '-';
+                row.innerHTML = `
+                    <td>
+                        <input type="checkbox" class="form-check-input classmate-checkbox" value="${classmate.id}" onchange="updateSelection()">
+                    </td>
+                    <td>${classmate.id}</td>
+                    <td>${classmate.name}</td>
+                    <td>${classmate.nickname || '-'}</td>
+                    <td><span class="badge bg-secondary">${classmate.class}</span></td>
+                    <td>${classmate.phone || '-'}</td>
+                    <td>${classmate.email || '-'}</td>
+                    <td>${addDate}</td>
+                    <td>
+                        <button class="btn btn-sm btn-info me-1" onclick="viewClassmate(${classmate.id})" title="查看详情">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                        <button class="btn btn-sm btn-primary me-1" onclick="editClassmate(${classmate.id})" title="编辑信息">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteClassmate(${classmate.id})" title="删除">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            // 重置选择状态
+            updateSelection();
+        }
+
+        // 删除同学
+        function deleteClassmate(id) {
+            if (!currentUser || currentUser.email !== 'admin@school.com') {
+                showToast('只有管理员可以删除同学信息', 'warning');
+                return;
+            }
+            
+            if (confirm('确定要删除这位同学的信息吗？')) {
+                classmates = classmates.filter(c => c.id !== id);
+                
+                // 保存到localStorage - 使用用户特定的键
+            if (currentUser) {
+                const userKey = 'classmates_' + currentUser.email;
+                localStorage.setItem(userKey, JSON.stringify(classmates));
+            }
+                
+                showToast('删除成功', 'success');
+                loadClassmates();
+                updateStats();
+                updateAdminStats();
+            }
+        }
+        
+        // 全选/取消全选
+        function toggleSelectAll() {
+            const selectAllCheckbox = document.getElementById('select-all');
+            const classmateCheckboxes = document.querySelectorAll('.classmate-checkbox');
+            
+            classmateCheckboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+            
+            updateSelection();
+        }
+        
+        // 更新选择状态
+        function updateSelection() {
+            const classmateCheckboxes = document.querySelectorAll('.classmate-checkbox');
+            const selectedCheckboxes = document.querySelectorAll('.classmate-checkbox:checked');
+            const selectAllCheckbox = document.getElementById('select-all');
+            
+            // 更新全选状态
+            if (selectAllCheckbox) {
+                selectAllCheckbox.checked = classmateCheckboxes.length > 0 && selectedCheckboxes.length === classmateCheckboxes.length;
+                selectAllCheckbox.indeterminate = selectedCheckboxes.length > 0 && selectedCheckboxes.length < classmateCheckboxes.length;
+            }
+            
+            // 更新已选择数量
+            const selectedCountElement = document.getElementById('selected-count');
+            if (selectedCountElement) {
+                selectedCountElement.textContent = `已选择: ${selectedCheckboxes.length}`;
+            }
+            
+            // 更新批量操作按钮状态
+            const batchDeleteBtn = document.getElementById('batch-delete-btn');
+            if (batchDeleteBtn) {
+                batchDeleteBtn.disabled = selectedCheckboxes.length === 0;
+            }
+        }
+        
+        // 批量删除
+        function batchDeleteClassmates() {
+            if (!currentUser || currentUser.email !== 'admin@school.com') {
+                showToast('只有管理员可以执行批量操作', 'warning');
+                return;
+            }
+            
+            const selectedCheckboxes = document.querySelectorAll('.classmate-checkbox:checked');
+            const selectedIds = Array.from(selectedCheckboxes).map(cb => parseInt(cb.value));
+            
+            if (selectedIds.length === 0) {
+                showToast('请先选择要删除的同学', 'warning');
+                return;
+            }
+            
+            if (confirm(`确定要删除选中的 ${selectedIds.length} 位同学的信息吗？`)) {
+                classmates = classmates.filter(c => !selectedIds.includes(c.id));
+                
+                // 保存到localStorage - 使用用户特定的键
+                if (currentUser) {
+                    const userKey = 'classmates_' + currentUser.email;
+                    localStorage.setItem(userKey, JSON.stringify(classmates));
+                }
+                
+                showToast(`成功删除 ${selectedIds.length} 位同学的信息`, 'success');
+                loadClassmates();
+                updateStats();
+                updateAdminStats();
+            }
+        }
+        
+        // 导出数据
+        function exportData() {
+            if (!currentUser || currentUser.email !== 'admin@school.com') {
+                showToast('只有管理员可以导出数据', 'warning');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(classmates, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `classmates_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            showToast('数据导出成功', 'success');
+        }
+        
+        // 导入数据
+        function importData() {
+            if (!currentUser || currentUser.email !== 'admin@school.com') {
+                showToast('只有管理员可以导入数据', 'warning');
+                return;
+            }
+            
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const importedData = JSON.parse(e.target.result);
+                        if (Array.isArray(importedData)) {
+                            if (confirm('导入数据将覆盖现有数据，确定继续吗？')) {
+                                classmates = importedData;
+                                
+                                // 保存到localStorage - 使用用户特定的键
+                                if (currentUser) {
+                                    const userKey = 'classmates_' + currentUser.email;
+                                    localStorage.setItem(userKey, JSON.stringify(classmates));
+                                }
+                                
+                                showToast('数据导入成功', 'success');
+                                loadClassmates();
+                                updateStats();
+                                updateAdminStats();
+                            }
+                        } else {
+                            showToast('导入文件格式错误', 'error');
+                        }
+                    } catch (error) {
+                        showToast('导入文件解析失败', 'error');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        // 清空所有数据
+        function clearAllData() {
+            if (!currentUser || currentUser.email !== 'admin@school.com') {
+                showToast('只有管理员可以清空数据', 'warning');
+                return;
+            }
+            
+            if (confirm('确定要清空所有同学数据吗？此操作不可恢复！')) {
+                classmates = [];
+                
+                // 清空localStorage - 使用用户特定的键
+            if (currentUser) {
+                const userKey = 'classmates_' + currentUser.email;
+                localStorage.removeItem(userKey);
+            }
+                
+                showToast('数据已清空', 'success');
+                loadClassmates();
+                updateStats();
+                updateAdminStats();
+            }
+        }
+
+        // 检查管理员权限
+        function checkAdminAccess() {
+            const adminNav = document.getElementById('nav-admin');
+            if (currentUser && currentUser.email === 'admin@school.com') {
+                adminNav.style.display = 'block';
+            } else {
+                adminNav.style.display = 'none';
+            }
+        }
+
+        // 登录函数
+        function login() {
+            try {
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                const rememberMe = document.getElementById('remember-me').checked;
+                
+                if (!email || !password) {
+                    showToast('请填写邮箱和密码', 'warning');
+                    return;
+                }
+                
+                // 简单的登录验证
+                currentUser = {
+                    name: email === 'admin@school.com' ? '管理员' : '用户',
+                    email: email
+                };
+                
+                // 保存登录状态到localStorage
+                if (rememberMe) {
+                    localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                } else {
+                    // 如果不记住我，使用sessionStorage（页面关闭后清除）
+                    sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                }
+                
+                // 加载用户特定的同学数据
+                const userKey = 'classmates_' + currentUser.email;
+                const savedClassmates = localStorage.getItem(userKey);
+                if (savedClassmates) {
+                    classmates = JSON.parse(savedClassmates);
+                } else {
+                    classmates = [];
+                }
+                
+                showToast('登录成功！', 'success');
+                updateUserProfile();
+                checkAdminAccess();
+                loadClassmates();
+                updateStats();
+                updateAdminStats();
+                showView('classmate-list');
+            } catch (error) {
+                showToast('登录过程中发生错误：' + error.message, 'error');
+            }
+        }
+
+        // 退出登录函数
+        function logout() {
+            // 清除保存的登录状态
+            localStorage.removeItem('currentUser');
+            sessionStorage.removeItem('currentUser');
+            
+            // 重置当前用户和数据
+            currentUser = null;
+            classmates = [];
+            loadClassmates();
+            updateStats();
+            
+            // 显示退出成功提示
+            showToast('已退出登录', 'success');
+            
+            // 返回登录页面
+            showView('login');
+        }
+
+        // 权限验证已集成到原始showView函数中
+    </script>
+</body>
+</html>
