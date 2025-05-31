@@ -1,0 +1,29 @@
+{
+  "name": "classmate-directory-bug-feedback",
+  "version": "1.0.0",
+  "description": "同学录系统的Bug反馈后台服务",
+  "main": "bug-feedback-server.js",
+  "scripts": {
+    "start": "node bug-feedback-server.js",
+    "dev": "nodemon bug-feedback-server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bug-feedback",
+    "express",
+    "nodejs",
+    "classmate-directory"
+  ],
+  "author": "同学录开发团队",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

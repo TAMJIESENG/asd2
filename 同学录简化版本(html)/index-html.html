@@ -212,6 +212,22 @@
             position: relative;
         }
         
+        /* 脉冲动画效果 */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.7);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(255, 193, 7, 0.3);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 193, 7, 0);
+            }
+        }
+        
         /* 模态框专用渐变背景 */
         .modal-header.bg-gradient-primary {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
@@ -1016,6 +1032,9 @@
                     <a class="nav-link nav-item-animated" href="#" onclick="showView('admin-view')" id="nav-admin" style="display: none;">
                         <i class="bi bi-gear me-1"></i>后台管理
                     </a>
+                    <a class="nav-link nav-item-animated" href="#" onclick="openBugFeedback()" title="反馈Bug或建议">
+                        <i class="bi bi-bug me-1"></i>Bug反馈
+                    </a>
                     <a class="nav-link nav-item-animated" href="#" onclick="showView('user-auth')" id="nav-user-auth">
                         <i class="bi bi-box-arrow-in-right me-1"></i>登录/注册
                     </a>
@@ -1364,6 +1383,78 @@
                     </button>
                     <button type="button" class="btn btn-primary px-4" id="edit-classmate-btn" onclick="editClassmate()">
                         <i class="bi bi-pencil-square me-1"></i>编辑
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bug反馈模态框 -->
+    <div class="modal fade" id="bugFeedbackModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-gradient-primary text-white border-0">
+                    <h5 class="modal-title d-flex align-items-center">
+                        <i class="bi bi-bug me-2"></i>Bug反馈与建议
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                    <form id="bugFeedbackForm">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="bug-category" class="form-label">问题类型</label>
+                                <select class="form-select" id="bug-category" required>
+                                    <option value="">请选择问题类型</option>
+                                    <option value="bug">🐛 程序错误</option>
+                                    <option value="ui">🎨 界面问题</option>
+                                    <option value="performance">⚡ 性能问题</option>
+                                    <option value="feature">💡 功能建议</option>
+                                    <option value="other">📝 其他问题</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="bug-severity" class="form-label">严重程度</label>
+                                <select class="form-select" id="bug-severity" required>
+                                    <option value="">请选择严重程度</option>
+                                    <option value="low">🟢 轻微</option>
+                                    <option value="medium">🟡 中等</option>
+                                    <option value="high">🟠 严重</option>
+                                    <option value="critical">🔴 紧急</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="bug-title" class="form-label">问题标题 <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="bug-title" placeholder="请简要描述问题..." required maxlength="100">
+                            <div class="form-text">请用一句话概括问题（最多100字符）</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="bug-description" class="form-label">详细描述 <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="bug-description" rows="6" placeholder="请详细描述遇到的问题或建议...\n\n例如：\n1. 操作步骤\n2. 预期结果\n3. 实际结果\n4. 其他相关信息" required maxlength="1000"></textarea>
+                            <div class="form-text">请详细描述问题，包括操作步骤、预期结果等（最多1000字符）</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="bug-contact" class="form-label">联系方式</label>
+                            <input type="email" class="form-control" id="bug-contact" placeholder="可选：留下邮箱以便我们联系您">
+                            <div class="form-text">可选项，如需回复请留下邮箱地址</div>
+                        </div>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="bug-system-info" checked>
+                                <label class="form-check-label" for="bug-system-info">
+                                    包含系统信息（浏览器版本、操作系统等）
+                                </label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer bg-white border-0">
+                    <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
+                        <i class="bi bi-x-circle me-1"></i>取消
+                    </button>
+                    <button type="button" class="btn btn-primary px-4" onclick="submitBugReport()">
+                        <i class="bi bi-send me-1"></i>提交反馈
                     </button>
                 </div>
             </div>
@@ -1926,6 +2017,31 @@
 
         // 登录函数已在后面重新定义
 
+        // 获取已注册用户列表
+        function getRegisteredUsers() {
+            const users = localStorage.getItem('registeredUsers');
+            return users ? JSON.parse(users) : [];
+        }
+        
+        // 保存用户到注册列表
+        function saveUserToRegistry(user) {
+            const users = getRegisteredUsers();
+            users.push(user);
+            localStorage.setItem('registeredUsers', JSON.stringify(users));
+        }
+        
+        // 检查用户是否已注册
+        function isUserRegistered(email) {
+            const users = getRegisteredUsers();
+            return users.some(user => user.email === email);
+        }
+        
+        // 获取注册用户信息
+        function getRegisteredUser(email) {
+            const users = getRegisteredUsers();
+            return users.find(user => user.email === email);
+        }
+        
         // 注册
         function register() {
             const username = document.getElementById('register-username').value;
@@ -1943,14 +2059,64 @@
                 return;
             }
             
-            // 模拟注册
-            currentUser = {
+            // 检查邮箱格式
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                showToast('请输入有效的邮箱地址', 'error');
+                return;
+            }
+            
+            // 检查用户是否已存在
+            if (isUserRegistered(email)) {
+                showToast('该邮箱已被注册，请使用其他邮箱', 'error');
+                return;
+            }
+            
+            // 密码强度检查
+            if (password.length < 6) {
+                showToast('密码长度至少6位', 'warning');
+                return;
+            }
+            
+            // 创建新用户
+            const newUser = {
                 name: username,
-                email: email
+                email: email,
+                password: password, // 实际项目中应该加密存储
+                registerDate: new Date().toISOString(),
+                isAdmin: email === 'admin@school.com'
             };
             
-            showToast('注册成功！', 'success');
-            updateUserProfile();
+            // 保存用户到注册列表
+            saveUserToRegistry(newUser);
+            
+            // 设置当前用户
+            currentUser = {
+                name: username,
+                email: email,
+                isAdmin: newUser.isAdmin
+            };
+            
+            // 保存登录状态
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            showToast('注册成功！正在为您登录...', 'success');
+            
+            // 清空注册表单
+            document.getElementById('register-username').value = '';
+            document.getElementById('register-email').value = '';
+            document.getElementById('register-password').value = '';
+            document.getElementById('confirm-password').value = '';
+            
+            // 延迟跳转，让用户看到成功提示
+            setTimeout(() => {
+                updateUserProfile();
+                checkAdminAccess();
+                loadClassmates();
+                updateStats();
+                updateAdminStats();
+                showView('classmate-list');
+            }, 1000);
         }
 
         // 更新用户资料显示
@@ -2459,13 +2625,44 @@
                     return;
                 }
                 
-                // 简单的登录验证
+                // 检查邮箱格式
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(email)) {
+                    showToast('请输入有效的邮箱地址', 'error');
+                    return;
+                }
+                
+                // 检查账号是否存在
+                if (!isUserRegistered(email)) {
+                    showToast('❌ 未发现此账号，请先注册或检查邮箱地址', 'error');
+                    // 高亮注册选项卡
+                    document.getElementById('register-tab').style.animation = 'pulse 1s ease-in-out 3';
+                    setTimeout(() => {
+                        document.getElementById('register-tab').style.animation = '';
+                    }, 3000);
+                    return;
+                }
+                
+                // 获取注册用户信息
+                const registeredUser = getRegisteredUser(email);
+                
+                // 验证密码
+                if (registeredUser.password !== password) {
+                    showToast('❌ 密码错误，请重新输入', 'error');
+                    // 清空密码框
+                    document.getElementById('login-password').value = '';
+                    document.getElementById('login-password').focus();
+                    return;
+                }
+                
+                // 登录成功，设置当前用户
                 currentUser = {
-                    name: email === 'admin@school.com' ? '管理员' : '用户',
-                    email: email
+                    name: registeredUser.name,
+                    email: registeredUser.email,
+                    isAdmin: registeredUser.isAdmin || email === 'admin@school.com'
                 };
                 
-                // 保存登录状态到localStorage
+                // 保存登录状态到localStorage或sessionStorage
                 if (rememberMe) {
                     localStorage.setItem('currentUser', JSON.stringify(currentUser));
                 } else {
@@ -2482,7 +2679,12 @@
                     classmates = [];
                 }
                 
-                showToast('登录成功！', 'success');
+                // 清空登录表单
+                document.getElementById('login-email').value = '';
+                document.getElementById('login-password').value = '';
+                document.getElementById('remember-me').checked = false;
+                
+                showToast('✅ 登录成功！欢迎回来，' + currentUser.name, 'success');
                 updateUserProfile();
                 checkAdminAccess();
                 loadClassmates();
@@ -2491,6 +2693,7 @@
                 showView('classmate-list');
             } catch (error) {
                 showToast('登录过程中发生错误：' + error.message, 'error');
+                console.error('Login error:', error);
             }
         }
 
@@ -2514,6 +2717,149 @@
         }
 
         // 权限验证已集成到原始showView函数中
+        
+        // ==================== Bug反馈功能 ====================
+        
+        // 打开Bug反馈模态框
+        function openBugFeedback() {
+            try {
+                // 如果用户已登录，自动填入邮箱
+                if (currentUser && currentUser.email) {
+                    document.getElementById('bug-contact').value = currentUser.email;
+                }
+                
+                // 重置表单
+                document.getElementById('bugFeedbackForm').reset();
+                if (currentUser && currentUser.email) {
+                    document.getElementById('bug-contact').value = currentUser.email;
+                }
+                
+                // 显示模态框
+                const modal = new bootstrap.Modal(document.getElementById('bugFeedbackModal'));
+                modal.show();
+            } catch (error) {
+                showToast('打开反馈窗口时发生错误：' + error.message, 'error');
+            }
+        }
+        
+        // 提交Bug报告
+        function submitBugReport() {
+            try {
+                const title = document.getElementById('bug-title').value.trim();
+                const description = document.getElementById('bug-description').value.trim();
+                const category = document.getElementById('bug-category').value;
+                const severity = document.getElementById('bug-severity').value;
+                const contact = document.getElementById('bug-contact').value.trim();
+                const includeSystemInfo = document.getElementById('bug-system-info').checked;
+                
+                // 验证必填字段
+                if (!title) {
+                    showToast('请填写问题标题', 'warning');
+                    document.getElementById('bug-title').focus();
+                    return;
+                }
+                
+                if (!description) {
+                    showToast('请填写详细描述', 'warning');
+                    document.getElementById('bug-description').focus();
+                    return;
+                }
+                
+                if (!category) {
+                    showToast('请选择问题类型', 'warning');
+                    document.getElementById('bug-category').focus();
+                    return;
+                }
+                
+                if (!severity) {
+                    showToast('请选择严重程度', 'warning');
+                    document.getElementById('bug-severity').focus();
+                    return;
+                }
+                
+                // 收集系统信息
+                let systemInfo = '';
+                if (includeSystemInfo) {
+                    systemInfo = `\n\n--- 系统信息 ---\n` +
+                        `浏览器: ${navigator.userAgent}\n` +
+                        `屏幕分辨率: ${screen.width}x${screen.height}\n` +
+                        `时间戳: ${new Date().toISOString()}\n` +
+                        `页面URL: ${window.location.href}\n` +
+                        `用户: ${currentUser ? currentUser.email : '未登录'}`;
+                }
+                
+                // 构建bug报告数据
+                const bugReport = {
+                    title: title,
+                    description: description + systemInfo,
+                    category: category,
+                    severity: severity,
+                    userEmail: contact || (currentUser ? currentUser.email : '匿名用户'),
+                    userAgent: navigator.userAgent,
+                    timestamp: new Date().toISOString()
+                };
+                
+                // 显示提交中状态
+                const submitBtn = document.querySelector('#bugFeedbackModal .btn-primary');
+                const originalText = submitBtn.innerHTML;
+                submitBtn.innerHTML = '<i class="bi bi-hourglass-split me-1"></i>提交中...';
+                submitBtn.disabled = true;
+                
+                // 发送到后台服务器
+                fetch('http://localhost:3001/api/bug-report', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(bugReport)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showToast('✅ Bug反馈提交成功！感谢您的反馈，我们会尽快处理。', 'success');
+                        
+                        // 关闭模态框
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('bugFeedbackModal'));
+                        if (modal) {
+                            modal.hide();
+                        }
+                        
+                        // 重置表单
+                        document.getElementById('bugFeedbackForm').reset();
+                        
+                    } else {
+                        showToast('❌ 提交失败：' + (data.message || '未知错误'), 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Bug反馈提交错误:', error);
+                    
+                    // 如果后台服务器不可用，保存到本地
+                    const localBugReports = JSON.parse(localStorage.getItem('localBugReports') || '[]');
+                    bugReport.id = 'LOCAL_' + Date.now();
+                    bugReport.status = 'pending';
+                    localBugReports.push(bugReport);
+                    localStorage.setItem('localBugReports', JSON.stringify(localBugReports));
+                    
+                    showToast('⚠️ 网络连接失败，反馈已保存到本地。请稍后重试或联系管理员。', 'warning');
+                    
+                    // 关闭模态框
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('bugFeedbackModal'));
+                    if (modal) {
+                        modal.hide();
+                    }
+                })
+                .finally(() => {
+                    // 恢复按钮状态
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                });
+                
+            } catch (error) {
+                showToast('提交Bug反馈时发生错误：' + error.message, 'error');
+                console.error('Bug反馈提交错误:', error);
+            }
+        }
         
         // ==================== 防护功能 ====================
         
